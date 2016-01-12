@@ -44,7 +44,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
   }
 
 //Changes food status to pending
-  var makeReq = fuction(req) {
+  var makeReq = function(req) {
     return $http({
       method: 'PUT',
       url: 'api/makerequest',
