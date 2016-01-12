@@ -81,6 +81,7 @@ angular.module('viewReq', [])
     })
 
   }
+});
   
 
 
