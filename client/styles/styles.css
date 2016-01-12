@@ -13,6 +13,12 @@
     min-height: 85px;
   }
 
+
+/*This allowed for flip cards via this site
+    Used fmp-card-directive if you want to look it up
+
+*/
+
 .carddemoBasicUsage .card-media {
   background-color: #999999; }
 
@@ -74,7 +80,7 @@ figure a.close-caption.hidden {
 }
 
 
-
+/*More figure sliding magic*/
 #effect-1 a.close-caption {
     bottom: 10px;
     right: 10px;
