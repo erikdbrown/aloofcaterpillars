@@ -8,8 +8,8 @@ angular.module('oneApp', [
   'fmp-card',
   'viewReq',
   'ngAnimate',
-  'base64',
-  'ngFileUpload'
+  'base64', //Needed for photo upload
+  'ngFileUpload' //Needed for photo upload
   ])
 
 .config(function($routeProvider, $httpProvider) {
@@ -53,6 +53,7 @@ angular.module('oneApp', [
     controller: 'AuthController'  
   })
 
+//Standard Auth from Angular Shortly
   $httpProvider.interceptors.push('AttachTokens');
 })
 .factory('AttachTokens', function($window) {

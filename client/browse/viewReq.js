@@ -4,14 +4,29 @@ angular.module('viewReq', [])
   //TODO: we need to figure out current user and pass that in the get request
   $scope.user = $window.localStorage.getItem('com.oneAppUser').toLowerCase();
 
+  //Initialize variables
   $scope.pending = [];
-
-  $scope.clicked = false;
   $scope.allData;
   $scope.activeUser = []
   $scope.activeMeals;
-
   $scope.tradeMeal = ''
+
+
+  //Renders initial view. Filtered by creator's pending requests
+  Meals.pendingReq().then(function(response) {
+    var getData = response
+    for (var i = 0; i<getData.length;i++) {
+      if (getData[i].creator.toLowerCase() === $scope.user) {
+        $scope.pending.push(getData[i])
+      }
+    }
+  })
+
+
+  //This code block was from StackOverflow
+  //On click (or confirm trade), changes view via ng-if
+
+  $scope.clicked = false;
   $scope.showHTML = false;
 
   var vm = this;
@@ -24,15 +39,11 @@ angular.module('viewReq', [])
     $scope.showHTML = false;
   }
 
-  Meals.pendingReq().then(function(response) {
-    var getData = response
-    for (var i = 0; i<getData.length;i++) {
-      if (getData[i].creator.toLowerCase() === $scope.user) {
-        $scope.pending.push(getData[i])
-      }
-    }
-  })
+  
 
+//On button click, getUserMeals
+//EG. Jon receives a meal request from Joey
+//on clicking "see Joey's meals", displays a new view that shows Joey's available meals for trade
   function handleButtonClick(meal){
     $scope.activeMeals = []
     Meals.getUserMeals().then(function(response) {
@@ -48,6 +59,13 @@ angular.module('viewReq', [])
       $scope.showHTML = !$scope.showHTML;
     })
   }
+
+
+//Confirms two ways
+/*  1. Switches the status of both meals to "sold"
+    2. Creator for Meal1 assigned to Meal2's consumer
+    3. Vice versa
+*/
 
   function confirmTrade(meal) {
     var sendReq = {
@@ -66,27 +84,6 @@ angular.module('viewReq', [])
   
 
 
-  //this is really messy, but I wasn't sure if we could issue a GET request filter
-  //When this was done in backbone, we filtered it on the front end. Doing that below
-
-
-
-  $scope.showUser = function(meal) {
-    //Get that meal's data
-    $scope.activeMeals = []
-    Meals.getUserMeals().then(function(response) {
-      var allData = response
-      $scope.activeUser = meal.consumers[0];
-      for (var i = 0; i < allData.length; i++) {
-        if (allData[i].creator === $scope.activeUser) {
-          $scope.activeMeals.push(allData[i])          
-        }
-      }
-    }).then(function() {
-      $scope.clicked = true;
-    })
-  }
-})
 
 
 

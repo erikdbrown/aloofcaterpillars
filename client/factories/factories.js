@@ -31,6 +31,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     })
   }
 
+//Standard GET for all meals
   var getAllMeals = function() {
     return $http({
       method:'GET',
@@ -42,7 +43,8 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     })
   }
 
-  var makeReq = function(req) {
+//Changes food status to pending
+  var makeReq = fuction(req) {
     return $http({
       method: 'PUT',
       url: 'api/makerequest',
@@ -52,6 +54,8 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     })
   }
 
+
+//See below comment on GET
   var getUserMeals = function(userMeals) {
     return $http({
       method: 'GET',
@@ -62,6 +66,11 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     })
   }
 
+  
+//Views pending requests. Passes a username
+
+//Note: GET requests as I know it don't have the username in the req.body
+//Therefore, filtering happened on front end. This is basically a normal GET
   var pendingReq = function(user) {
     return $http({
       method: 'GET',
@@ -71,6 +80,8 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     })
   }
 
+
+//Confirms request from View Request Screen
   var confirmReq = function(meal) {
     return $http({
       method: 'PUT',
@@ -81,6 +92,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     })
   }
 
+//This one isn't used yet
   var searchByIngredient = function(ingredient){
     return $http({
       method: 'POST',
@@ -143,7 +155,6 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       $window.localStorage.removeItem('com.oneApp');
       $location.path('/signin');
     };
-
 
     return {
       signin: signin,
