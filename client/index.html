@@ -40,12 +40,14 @@
 </head>
 <body ng-app="oneApp" layout='row' class='layout-row'>
   <div layout='column' flex class='layout-column flex'>
+
+    <!-- navbar content -->
     <md-toolbar class='md-whiteframe-glow-z1'>
       <div class="md-toolbar-tools" ng-controller="AuthController">
         <md-button ng-href="#/browse">OneForOne</md-button>
         <span flex></span>
         <md-button ng-href="#/signin" class="" aria-label="Learn More">
-          Sign In
+          Sign In 
         </md-button>
         <md-button ng-click="signout()" class="" aria-label="Learn More">
           Logout
@@ -58,8 +60,10 @@
         </md-button>
       </div>
     </md-toolbar>
-    <md-content>
-      <div ng-view></div>
+
+    <!-- page content here -->
+    <md-content ng-view md-scroll-y flex layout-padding class='layout-padding flex'>
+      <!-- <div ng-view></div> -->
     </md-content> 
     
   <!-- <div id="preloader">
