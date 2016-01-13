@@ -6,7 +6,6 @@ var feedbackController = require('../feedback/feedbackController.js');
 // Middleware. Add below as needed
 
 module.exports = function(app, express) {
-
   // retrieving and deleting a specific user
   app.get('/boorish/users/:id', userController.getUser); // retrieve a user
   app.post('/boorish/users', userController.create); // create a new user
