@@ -1,22 +1,23 @@
 var mongoose = require('mongoose');
 
-var mealSchema = mongoose.Schema({
-  picture: String, // TODO: store picure URL 
+var MealSchema = mongoose.Schema({
+  imgUrl: String, // TODO: store picure URL 
   description: String,
   title: String,
   ingredients: Array,
-  // _creator: Schema.User.ObjectId,
+  _creator: String, // TODO: need to pull this from Users schema
   consumers: Array,
-  status: {type: String, default: 'false'}, // two statuses: 'open' and 'closed'
   date_available: {type: Date, default: Date.now}, // TODO: check that this is correct
   portions: Number,
   tags: Array,
+  feedback: Array,
+  overall: Number
 },
 { 
   timestamps: true
 });
 
-var Meal = mongoose.model('Meal', mealSchema);
+var Meal = mongoose.model('Meals', MealSchema);
 
 module.exports = Meal; 
 
