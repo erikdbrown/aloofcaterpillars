@@ -5,32 +5,28 @@ var mealController = require('../meals/mealController.js');
 // Middleware. Add below as needed
 
 module.exports = function(app, express) {
-  // Look into having both get and post
-  app.get('/api/signin', userController.signin);
-  app.post('/api/signin', userController.signin);
+  // Authentication and regirstration
+  app.get('/boorish/signin', userController.signin);
+  app.post('/boorish/signin', userController.signin);
+  app.post('/boorish/register', userController.register);
 
-  app.post('/api/register', userController.register);
+  // creating, retreiving, and removing meals
+  app.get('/boorish/meals', mealController.allMeals); // get all meals
+  app.post('/boorish/meals', mealController.create); // create a new meal
+  app.delete('/boorish/meals/:id', mealController.deleteMeal) // TODO: write controller to delete meal
 
-  // this endpoint returns all the meals objects form the db. TODO check with Jonathon to sync endpoint name 
-  app.get('/api/browse', mealController.allMeals);
+  // adding, retrieving, and deleting a user's meals
+  app.get('/boorish/meals/user/:id', checkUser, mealController.userMeals) // TODO: write a controller to GET a specific user's meals
+  app.post('/boorish/meals/user/:id', checkUser, mealController.addMeal) // TODO: write a controller to add a meal
+  app.delete('/boorish/meals/user/:id', mealController.deleteMeal) // TODO: write controller to delete meal from user's meals
 
-  app.post('/api/create', mealController.create);
+  // retrieving and adding feedback on individual meals
+  app.get('/boorish/feedback/meals/:id', feedbackController.retrieveFeedback) // TODO: write controller to retrievie feedback on a meal
+  app.post('/boorish/feedback/meals/:id', feedbackController.addFeedback) // TODO: write controller to add feedback to a meal
 
-  // this endpoint returns all the meal instances.
-  app.get('/api/usermeals', checkUser, mealController.allMeals);
-
-  // this endpoint recieves an object containing a user (the prospective consumer) and the meal being requested and updates the status or the meal to pending  
-  app.put('/api/makerequest', checkUser, mealController.makeRequest);
-
-  // this endpoint returns all the pending meals from a user 
-  app.get('/api/viewpending', mealController.viewPending);
-
-
-  // this endpoint returns all the consumers of a meal instance
-  app.get('/api/viewuser', mealController.viewUsers);
-
-  // this endpoint takes TWO meal instances and updates the status to sold to confirm transaction
-  app.put('/api/confirmrequest', mealController.confirmRequest);
+  // retrieving and deleting a specific user
+  app.get('/boorish/users/:id', userController.getUser)
+  app.delete('/boorish/users/:id', userController.removeUser)
 }
 
 var checkUser = function (req,res,next) {
