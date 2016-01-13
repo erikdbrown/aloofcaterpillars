@@ -17,40 +17,79 @@ var readFile = Q.nbind(fs.readFile, fs);
 module.exports = {
   //create method that takes req, res, and next
   create: function(req, res, next) {
-    var form = new multiparty.Form();
+    var count = 0;
+    var filepath;
+
+    var form = new multiparty.Form({
+      autoFiles: true,
+      uploadDir: '../images/'
+    });
+
+    form.on('error', function(err) {
+      console.log('Error parsing form: ' + err.stack);
+    });
+
+    // form.on('file', function(file) {
+    //   filepath = file.path; 
+    // });
 
     form.parse(req, function(err, fields, files) {
 
-      readFile(files['meal[picture]'][0].path, function(err, data) {
-        if (err) throw err;
-        console.log(data);
-      })
-      .then(function(pic) {
-        // console.log(files['meal[picture]'][0].path);
-        // console.log(pic);
-        //   pic = pic.toString()
-        //take the field.creator and make a new folder 
-        //write the pic to the filesystem in the creator's folder
-        //assign the directory to a variable 
-        pic.toString('utf8');
-        console.log(pic);
+      Object.keys(fields).forEach(function(name) {
+        console.log('Received field named ' + name);
+      });
+
+      Object.keys(files).forEach(function(name) {
+        console.log('Received file named ' + name);
+      });
+
+      console.log('Upload completed!');
+
+      form.on('close', function() {
+        console.log('Upload completed!');
+
         createMeal({
-          //picpath : save the meals picture path
-          picture: pic,
+          imgUrl: files.path[0],
+          description: fields.description[0],
           title: fields.title[0],
-          //title: fields.title[0],
-          //protein: fields.protein[0],
-          creator: fields.creator[0],
-          //consumers: fields.consumer[0],
-          quantity: fields.quantity[0]
+          ingredients: fields.ingredients[0],
+          creator: '', /////
+          date_available: fields.date_available[0],
+          portions: fields.portions[0],
+          tags: fields.tags[0];
         })
         .then(function() {
-          res.status(201).send('success')
-        });
+          res.sendStatus(201);
+        })
+
       })
+
+    })
+    // .then(function(pic) {
+    //     //take the field.creator and make a new folder 
+    //     //write the pic to the filesystem in the creator's folder
+    //     //assign the directory to a variable 
+    //     pic.toString('utf8');
+    //     console.log(pic);
+    //     createMeal({
+    //       imgUrl : '', // must write this to the images folder
+    //       description: fields.description[0];
+    //       title: fields.title[0],
+    //       creator: fields.creator[0],
+    //       //consumers: fields.consumer[0],
+    //       quantity: fields.quantity[0]
+    //     })
+    //     .then(function() {
+    //       res.status(201).send('success')
+    //     });
+    //   })
 
     });
   },
+      // readFile(files['meal[picture]'][0].path, function(err, data) {
+      //   if (err) throw err;
+      //   console.log(data);
+      // })
 
   allMeals: function(req, res, next) {
     console.log('You accessed all meals')

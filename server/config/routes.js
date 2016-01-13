@@ -15,7 +15,7 @@ module.exports = function(app, express) {
   app.get('/boorish/users/signedin', userController.checkAuth); // check user authorization
 
   // creating, retreiving, and removing meals
-  app.get('/boorish/meals', mealController.allMeals); // get all meals
+  app.get('/boorish/meals', mealController.allAvailableMeals); // get all meals
   app.post('/boorish/meals', mealController.createMeal); // create a new meal
   app.put('/boorish/meals/:mid', mealController.editMeal); // edit a new meal
   app.delete('/boorish/meals/:mid', mealController.deleteMeal) // TODO: write controller to delete meal
