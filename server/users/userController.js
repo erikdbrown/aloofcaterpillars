@@ -67,7 +67,7 @@ module.exports = {
     });
   }, 
 
-  register: function(req, res, next) {
+  newUser: function(req, res, next) {
     //save input username
     var username = req.body.username;
     //save input password
@@ -100,5 +100,9 @@ module.exports = {
 
   removeUser: function(req, res, next) {
     // removes a user from the database
+  },
+
+  checkAuth: function(req, res, next) {
+    // checks user against token
   }
 };

@@ -7,6 +7,10 @@ module.exports = {
 
   addFeedback: function(req, res, next) {
     // adds feedback about a specific meal from one user
+  },
+
+  editFeedback: function(req, res, next) {
+    // edits feedback 
   }
 
 };
