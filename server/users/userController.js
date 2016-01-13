@@ -1,5 +1,5 @@
 var Q = require('q');
-var User = require('./user.js');
+var User = require('./userModel.js');
 var session = require('express-session');
 var jwt = require('jwt-simple');
 
@@ -92,5 +92,13 @@ module.exports = {
       //res.redirect('/browse');
       res.json({token: token});
     }); 
+  },
+
+  getUser: function(req, res, next) {
+    // returns a user from the database
+  },
+
+  removeUser: function(req, res, next) {
+    // removes a user from the database
   }
 };
