@@ -1,7 +1,8 @@
 // links to controllers
-var userController = require('../users/userController.js');
-var mealController = require('../meals/mealController.js');
-var feedbackController = require('../feedback/feedbackController.js');
+var userController = require('../controllers/userController.js');
+var mealController = require('../controllers/mealController.js');
+var feedbackController = require('../controllers/feedbackController.js');
+var tagController = require('../controllers/tagController.js');
 
 // Middleware. Add below as needed
 
@@ -25,9 +26,11 @@ module.exports = function(app, express) {
   app.put('/boorish/meals/:mid/:uid', mealController.deleteMealFromUser) // TODO: write controller to remove a meal from user's list
 
   // retrieving and adding feedback on individual meals
-  app.get('/boorish/feedback/meals/:id', feedbackController.retrieveFeedback) // TODO: write controller to retrievie feedback on a meal
-  app.post('/boorish/feedback/meals/:id', feedbackController.addFeedback) // TODO: write controller to add feedback to a meal
-  app.put('/boorish/feedback/meals/:id', feedbackController.editFeedback) // TODO: write controller to retrievie feedback on a meal
+  app.get('/boorish/feedback/meals/:mid', feedbackController.retrieveFeedback) // TODO: write controller to retrievie feedback on a meal
+  app.post('/boorish/feedback/meals/:mid', feedbackController.addFeedback) // TODO: write controller to add feedback to a meal
+  app.put('/boorish/feedback/meals/:mid', feedbackController.editFeedback) // TODO: write controller to retrievie feedback on a meal
+
+  app.get('boorish/tags/', tagController.getTags) // TODO: write controller function
 
 }
 

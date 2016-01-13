@@ -1,5 +1,5 @@
 var Q = require('q');
-var Meal = require('./mealModel.js');
+var Meal = require('../models/mealModel.js');
 var fs = require('fs')
 var path = require('path')
 var multiparty = require('multiparty')

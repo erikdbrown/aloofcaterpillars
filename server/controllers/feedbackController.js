@@ -1,4 +1,4 @@
-var Feedback = require('./feedbackModel');
+var Feedback = require('../models/feedbackModel');
 
 module.exports = {
   retrieveFeedback: function(req, res, next) {
