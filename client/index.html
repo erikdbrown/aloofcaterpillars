@@ -1,74 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>One For One</title>
-	
-	<link rel="stylesheet" href="./styles/styles.css">
-	<link rel="stylesheet" href="./lib/angular-material/angular-material.css">
-	<link rel="stylesheet" href="./lib/fmp-card-directive/css/fmpCardDirective.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>One For One</title>
+  
+  <!-- <link rel="stylesheet" href="./styles/styles.css"> -->
+  <link rel="stylesheet" href="./lib/angular-material/angular-material.css">
+  <link rel="stylesheet" href="./lib/fmp-card-directive/css/fmpCardDirective.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
 
-	<!-- Scripts for Angular -->
-	<script src="./lib/angular/angular.js"></script>
-	<script src="./lib/angular-route/angular-route.js"></script>
-	<script src="./lib/angular-animate/angular-animate.js"></script>
+  <!-- Scripts for Angular -->
+  <script src="./lib/angular/angular.js"></script>
+  <script src="./lib/angular-route/angular-route.js"></script>
+  <script src="./lib/angular-animate/angular-animate.js"></script>
     
+  <!-- Scripts for Angular Material Design -->
+  <script src="./lib/angular-aria/angular-aria.js"></script>
+  <script src="./lib/angular-messages/angular-messages.js"></script>
+  <script src="./lib/angular-material/angular-material.js"></script>  
+  <script src="./lib/fmp-card-directive/fmpCardDirective.js"></script>  
 
-	
-	<!-- Scripts for Angular Material Design -->
-	<script src="./lib/angular-aria/angular-aria.js"></script>
-	<script src="./lib/angular-messages/angular-messages.js"></script>
-	<script src="./lib/angular-material/angular-material.js"></script>	
-	<script src="./lib/fmp-card-directive/fmpCardDirective.js"></script>	
-
-	<!-- Allows for toggle effects on cards -->
-	<script src="./styles/touch.js"></script>	
-	<script src="./styles/modernizr.js"></script>	
-
-
-	<!-- Bootstrap boiler -->
-	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Cabin:400,500,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-
-
-    <!-- Bootstrap -->
-    <link href="styles/bootstrap.min.css" rel="stylesheet">
-
-    <!--fontawesome-->
-    <link href="styles/font-awesome.min.css" rel="stylesheet">
-
-    <!--animation-->
-    <link href="styles/animate.min.css" rel="stylesheet">
-
-    <!--main css-->
-    <link href="styles/style.css" rel="stylesheet">
-
-    <!--main css-->
-    <link href="styles/responsive.css" rel="stylesheet">
-
+  <!-- Allows for toggle effects on cards -->
+  <script src="./styles/touch.js"></script> 
+  <script src="./styles/modernizr.js"></script> 
 
     <!-- Needed to work base functionality -->
-	<script src="./app.js"></script>
-	<script src="./browse/browse.js"></script>
-	<script src="./browse/viewReq.js"></script>
-	<script src="./create/create.js"></script>
-	<script src="./factories/factories.js"></script>
+  <script src="./app.js"></script>
+  <script src="./browse/browse.js"></script>
+  <script src="./browse/viewReq.js"></script>
+  <script src="./create/create.js"></script>
+  <script src="./factories/factories.js"></script>
 
-	<script src="./auth/auth.js"></script>
+  <script src="./auth/auth.js"></script>
     
     <!-- Allow for file upload -->
-    <script src="lib/ng-file-upload/ng-file-upload.js"></script>
-    <script src="lib/angular-base64/angular-base64.js"></script>
-		
+  <script src="lib/ng-file-upload/ng-file-upload.js"></script>
+  <script src="lib/angular-base64/angular-base64.js"></script>
+    
 </head>
 <body ng-app="oneApp">
-		
-  <div id="preloader">
-        <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
-    </div>
+    
+  <!-- <div id="preloader">
+    <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+  </div> -->
 
         <header id="header_area">
         <div class="container">
@@ -124,183 +98,7 @@
         </div>
     </header>
 
-    <div ng-view>
-        
-    </div>
-
-    <div ng-controller="AuthController">
-
-     <section id="story_area" class="section_padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="story_image wow slideInLeft" data-wow-duration="2s">
-                        <img src="images/mealprep.jpg" alt="">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="story_text wow slideInRight" data-wow-duration="2s">
-                        <h2>Our Short Story</h2>
-                        <p>Faced with the unsavory prospect of eating the same meals six times a week, we wanted to find a solution that blended health with diversity.</p>
-                        <p>One For One is about connecting students who prep meals ahead of time. Trade your meal with another student.</p>
-
-                        <p>One For One</p>
-                        <a href="">More about our team</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-     <section id="features_area" class="section_padding text-center">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h2>Features you’ll love</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="single_feature wow slideInUp" data-wow-duration="1s">
-                        <i class="fa fa-user"></i>
-                        <h3>Personally handcrafted</h3>
-                        <p>Each meal you receive is lovingly prepared by classmates and coworkers
-                        </p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="single_feature wow slideInUp" data-wow-duration="2s">
-                        <i class="fa fa-flag"></i>
-                        <h3>Trade with friends</h3>
-                        <p>View requests in an inclusive, culinary marketplace. Decide what meals you want to trade.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="single_feature wow slideInUp" data-wow-duration="3s">
-                        <i class="fa fa-paint-brush"></i>
-                        <h3>Personal touch</h3>
-                        <p>We set you up to eat something different every day. Over time, we suggest meals and recipes based on your feedback.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="Experience_area" class="section_padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="experience wow slideInLeft">
-                        <h2>TODO: Legacy Projects</h2>
-                        <ul>
-                            <li>Refactor to SQL</li>
-                            <li>Add Ratings and Trade History</li>
-                            <li>Integrate API for suggested recipes</li>
-                            <li>Abstract Angular filters into factories</li>
-                        </ul>
-                        
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="skills">
-                       <h2>Tech Stack</h2>
-                        <div class="skill_right">
-
-                            <p>MongoDB</p>
-                            <div class="progress wow slideInUp">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
-                                    90% => Almost Complete
-                                </div>
-                            </div>
-
-                            <p>AngularJS</p>
-                            <div class="progress wow slideInUp">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">
-                                    40% => Refactoring and features
-                                </div>
-                            </div>
-
-                            <p>Express/Node</p>
-                            <div class="progress wow slideInUp">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
-                                    90% => Almost Complete
-                                </div>
-                            </div>
-
-                            <p>CSS3/Bootstrap</p>
-                            <div class="progress wow slideInUp">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-                                    50% => Familiarity with code base
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- end experience area -->
-
-
-
-    <!-- Boilerplate JS sources. Not required -->
-    <!-- main jQuery-->
-    <script src="bootstrapJS/jquery-1.11.3.min.js"></script>
-
-    <!-- bootstrap js -->
-    <script src="bootstrapJS/bootstrap.min.js"></script>
-
-    <!-- wow js -->
-    <script src="bootstrapJS/wow.min.js"></script>
-    <script>
-        new WOW().init();
-    </script>
-
-    <!-- main js -->
-    <script src="bootstrapJS/main.js"></script>
-
-    <section id="caal_to_action_area">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8">
-                    <div class="call_to_action_text wow slideInLeft" data-wow-duration="2s">
-                        <h2>Are you ready?</h2>
-                        <p>The future of food</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="call_project text-right wow slideInRight" data-wow-duration="2s">
-                        <a href="#/browse">Start now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
-
-
-  <footer id="footer_area">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="company_logo wow slideInDown">
-                        <h2>OneForOne</h2>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="company_address wow slideInDown">
-                        <h2>San Francisco</h2>
-                        <p>Hack Reactor
-                        </p>
-                   
-                    </div>
-                </div>
-                             
-            </div>
-        </div>
-    </footer>
-	
+    <div ng-view></div>
+  
 </body>
 </html>
