@@ -29,4 +29,5 @@ module.exports = function(app, express) {
   // retrieving and adding feedback on individual meals
   app.get('/boorish/feedback/meals/:id', feedbackController.retrieveFeedback) // TODO: write controller to retrievie feedback on a meal
   app.post('/boorish/feedback/meals/:id', feedbackController.addFeedback) // TODO: write controller to add feedback to a meal
+
 };
