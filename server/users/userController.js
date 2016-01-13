@@ -104,6 +104,5 @@ module.exports = {
 
   checkAuth: function(req, res, next) {
     // checks user against token
-
   }
 };
