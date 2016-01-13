@@ -1,9 +1,12 @@
 var mongoose = require('mongoose');
 var Feedback =  require('./feedbackModel.js');
 var Meal =  require('./mealModel.js');
+<<<<<<< HEAD
 var bcrypt = require('bcrypt-nodejs');
 var Q = require('q');
 var SALT_WORK_FACTOR = 10;
+=======
+>>>>>>> added references to ObjectIDs on each model
 
 var UserSchema = mongoose.Schema({
   // _id: automatically populated by MongoDB
