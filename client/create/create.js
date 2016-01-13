@@ -1,16 +1,17 @@
 angular.module('create', [])
 
-.controller('createCtrl', ['$scope', 'Meals', 'Upload', '$base64', '$window', function($scope, Meals, Upload) {
+.controller('createCtrl', ['$scope', 'Meals', 'Upload', 'Auth', '$base64', '$window', function($scope, Meals, Upload, Auth) {
 
   //Add meal via POST request from Meals factory
     $scope.addMeal = function(meal) {
      
     var meal = meal;
     console.log(Upload)
+    var creator = Auth.currentUser();
 
     meal.upload = Upload.upload({
       url: '/api/create',
-      data: {meal: meal, creator: $scope.meal.creator, title: $scope.meal.title, quantity: $scope.meal.quantity},
+      data: {meal: meal, creator: creator, title: $scope.meal.title, quantity: $scope.meal.quantity},
     });
     meal.upload.then(function (resp) {
       alert('MEAL CREATED')
