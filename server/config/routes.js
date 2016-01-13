@@ -1,7 +1,8 @@
 // links to controllers
-var userController = require('../users/userController.js');
-var mealController = require('../meals/mealController.js');
-var feedbackController = require('../feedback/feedbackController.js');
+var userController = require('../controllers/userController.js');
+var mealController = require('../controllers/mealController.js');
+var feedbackController = require('../controllers/feedbackController.js');
+var tagController = require('../controllers/tagController.js');
 
 // Middleware. Add below as needed
 

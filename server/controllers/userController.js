@@ -1,5 +1,5 @@
 var Q = require('q');
-var User = require('./userModel.js');
+var User = require('../models/userModel.js');
 var session = require('express-session');
 var jwt = require('jwt-simple');
 
