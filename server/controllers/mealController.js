@@ -13,12 +13,58 @@ var findAllMeals = Q.nbind(Meal.find, Meal);
 var readFile = Q.nbind(fs.readFile, fs);
 
 module.exports = {
-  allMeals: function(req, res, next) {
-    // returns all meals currently open in the database
+
+  allAvailableMeals: function(req, res, next) {
+    findAllMeals({})
+    .then(function(meals) {
+      var available = meals.filter(function(meal) {
+        return meal.date_available < new Date();
+      })
+      res.status(200).send(available);
+    })
+    .fail(function(error) {
+      res.sendStatus(500);
+    });
   },
 
   createMeal: function(req, res, next) {
-    // creates a new meal in the database
+    var form = new multiparty.Form({
+      autoFiles: true,
+      uploadDir: '../images/'
+    });
+
+    form.on('error', function(err) {
+      console.log('Error parsing form: ' + err.stack);
+    });
+
+    form.parse(req, function(err, fields, files) {
+
+      Object.keys(fields).forEach(function(name) {
+        console.log('Received field named ' + name);
+      });
+
+      Object.keys(files).forEach(function(name) {
+        console.log('Received file named ' + name);
+      });
+
+      form.on('close', function() {
+        console.log('Upload completed!');
+
+        createMeal({
+          imgUrl: files.path[0],
+          description: fields.description[0],
+          title: fields.title[0],
+          ingredients: fields.ingredients[0],
+          creator: '', /////
+          date_available: fields.date_available[0],
+          portions: fields.portions[0],
+          tags: fields.tags[0]
+        })
+        .then(function() {
+          res.sendStatus(201);
+        });
+      });
+    });
   },
 
   editMeal: function(req, res, next) {
