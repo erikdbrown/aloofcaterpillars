@@ -29,6 +29,8 @@ angular.module('auth', [])
         $window.localStorage.setItem('com.oneApp', token.token)
         $window.localStorage.setItem('com.oneAppUser', token.username);
         $location.path('/browse');
+        $scope.user = token.username;
+        console.log($scope.user);
       })
       .catch(function (error) {
         console.error(error);
@@ -40,6 +42,5 @@ angular.module('auth', [])
     $window.localStorage.setItem('com.oneApp', {})
     $window.localStorage.setItem('com.oneAppUser', "")
     $location.path('/signin')
-
   };
 });
