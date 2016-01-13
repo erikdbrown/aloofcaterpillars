@@ -50,8 +50,23 @@ angular.module('oneApp', [
   })
   .when('/logout', {
     templateUrl: '/auth/signin.html',
-    controller: 'AuthController'  
+    controller: 'AuthController'
   })
+  // .when('/dashboard', {
+  //   templateUrl: '/dashboard/dashboard.html',
+  //   controller: 'dashController'
+  // })
+  // .when('/feedback', {
+  //   templateUrl: '/feedback/feedback.html',
+  //   controller: 'feedbackCtonroller'
+  // })
+  // .when('/orders', {
+  //   templateUrl: '/orders/orders.html',
+  //   controller: 'ordersController'
+  // })
+  // .otherwise({
+  //   redirectTo: '/dashboard'
+  // })
 
 //Standard Auth from Angular Shortly
   $httpProvider.interceptors.push('AttachTokens');
