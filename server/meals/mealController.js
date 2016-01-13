@@ -21,6 +21,7 @@ module.exports = {
     // creates a new meal in the database
   },
 
+
   editMeal: function(req, res, next) {
 
   },
