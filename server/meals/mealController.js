@@ -26,7 +26,6 @@ module.exports = {
   },
 
   deleteMeal: function(req, res, next) {
-
   },
 
   userMeals: function(req, res, next) {
