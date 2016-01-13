@@ -8,7 +8,7 @@ var helper = require('./helpers.js');
 // Middleware. Add below as needed
 
 module.exports = function(app, express) {
-<<<<<<< HEAD
+
   // retrieving and deleting a specific user
   app.get('/boorish/users/', helper.decode, userController.getUser); // retrieves a user
   app.post('/boorish/users', userController.create); // creates a new user
