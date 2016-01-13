@@ -29,32 +29,4 @@ module.exports = function(app, express) {
   // retrieving and adding feedback on individual meals
   app.get('/boorish/feedback/meals/:id', feedbackController.retrieveFeedback) // TODO: write controller to retrievie feedback on a meal
   app.post('/boorish/feedback/meals/:id', feedbackController.addFeedback) // TODO: write controller to add feedback to a meal
-  app.put('/boorish/feedback/meals/:id', feedbackController.editFeedback) // TODO: write controller to retrievie feedback on a meal
-
 }
-
-var checkUser = function (req,res,next) {
-  var token = req.headers['x-access-token'];
-  if(!token) {
-    res.redirect('/signin');
-  } else{
-    next();
-  }
-};
-
-// var express = require('express');
-// var app = express();
-// var partials = require('express-partials');
-// var mongoose = require('mongoose');
-
-// var Meal = require('./db/meals/meal');
-
-// var User = require('./db/users/user');
-// var UserController = require('./db/users/userController');
-
-// var q = require('q');
-// var jwt = require('jwt-simple');
-
-// var db = require('./db/dbconfig');// uncomment when this is ready
-
-// var app = express();
