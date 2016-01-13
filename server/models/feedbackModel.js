@@ -3,6 +3,7 @@ var Meal =  require('./mealModel.js');
 var User =  require('./userModel.js');
 
 var FeedbackSchema = mongoose.Schema({
+  // _id: automatically populated by MongoDB
   user_creator: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' }, // TODO: needs to reference the creator's ObjectID
   user_eater: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' }, // TODO: needs to reference the eater's ObjectID
   ratingOne: { type: Number, default: 0 }, // TODO: check in on what things we're rating
