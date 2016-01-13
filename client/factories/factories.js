@@ -156,11 +156,16 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       $location.path('/signin');
     };
 
+    var currentUser = function() {
+      return $window.localStorage.getItem('com.oneAppUser');
+    };
+
     return {
       signin: signin,
       signup: signup,
       isAuth: isAuth,
-      signout: signout
+      signout: signout,
+      currentUser: currentUser
     };
   });
     
