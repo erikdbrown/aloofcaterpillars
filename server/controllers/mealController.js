@@ -188,8 +188,13 @@ module.exports = {
           res.sendStatus(404);
         }
         meal.consumers.push(user._id);
-        meal.save(function() {
-          res.sendStatus(200);
+        meal.save();
+        User.update(user, { $inc: { foodTokens : -1 } }, function(err) {
+          if (err) { throw 'There was an error removing a token after adding a meal:' + err; }
+          User.update({ _id: meal._creator }, { $inc: { foodTokens : +1 } }, function(err) {
+            if (err) { throw 'There was an error adding a token to the creator after adding a meal:' + err; }
+            res.sendStatus(200);
+          });
         });
       });
     });
