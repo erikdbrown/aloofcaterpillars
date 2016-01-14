@@ -33,21 +33,4 @@ module.exports = function(app, express) {
 
   app.get('boorish/tags/', tagController.getTags) // TODO: write controller function
 
-}
-
-// var express = require('express');
-// var app = express();
-// var partials = require('express-partials');
-// var mongoose = require('mongoose');
-
-// var Meal = require('./db/meals/meal');
-
-// var User = require('./db/users/user');
-// var UserController = require('./db/users/userController');
-
-// var q = require('q');
-// var jwt = require('jwt-simple');
-
-// var db = require('./db/dbconfig');// uncomment when this is ready
-
-// var app = express();
+};
