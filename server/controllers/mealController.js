@@ -73,7 +73,7 @@ module.exports = {
     // });
   },
 
-  editMeal: function(req, res, next) { // TODO: Use update and update
+  editMeal: function(req, res, next) {
     var meal_id = req.params.id;
     var updates = req.body;
 
@@ -87,13 +87,13 @@ module.exports = {
   deleteMeal: function(req, res, next) {
 
     var meal_id = req.params.id;
-    var username = req.username; // TODO: return to taking from the token.
+    var username = req.username;
 
     User.findOne({ username: username })
     .then(function(creator) {
       console.log('This is the creator: ', creator);
       if (!creator) {
-        console.log('couldn\'t find user')
+        console.log('Couldn\'t find user');
         res.sendStatus(404);
       }
       Meal.findOne({ _id: meal_id, _creator: creator._id })
