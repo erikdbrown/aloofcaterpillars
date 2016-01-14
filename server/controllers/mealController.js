@@ -56,76 +56,87 @@ module.exports = {
         .then(function(user) {
           console.log(user);
           createMeal({
-            imgUrl: req.body.imgUrl, // files.path[0],
-            description: req.body.decription, // fields.description[0],
-            title: req.body.title, // fields.title[0],
-            ingredients: req.body.ingredients, // fields.ingredients[0],
-            _creator: user._id, // fields.creator[0],
-            date_available: req.body.date_available, // fields.date_available[0],
-            portions: req.body.portions, // fields.portions[0],
-            tags: req.body.tags // fields.tags[0]
+            imgUrl: req.body.imgUrl, // files.path[0], //
+            description: req.body.decription, // fields.description[0], //
+            title: req.body.title, // fields.title[0], //
+            ingredients: req.body.ingredients, // fields.ingredients[0], // 
+            _creator: user._id,
+            date_available: req.body.date_available, //fields.date_available[0], //
+            portions: req.body.portions, // fields.portions[0], //
+            tags: req.body.tags // fields.tags[0] // 
           })
           .then(function(meal) {
             res.sendStatus(201);
           });
         })
-
     //   });
     // });
   },
 
   editMeal: function(req, res, next) { // TODO: Use update and update
-    if (!req.userId) {
-      res.sendStatus(401);
-    } else {
-      var mealID = req.params.mid
-    }
+    var meal_id = req.params.id;
+    var updates = req.body;
+
+    Meal.update({
+      _id: meal_id
+    }, updates, function() {
+      res.sendStatus(200)
+    });
   },
 
   deleteMeal: function(req, res, next) {
 
-    var meal_id = req.params.mid;
-    var user_id = req.userId; // TODO: return to taking from the token.
-    Meal.findOne({ _id: meal_id })
-    .then(function(meal) {
-      console.log('This is the meal requested to be deleted: ', meal);
-      if (!meal) {
+    var meal_id = req.params.id;
+    var username = req.username; // TODO: return to taking from the token.
+
+    User.findOne({ username: username })
+    .then(function(user) {
+      if (!user) {
+        console.log('couldn\'t find user')
         res.sendStatus(404);
       }
-      if (meal._creator !== user_id) {
-        res.sendStatus(401).send('You are not authorized to delete this meal.');
-      } else {
-        if (meal.consumers.length === 0) {
-          meal.remove();
-          res.sendStatus(200)
-        } else {
-          User.find({ _id: { $in: meal.consumers } }, function(users) { // http://stackoverflow.com/questions/8303900/mongodb-mongoose-findmany-find-all-documents-with-ids-listed-in-array
-            users.forEach(function(user) {
-              User.update(user, { $inc: { foodTokens : +1 } }, function(err) {
-                if (err) { throw 'There was an error updating tokens after deleting a meal: ' + err; }
-              })
-            })
-            meal.remove();
-          });
+      Meal.find({ _id: meal_id, _creator: user._id })
+      .then(function(meal) {
+        console.log('This is the meal requested to be deleted: ', meal);
+        if (!meal) {
+          res.sendStatus(404);
         }
-      }
-    });
+        if (meal._creator !== user._id) {
+          res.sendStatus(401);
+        } else {
+          if (meal.consumers.length === 0) {
+            meal.remove();
+            res.sendStatus(200);
+          } else {
+            User.find({ _id: { $in: meal.consumers } }, function(users) { // http://stackoverflow.com/questions/8303900/mongodb-mongoose-findmany-find-all-documents-with-ids-listed-in-array
+              users.forEach(function(user) {
+                User.update(user, { $inc: { foodTokens : + 1 } }, function(err) {
+                  if (err) { throw 'There was an error updating tokens after deleting a meal: ' + err; }
+                })
+              })
+              meal.remove();
+            });
+          }
+        }
+      });
+      
+    })
+
   },
 
   userMeals: function(req, res, next) {
 
-    var user_id = req.userId;
     var date = new Date();
     var userMeals = {};
 
     User.findOne({ username: req.username})
     .then(function(user) {
-      console.log('User: ', user)
-      Meal.find({ creator: user._id })
+      console.log(user._id)
+      Meal.find({ _creator: user._id })
       .populate('_creator', 'displayName')
       .populate('consumers', 'displayName')
       .exec(function(err, meals) {
-        if (err) { throw 'There was an error fetching a user\'s created meals: ' + err }
+        if (err) { throw 'There was an error fetching a user\'s created meals: ' + err; }
         if (meals.length > 0) {
           userMeals.created = {};
           meals.forEach(function(meal) {
@@ -144,7 +155,7 @@ module.exports = {
         .populate('_creator', 'displayName')
         .populate('consumers', 'displayName')
         .exec(function(err, meals) {
-          if (err) { throw 'There was an error fetching a user\'s eating meals: ' + err }
+          if (err) { throw 'There was an error fetching a user\'s eating meals: ' + err; }
           if (meals.length > 0) {
             userMeals.consumed = {};
             meals.forEach(function(meal) {
@@ -160,17 +171,13 @@ module.exports = {
           res.status(200).send(userMeals);
         });
       });
-    })
-
-
+    });
   },
 
   addMealToUser: function(req, res, next) {
     // adds a selected meal the user's list of meals
     var meal_id = req.params.id;
     var username = req.username;
-    console.log('Meal Id: ', meal_id)
-    console.log('Username: ', username);
 
     User.findOne({ username: username })
     .then(function(user) {
@@ -183,11 +190,9 @@ module.exports = {
         meal.consumers.push(user._id);
         meal.save(function() {
           res.sendStatus(200);
-        })
-      })
-    })
-
-
+        });
+      });
+    });
   },
 
   deleteMealFromUser: function(req, res, next) {
@@ -214,6 +219,5 @@ module.exports = {
         }
       })
     })
-
   }
 };
