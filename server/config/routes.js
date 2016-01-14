@@ -22,9 +22,9 @@ module.exports = function(app, express) {
   app.delete('/boorish/meals/:mid', helper.decode, mealController.deleteMeal) // TODO: write controller to delete meal
 
   // adding, retrieving, and deleting a user's meals
-  app.get('/boorish/meals/users/:mid', helper.decode, mealController.userMeals) // TODO: write a controller to GET all of a user's meals
-  app.post('/boorish/meals/users/:mid', helper.decode, mealController.addMealToUser) // TODO: write a controller to add a meal to a user's list
-  app.put('/boorish/meals/users/:uid', helper.decode, mealController.deleteMealFromUser) // TODO: write controller to remove a meal from user's list
+  app.get('/boorish/meals/users/', helper.decode, mealController.userMeals) // TODO: write a controller to GET all of a user's meals
+  app.post('/boorish/meals/users/:id', helper.decode, mealController.addMealToUser) // TODO: write a controller to add a meal to a user's list
+  app.put('/boorish/meals/users/:id', helper.decode, mealController.deleteMealFromUser) // TODO: write controller to remove a meal from user's list
 
   // retrieving and adding feedback on individual meals
   app.get('/boorish/feedback/meals/:mid', helper.decode, feedbackController.retrieveFeedback) // TODO: write controller to retrievie feedback on a meal

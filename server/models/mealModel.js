@@ -10,7 +10,7 @@ var MealSchema = mongoose.Schema({
   title: String,
   ingredients: [String],
   _creator: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' }, // TODO: need to pull the _id from Users schema
-  consumers: [String],  // in query, this will be populated
+  consumers: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Users' } ],  // in query, this will be populated
   date_available: { type: Date, default: Date.now }, // TODO: check that this is correct
   portions: Number,
   tags: [String], // in query, this will be populated

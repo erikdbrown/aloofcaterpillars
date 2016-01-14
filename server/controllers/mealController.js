@@ -1,8 +1,10 @@
 var Q = require('q');
 var Meal = require('../models/mealModel.js');
+var User = require('../models/userModel.js');
 var fs = require('fs')
 var path = require('path')
 var multiparty = require('multiparty')
+
 
 //findone is the actual mongoose method, and it is being called on the Meal model provided as the second arg. 
 var findMeal = Q.nbind(Meal.findOne, Meal);
@@ -16,16 +18,17 @@ module.exports = {
 
   allAvailableMeals: function(req, res, next) {
 
-    findAllMeals({})
-    .then(function(meals) {
+    Meal.find({})
+    .populate('_creator', 'displayName')
+    .exec(function(err, meals) {
+      if (err) { throw 'Err getting meals: ' + err }
+
       var available = meals.filter(function(meal) {
-        return meal.date_available < new Date();
+        return meal.date_available > new Date();
       })
+      console.log(available);
       res.status(200).send(available);
     })
-    .fail(function(error) {
-      res.sendStatus(500);
-    });
   },
 
   createMeal: function(req, res, next) {
@@ -49,20 +52,24 @@ module.exports = {
     //   });
 
     //   form.on('close', function() {
-
-        createMeal({
-          imgUrl: req.body.imgUrl, // files.path[0],
-          description: req.body.decription, // fields.description[0],
-          title: req.body.title, // fields.title[0],
-          ingredients: req.body.ingredients, // fields.ingredients[0],
-          _creator: req.body.creator, // fields.creator[0],
-          date_available: req.body.date_available, // fields.date_available[0],
-          portions: req.body.portions, // fields.portions[0],
-          tags: req.body.tags // fields.tags[0]
+        User.findOne({ username: req.username })
+        .then(function(user) {
+          console.log(user);
+          createMeal({
+            imgUrl: req.body.imgUrl, // files.path[0],
+            description: req.body.decription, // fields.description[0],
+            title: req.body.title, // fields.title[0],
+            ingredients: req.body.ingredients, // fields.ingredients[0],
+            _creator: user._id, // fields.creator[0],
+            date_available: req.body.date_available, // fields.date_available[0],
+            portions: req.body.portions, // fields.portions[0],
+            tags: req.body.tags // fields.tags[0]
+          })
+          .then(function(meal) {
+            res.sendStatus(201);
+          });
         })
-        .then(function(meal) {
-          res.sendStatus(201);
-        });
+
     //   });
     // });
   },
@@ -120,48 +127,61 @@ module.exports = {
       }
     };
 
-    Meal.find({ creator: user_id })
-    .then(function(meals) {
-      meals.forEach(function(meal) {
-        if (meal.date_available > date) {
-          userMeals.created.current.push(meal);
-        } else {
-          userMeals.created.past.push(meal);
-        }
-      });
-    })
-    .then(function() {
-      Meal.find({ consumers: user_id })
+    User.find({ username: req.username})
+    .then(function(user) {
+      Meal.find({ creator: user._id })
       .then(function(meals) {
         meals.forEach(function(meal) {
           if (meal.date_available > date) {
-            userMeals.eating.current.push(meal);
+            userMeals.created.current.push(meal);
           } else {
-            userMeals.eating.past.push(meal);
+            userMeals.created.past.push(meal);
           }
         });
-        res.status(200).send(userMeals);
+      })
+      .then(function() {
+        Meal.find({ consumers: user_id })
+        .then(function(meals) {
+          meals.forEach(function(meal) {
+            if (meal.date_available > date) {
+              userMeals.eating.current.push(meal);
+            } else {
+              userMeals.eating.past.push(meal);
+            }
+          });
+          res.status(200).send(userMeals);
+        });
       });
-    });
+    })
+
 
   },
 
   addMealToUser: function(req, res, next) {
     // adds a selected meal the user's list of meals
-    var meal_id = req.params.mid;
-    var user_id = req.userId;
+    var meal_id = req.params.id;
+    var username = req.username;
+    console.log('Meal Id: ', meal_id)
+    console.log('Username: ', username);
 
-    Meal.findById(meal_id, function(err, meal) {
-      if (err) { throw 'There was an error in adding this meal to your meals: ' + err; }
-      if (meal) {
-        meal.consumers.push(user_id);
-        post.save(function() {
-          res.sendStatus(200);
-        })
-      } else {
-        res.sendStatus(404);
-      }
+    User.findOne({ username: username })
+    .then(function(user) {
+      console.log(user);
+      Meal.findById(meal_id, function(err, meal) {
+        console.log('Meal: ', meal);
+        console.log('Err: ', err);
+        if (err) { throw 'There was an error in adding this meal to your meals: ' + err; }
+        if (meal) {
+          meal.consumers.push(user._id);
+          post.save(function() {
+            res.sendStatus(200);
+          })
+        } else {
+          res.sendStatus(404);
+        }
+      })
     })
+
 
   },
 
