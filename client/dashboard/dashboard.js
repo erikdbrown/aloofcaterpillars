@@ -1,20 +1,15 @@
-angular.module('dashboard', [])
+angular.module('dashboard', ['ngMaterial', 'ngMessages'])
 
-.controller('dashController', function() {
-  User.getUser(uid)
-  .then(function(user) {
-    $scope.tokenBalance = user.foodTokens;
-    return;
-  })
-  .then(function() {
-    return User.getMeals(uid);
-  })
+.controller('dashController', function(Users) {
+  $scope.tokenBalance = Users.getBalance();
+
+  Users.getMeals()
   .then(function(meals) {
     if (meals.eating.current.length) {
       $scope.nextMeal = meals.eating.current[0];
     } else {
       $scope.nextMeal = {
-        imgUrl: '' // need address of default image
+        imgUrl: '', // need address of default image
         title: 'We don\'t know yet!',
         creator: 'a friend',
         date_available: 'Sometime soon, we hope'
@@ -25,9 +20,9 @@ angular.module('dashboard', [])
       $scope.nextOffer = meals.created.current[0];
     } else {
       $scope.nextOffer = {
-        imgUrl: '' // need address of default image
+        imgUrl: '', // need address of default image
         title: 'Share a meal with someone',
-        date_available: 'Sometime soon, we hope'
+        date_available: 'Sometime soon, we hope',
         portions: 'Lots!'
       };
     }
