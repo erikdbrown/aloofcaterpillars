@@ -91,12 +91,13 @@ module.exports = {
         })
       }
     })
-    // .then(function(user) {
-    //   var token = jwt.encode(user, 'secret');
-    //   //res.redirect('/browse');
-    //   res.json({token: token});
-    //   res.status(200).send({ token: token })
-    // }); 
+    .then(function(user) {
+      var token = jwt.encode(user, 'hrPenguins');
+      res.json({
+        token: token, username: req.body.username
+      });
+      res.redirect('/browse');
+    }); 
   },
 
   getUser: function(req, res, next) {
