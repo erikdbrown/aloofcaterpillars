@@ -18,8 +18,8 @@ module.exports = function(app, express) {
   // creating, retreiving, and removing meals
   app.get('/boorish/meals', helper.decode, mealController.allAvailableMeals); // get all meals
   app.post('/boorish/meals', helper.decode, mealController.createMeal); // create a new meal
-  app.put('/boorish/meals/:mid', helper.decode, mealController.editMeal); // edit a new meal
-  app.delete('/boorish/meals/:mid', helper.decode, mealController.deleteMeal) // TODO: write controller to delete meal
+  app.put('/boorish/meals/:id', helper.decode, mealController.editMeal); // edit a new meal
+  app.delete('/boorish/meals/:id', helper.decode, mealController.deleteMeal) // TODO: write controller to delete meal
 
   // adding, retrieving, and deleting a user's meals
   app.get('/boorish/meals/users/', helper.decode, mealController.userMeals) // TODO: write a controller to GET all of a user's meals
