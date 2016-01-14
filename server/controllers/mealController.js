@@ -90,38 +90,34 @@ module.exports = {
     var username = req.username; // TODO: return to taking from the token.
 
     User.findOne({ username: username })
-    .then(function(user) {
-      if (!user) {
+    .then(function(creator) {
+      console.log('This is the creator: ', creator);
+      if (!creator) {
         console.log('couldn\'t find user')
         res.sendStatus(404);
       }
-      Meal.find({ _id: meal_id, _creator: user._id })
+      Meal.findOne({ _id: meal_id, _creator: creator._id })
       .then(function(meal) {
         console.log('This is the meal requested to be deleted: ', meal);
         if (!meal) {
           res.sendStatus(404);
         }
-        if (meal._creator !== user._id) {
-          res.sendStatus(401);
+        if (meal.consumers.length === 0) {
+          meal.remove();
+          res.sendStatus(200);
         } else {
-          if (meal.consumers.length === 0) {
+          var howMany = meal.consumers.length;
+          User.update({ _id: { $in: meal.consumers } }, { $inc: { foodTokens : + 1 } } , function(err) { // http://stackoverflow.com/questions/8303900/mongodb-mongoose-findmany-find-all-documents-with-ids-listed-in-array
+            if (err) { throw 'There was an error updating tokens of consumers after deleting a meal: ' + err; }
+          });
+          User.update(creator, { $inc: { foodTokens : -howMany } }, function(err) {
+            if (err) { throw 'There was an error updating tokens on the creator after deleting a meal: ' + err; }
             meal.remove();
             res.sendStatus(200);
-          } else {
-            User.find({ _id: { $in: meal.consumers } }, function(users) { // http://stackoverflow.com/questions/8303900/mongodb-mongoose-findmany-find-all-documents-with-ids-listed-in-array
-              users.forEach(function(user) {
-                User.update(user, { $inc: { foodTokens : + 1 } }, function(err) {
-                  if (err) { throw 'There was an error updating tokens after deleting a meal: ' + err; }
-                })
-              })
-              meal.remove();
-            });
-          }
+          });
         }
       });
-      
-    })
-
+    });
   },
 
   userMeals: function(req, res, next) {
