@@ -3,12 +3,9 @@ var User = require('../models/userModel.js');
 var session = require('express-session');
 var jwt = require('jwt-simple');
 
-//findone is the actual mongoose method, and it is being called on the User model provided as the second arg. 
 var findUser = Q.nbind(User.findOne, User);
-// create user is a method that uses the create mongoose method to instantiate a new User model
 var createUser = Q.nbind(User.create, User);
 
-//export methods that utilize the Q methods above. 
 module.exports = {
   
   create: function(req, res, next) {
@@ -63,8 +60,6 @@ module.exports = {
       }
     })
   },
-
-  // eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfX3YiOjAsInNhbHQiOiIkMmEkMTAkcnNyN0xiaE55MHZlVWovWEM1NC5wZSIsInBhc3N3b3JkIjoiJDJhJDEwJGVibzZ0NTJnOGd3aW5CeVBwYmVoMC5GSlFTejcxa2ovZC9ZYlFhNGRBQmZMM3E2QVVUVC5xIiwiX2lkIjoiNTY5NzQ2ZjZmMzQ4OGI3ZTgwY2ExMTY4IiwicmF0aW5nIjowLCJmb29kVG9rZW5zIjowfQ.kYjdLwVM9zs7kvlm8b3QyPgPBmOPBNxcfPlIzjMsk0c
 
   getUser: function(req, res, next) {
     // returns a user from the database
