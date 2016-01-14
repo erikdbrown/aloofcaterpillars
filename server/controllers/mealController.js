@@ -145,7 +145,7 @@ module.exports = {
         .populate('consumers', 'displayName')
         .exec(function(err, meals) {
           if (err) { throw 'There was an error fetching a user\'s eating meals: ' + err }
-          if (meals) {
+          if (meals.length > 0) {
             userMeals.consumed = {};
             meals.forEach(function(meal) {
               if (meal.date_available > date) {
@@ -157,6 +157,8 @@ module.exports = {
               }
             });
             res.status(200).send(userMeals);
+          } else {
+            res.sendStatus(404);
           }
         });
       });
@@ -192,23 +194,28 @@ module.exports = {
 
   deleteMealFromUser: function(req, res, next) {
     // removes a meal from the user's list of meals
-    var meal_id = req.params.mid;
-    var user_id = req.params.uid;
+    var meal_id = req.params.id;
+    var username = req.username;
 
-    Meal.find({
-      _id: ObjectId(meal_id),
-      consumers: ObjectId(user_id)
+    User.findOne({ username: username })
+    .then(function(user) {
+      Meal.findOne({
+        _id: meal_id,
+        consumers: user._id
+      })
+      .then(function(meal) {
+        if (meal) {
+          console.log('Meal: ', meal)
+          console.log('Consumers Array: ', meal.consumers)
+          meal.consumers.pull(user._id);
+          meal.save(function() {
+            res.sendStatus(200);
+          })
+        } else {
+          res.sendStatus(404);
+        }
+      })
     })
-    .exec(function(err, meal) {
-      if (err) { throw 'There was an error when deleting this meal: ' + err; }
-      if (meal) {
-        meal.cosumers.pull(ObjectId(_id));
-        post.save(function() {
-          res.sendStatus(200);
-        })
-      } else {
-        res.sendStatus(404);
-      }
-    })
+
   }
 };
