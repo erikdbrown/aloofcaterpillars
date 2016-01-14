@@ -167,18 +167,15 @@ module.exports = {
     User.findOne({ username: username })
     .then(function(user) {
       console.log(user);
-      Meal.findById(meal_id, function(err, meal) {
-        console.log('Meal: ', meal);
-        console.log('Err: ', err);
-        if (err) { throw 'There was an error in adding this meal to your meals: ' + err; }
-        if (meal) {
-          meal.consumers.push(user._id);
-          post.save(function() {
-            res.sendStatus(200);
-          })
-        } else {
+      Meal.findOne({ _id: meal_id })
+      .then(function(meal) {
+        if (!meal) {
           res.sendStatus(404);
         }
+        meal.consumers.push(user._id);
+        meal.save(function() {
+          res.sendStatus(200);
+        })
       })
     })
 
