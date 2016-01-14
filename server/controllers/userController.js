@@ -12,6 +12,10 @@ var createUser = Q.nbind(User.create, User);
 module.exports = {
   
   create: function(req, res, next) {
+    // var username = req.body.username;
+    // var password = req.body.password;
+    // var displayName = req.body.displayName;
+
     findUser({ username: req.body.username })
 	  .then(function (user) {
 	    console.log('user is', user)
@@ -20,10 +24,17 @@ module.exports = {
 		    next(new Error('User already in the database'));
 		  } else {
 	      console.log('we created a user')
-        return createUser({
+        createUser({
 		      username: req.body.username,
-		      password: req.body.password
-		    });
+		      password: req.body.password,
+          displayName: req.body.displayName
+		    })
+        .then(function(user) {
+          if (!user) { console.log('Something bad happened.') }
+          else {
+            res.sendStatus(200);
+          }
+        })
 		  }
 	  });
   }, 
@@ -31,6 +42,7 @@ module.exports = {
   signin: function(req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
+    var displayName = req.body.displayName;
     //call findUser, which is the mongoose method findone, which will query for the user from post req
     console.log(req.body);
     findUser({
@@ -56,13 +68,15 @@ module.exports = {
         } else {
           console.log('Less congrats. You are redirected')
           //redirect to login
-          res.redirect('/signin'); 
+          // res.redirect('/signin'); 
+          res.sendStatus(200);
         }
       //user not found
       } else {
         console.log('Bruh. Sign up')
         //redirect to sign up
-        res.redirect('/register'); 
+        // res.redirect('/register'); 
+        res.sendStatus(401);
       }
     });
   }, 
@@ -72,6 +86,7 @@ module.exports = {
     var username = req.body.username;
     //save input password
     var password = req.body.password;
+    var displayName = req.body.displayName;
     //create a new user with the request username and password
     findUser({username: username})
     .then(function(user) {
@@ -81,17 +96,22 @@ module.exports = {
         next(new Error('username already exists!'));
       } else {
         //otherwise create a user with the provided username and password
-        return createUser({
+        createUser({
           username: username,
-          password: password
-        });
+          password: password,
+          displayName: displayName
+        })
+        .then(function(newUser) {
+          res.sendStatus(200);
+        })
       }
     })
-    .then(function(user) {
-      var token = jwt.encode(user, 'secret');
-      //res.redirect('/browse');
-      res.json({token: token});
-    }); 
+    // .then(function(user) {
+    //   var token = jwt.encode(user, 'secret');
+    //   //res.redirect('/browse');
+    //   res.json({token: token});
+    //   res.status(200).send({ token: token })
+    // }); 
   },
 
   getUser: function(req, res, next) {
