@@ -51,7 +51,7 @@ module.exports = {
             if (found) {
               var token = jwt.encode(user.username, 'hrPenguins');
               res.json({
-                token: token, username: user.username
+                token: token
               });
             } else {
               res.sendStatus(401);
