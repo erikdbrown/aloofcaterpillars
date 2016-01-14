@@ -9,7 +9,7 @@ var helper = require('./helpers.js');
 
 module.exports = function(app, express) {
   // retrieving and deleting a specific user
-  app.get('/boorish/users/:id', helper.decode, userController.getUser); // retrieve a user
+  app.get('/boorish/users/', helper.decode, userController.getUser); // retrieve a user
   app.post('/boorish/users', userController.create); // create a new user
   app.delete('/boorish/users/', helper.decode, userController.removeUser); // remove a user
   app.post('/boorish/users/signin', userController.signin); // sign in a user
