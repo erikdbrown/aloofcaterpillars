@@ -9,11 +9,11 @@ var helper = require('./helpers.js');
 
 module.exports = function(app, express) {
   // retrieving and deleting a specific user
-  app.get('/boorish/users/', helper.decode, userController.getUser); // retrieve a user
-  app.post('/boorish/users', userController.create); // create a new user
-  app.delete('/boorish/users/', helper.decode, userController.removeUser); // remove a user
+  app.get('/boorish/users/', helper.decode, userController.getUser); // retrieves a user
+  app.post('/boorish/users', userController.create); // creates a new user
+  app.delete('/boorish/users/', helper.decode, userController.removeUser); // TODO: Remove a user and delete their created meals
   app.post('/boorish/users/signin', userController.signin); // sign in a user
-  app.get('/boorish/users/signedin', userController.checkAuth); // check user authorization
+  app.get('/boorish/users/signedin', userController.checkAuth); // TODO: check user authorization
 
   // creating, retreiving, and removing meals
   app.get('/boorish/meals', helper.decode, mealController.allAvailableMeals); // get all meals
