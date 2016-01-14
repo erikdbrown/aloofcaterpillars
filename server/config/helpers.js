@@ -12,12 +12,12 @@ module.exports = {
     try {
       // decode token and attach user to the request
       // for use inside our controllers
-      userId = jwt.decode(token, 'secret');
-      req.userId = userId;
+      // userId = jwt.decode(token, 'secret');
+      req.userId = token;
       next();
     } catch (error) {
       return next(error);
     }
   }
-  
+
 }
