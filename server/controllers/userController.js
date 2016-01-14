@@ -28,17 +28,11 @@ module.exports = {
       }
     })
     .then(function(user) {
-      var token = jwt.encode(user, 'hrPenguins');
+      var token = jwt.encode(user.username, 'hrPenguins');
       res.json({
-        token: token, username: req.body.username
+        token: token, username: user.username
       });
     })
-    // .then(function(user) {
-    //   if (!user) { console.log('Something bad happened.') }
-    //   else {
-    //     res.sendStatus(200);
-    //   }
-    // })
     .fail(function (error) {
       next(error);
     });
@@ -58,9 +52,9 @@ module.exports = {
         return user.comparePassword(password)
           .then(function(found) {
             if (found) {
-              var token = jwt.encode(user, 'hrPenguins');
+              var token = jwt.encode(user.username, 'hrPenguins');
               res.json({
-                token: token, username: req.body.username
+                token: token, username: user.username
               });
             } else {
               res.sendStatus(401);
@@ -68,44 +62,27 @@ module.exports = {
           })
       }
     })
-  }, 
-
-  newUser: function(req, res, next) {
-    //save input username
-    var username = req.body.username;
-    //save input password
-    var password = req.body.password;
-    var displayName = req.body.displayName;
-    //create a new user with the request username and password
-    findUser({username: username})
-    .then(function(user) {
-      //if user exists...
-      if(user) {
-        //...throw error as username already stored in db. 
-        next(new Error('username already exists!'));
-      } else {
-        //otherwise create a user with the provided username and password
-        createUser({
-          username: username,
-          password: password,
-          displayName: displayName
-        })
-        // .then(function(newUser) {
-        //   res.sendStatus(200);
-        // })
-      }
-    })
-    .then(function(user) {
-      var token = jwt.encode(user, 'hrPenguins');
-      res.json({
-        token: token, username: req.body.username
-      });
-      // res.redirect('/browse');
-    }); 
   },
+
+  // eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfX3YiOjAsInNhbHQiOiIkMmEkMTAkcnNyN0xiaE55MHZlVWovWEM1NC5wZSIsInBhc3N3b3JkIjoiJDJhJDEwJGVibzZ0NTJnOGd3aW5CeVBwYmVoMC5GSlFTejcxa2ovZC9ZYlFhNGRBQmZMM3E2QVVUVC5xIiwiX2lkIjoiNTY5NzQ2ZjZmMzQ4OGI3ZTgwY2ExMTY4IiwicmF0aW5nIjowLCJmb29kVG9rZW5zIjowfQ.kYjdLwVM9zs7kvlm8b3QyPgPBmOPBNxcfPlIzjMsk0c
 
   getUser: function(req, res, next) {
     // returns a user from the database
+    var username = req.username;
+    console.log(username);
+    findUser({ username: username })
+    .then(function(user) {
+      if (!user) {
+        res.sendStatus(404);
+      } else {
+        res.json({
+          username: user.username,
+          foodTokens: user.foodTokens,
+          displayName: user.displayName,
+          rating: user.rating
+        })
+      }
+    })
   },
 
   removeUser: function(req, res, next) {
