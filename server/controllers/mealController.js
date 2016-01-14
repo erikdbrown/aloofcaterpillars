@@ -15,6 +15,7 @@ var readFile = Q.nbind(fs.readFile, fs);
 module.exports = {
 
   allAvailableMeals: function(req, res, next) {
+
     findAllMeals({})
     .then(function(meals) {
       var available = meals.filter(function(meal) {
@@ -67,14 +68,39 @@ module.exports = {
     });
   },
 
-  editMeal: function(req, res, next) {
-
+  editMeal: function(req, res, next) { // TODO: Use update and update
+    if (!req.userId) {
+      res.sendStatus(401);
+    } else {
+      var mealID = req.params.mid
+    }
   },
 
   deleteMeal: function(req, res, next) {
 
-    var token = req.headers['x-access-token'];
     var meal_id = req.params.mid;
+    var user_id = req.userId;
+    Meal.find({ _id: ObjectId(meal_id)})
+    .then(function(err, meal) {
+      if (err) { throw 'There was an error retrieving your deletion request'; }
+      if (meal.creator !== user_id) {
+        res.sendStatus(401).('You are not authorized to delete this meal.')
+      } else {
+        if (meal.consumers.length === 0) {
+          meal.remove()
+        } else {
+          User.find(meal.consumers, function(err, users) { // TODO: can you pass in an array of objects in to .find?
+            if (err) { throw 'There was an error retreiving users that were consumers of the deleted meal: ' + err ; }
+            users.forEach(function(user) {
+              User.update(user, { $inc: { foodTokens : +1 } }, function(err) {
+                if (err) { throw 'There was an error updating tokens after deleting a meal: ' + err }
+              })
+            })
+            meal.remove();
+          })
+        }
+      }
+    })
 
   },
 
