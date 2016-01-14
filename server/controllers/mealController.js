@@ -116,40 +116,48 @@ module.exports = {
 
     var user_id = req.userId;
     var date = new Date();
-    var userMeals = {
-      created: {
-        current: [],
-        past: []
-      },
-      eating: {
-        current: [],
-        past: []
-      }
-    };
+    var userMeals = {};
 
-    User.find({ username: req.username})
+    User.findOne({ username: req.username})
     .then(function(user) {
+      console.log('User: ', user)
       Meal.find({ creator: user._id })
-      .then(function(meals) {
-        meals.forEach(function(meal) {
-          if (meal.date_available > date) {
-            userMeals.created.current.push(meal);
-          } else {
-            userMeals.created.past.push(meal);
-          }
-        });
-      })
-      .then(function() {
-        Meal.find({ consumers: user_id })
-        .then(function(meals) {
+      .populate('_creator', 'displayName')
+      .populate('consumers', 'displayName')
+      .exec(function(err, meals) {
+        if (err) { throw 'There was an error fetching a user\'s created meals: ' + err }
+        if (meals.length > 0) {
+          userMeals.created = {};
           meals.forEach(function(meal) {
             if (meal.date_available > date) {
-              userMeals.eating.current.push(meal);
+              userMeals.created.current = userMeals.created.current || []; 
+              userMeals.created.current.push(meal);
             } else {
-              userMeals.eating.past.push(meal);
+              userMeals.created.past = userMeals.created.past || [];
+              userMeals.created.past.push(meal);
             }
           });
-          res.status(200).send(userMeals);
+        }
+      })
+      .then(function() {
+        Meal.find({ consumers: user._id })
+        .populate('_creator', 'displayName')
+        .populate('consumers', 'displayName')
+        .exec(function(err, meals) {
+          if (err) { throw 'There was an error fetching a user\'s eating meals: ' + err }
+          if (meals) {
+            userMeals.consumed = {};
+            meals.forEach(function(meal) {
+              if (meal.date_available > date) {
+                userMeals.consumed.current = userMeals.consumed.current || []; 
+                userMeals.consumed.current.push(meal);
+              } else {
+                userMeals.consumed.past = userMeals.consumed.past || []; 
+                userMeals.consumed.past.push(meal);
+              }
+            });
+            res.status(200).send(userMeals);
+          }
         });
       });
     })
