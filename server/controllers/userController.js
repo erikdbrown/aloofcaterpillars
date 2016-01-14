@@ -28,13 +28,17 @@ module.exports = {
       }
     })
     .then(function(user) {
-      console.log('user is', user)
-      console.log('we created a user')
-      if (!user) { console.log('Something bad happened.') }
-      else {
-        res.sendStatus(200);
-      }
+      var token = jwt.encode(user, 'hrPenguins');
+      res.json({
+        token: token, username: req.body.username
+      });
     })
+    // .then(function(user) {
+    //   if (!user) { console.log('Something bad happened.') }
+    //   else {
+    //     res.sendStatus(200);
+    //   }
+    // })
     .fail(function (error) {
       next(error);
     });
@@ -86,9 +90,9 @@ module.exports = {
           password: password,
           displayName: displayName
         })
-        .then(function(newUser) {
-          res.sendStatus(200);
-        })
+        // .then(function(newUser) {
+        //   res.sendStatus(200);
+        // })
       }
     })
     .then(function(user) {
@@ -96,7 +100,7 @@ module.exports = {
       res.json({
         token: token, username: req.body.username
       });
-      res.redirect('/browse');
+      // res.redirect('/browse');
     }); 
   },
 
