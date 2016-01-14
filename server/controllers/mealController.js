@@ -55,7 +55,7 @@ module.exports = {
           description: fields.description[0],
           title: fields.title[0],
           ingredients: fields.ingredients[0],
-          creator: '', /////
+          creator: fields.creator[0],
           date_available: fields.date_available[0],
           portions: fields.portions[0],
           tags: fields.tags[0]
@@ -72,17 +72,90 @@ module.exports = {
   },
 
   deleteMeal: function(req, res, next) {
+
+    var token = req.headers['x-access-token'];
+    var meal_id = req.params.mid;
+
   },
 
   userMeals: function(req, res, next) {
-    // retrieves a list of meals that are owned or subscribed by the user
+    var date = new Date();
+    var userMeals = {
+      created: {
+        current: [],
+        past: []
+      },
+      eating: {
+        current: [],
+        past: []
+      }
+    };
+
+    Meal.find({ creator: ObjectID(_id) })
+    .then(function(meals) {
+      meals.forEach(function(meal) {
+        if (meal.date_available > date) {
+          userMeals.created.current.push(meal);
+        } else {
+          userMeals.created.past.push(meal);
+        }
+      });
+    })
+    .then(function() {
+      Meal.find({ consumers: Object(_id) })
+      .then(function(meals) {
+        meals.forEach(function(meal) {
+          if (meal.date_available > date) {
+            userMeals.eating.current.push(meal);
+          } else {
+            userMeals.eating.past.push(meal);
+          }
+        });
+        res.status(200).send(userMeals);
+      });
+    });
+
   },
 
   addMealToUser: function(req, res, next) {
     // adds a selected meal the user's list of meals
+    var meal_id = req.params.mid;
+    var user_id = req.params.uid;
+
+    Meal.findById(meal_id, function(err, meal) {
+      if (err) { throw 'There was an error in adding this meal'; }
+      if (meal) {
+        meal.consumers.push(user_id);
+        post.save(function() {
+          res.sendStatus(200);
+        })
+      } else {
+        res.sendStatus(404);
+      }
+    })
+
   },
 
   deleteMealFromUser: function(req, res, next) {
     // removes a meal from the user's list of meals
+    var meal_id = req.params.mid;
+    var user_id = req.params.uid;
+
+    Meal.find({
+      _id: ObjectId(meal_id),
+      consumers: ObjectId(user_id)
+    })
+    .exec(function(err, meal) {
+      if (err) { throw 'There was an error when deleting this meal'; }
+      if (meal) {
+        meal.cosumers.pull(ObjectId(_id));
+        post.save(function() {
+          res.sendStatus(200);
+        })
+      } else {
+        res.sendStatus(404);
+      }
+    })
+
   }
 };
