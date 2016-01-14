@@ -49,7 +49,6 @@ module.exports = {
       });
 
       form.on('close', function() {
-        console.log('Upload completed!');
 
         createMeal({
           imgUrl: files.path[0],
@@ -79,7 +78,7 @@ module.exports = {
   deleteMeal: function(req, res, next) {
 
     var meal_id = req.params.mid;
-    var user_id = req.params.uid; // TODO: return to taking from the token.
+    var user_id = req.userId; // TODO: return to taking from the token.
     Meal.findOne({ _id: meal_id })
     .then(function(meal) {
       console.log('This is the meal requested to be deleted: ', meal);
