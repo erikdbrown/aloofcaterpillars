@@ -16,10 +16,10 @@ module.exports = function(app, express) {
   app.get('/boorish/users/signedin', userController.checkAuth); // check user authorization
 
   // creating, retreiving, and removing meals
-  app.get('/boorish/meals', helper.decode, mealController.allAvailableMeals); // get all meals
-  app.post('/boorish/meals', helper.decode, mealController.createMeal); // create a new meal
+  app.get('/boorish/meals', mealController.allAvailableMeals); // get all meals
+  app.post('/boorish/meals', mealController.createMeal); // create a new meal
   app.put('/boorish/meals/:mid', helper.decode, mealController.editMeal); // edit a new meal
-  app.delete('/boorish/meals/:mid', helper.decode, mealController.deleteMeal) // TODO: write controller to delete meal
+  app.delete('/boorish/meals/:mid/:uid', mealController.deleteMeal) // TODO: write controller to delete meal
 
   // adding, retrieving, and deleting a user's meals
   app.get('/boorish/meals/users/:uid', helper.decode, mealController.userMeals) // TODO: write a controller to GET all of a user's meals
