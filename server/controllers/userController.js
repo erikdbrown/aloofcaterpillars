@@ -12,73 +12,58 @@ var createUser = Q.nbind(User.create, User);
 module.exports = {
   
   create: function(req, res, next) {
-    // var username = req.body.username;
-    // var password = req.body.password;
-    // var displayName = req.body.displayName;
+    console.log(req.body);
 
     findUser({ username: req.body.username })
-	  .then(function (user) {
-	    console.log('user is', user)
+    .then(function (user) {
       if (user) {
-	      //should refactor this later not to return an error but to check the session. 
-		    next(new Error('User already in the database'));
-		  } else {
-	      console.log('we created a user')
-        createUser({
-		      username: req.body.username,
-		      password: req.body.password,
+        //should refactor this later not to return an error but to check the session. 
+        next(new Error('User already in the database'));
+      } else {
+        return createUser({
+          username: req.body.username,
+          password: req.body.password,
           displayName: req.body.displayName
-		    })
-        .then(function(user) {
-          if (!user) { console.log('Something bad happened.') }
-          else {
-            res.sendStatus(200);
-          }
-        })
-		  }
-	  });
+        });
+      }
+    })
+    .then(function(user) {
+      console.log('user is', user)
+      console.log('we created a user')
+      if (!user) { console.log('Something bad happened.') }
+      else {
+        res.sendStatus(200);
+      }
+    })
+    .fail(function (error) {
+      next(error);
+    });
   }, 
 
   signin: function(req, res, next) {
-    var username = req.body.username;
     var password = req.body.password;
-    var displayName = req.body.displayName;
     //call findUser, which is the mongoose method findone, which will query for the user from post req
-    console.log(req.body);
     findUser({
-      username: username
+      username: req.body.username
     })
     //when done, if found...
     .then(function(user) {
-      if (user) {
-        //...user exists. Check their password.
-        //save database password
-        var dbPassword = user.get('password');
-        //if input password equals db password
-        if (dbPassword === password) {
-          console.log('Congrats. You got in')
-          // create token to send back for auth
-          var token = jwt.encode(user, 'secret');
-          //the big question here is exactly how to handle a redirect. know that res.redirect and res.json end
-          //a response, so redirection may have to be handled on client side. 
-          res.json({
-            token: token, username: username
-          });
-        //password does not match
-        } else {
-          console.log('Less congrats. You are redirected')
-          //redirect to login
-          // res.redirect('/signin'); 
-          res.sendStatus(200);
-        }
-      //user not found
-      } else {
-        console.log('Bruh. Sign up')
-        //redirect to sign up
-        // res.redirect('/register'); 
+      if (!user) {
         res.sendStatus(401);
+      } else {
+        return user.comparePassword(password)
+          .then(function(found) {
+            if (found) {
+              var token = jwt.encode(user, 'hrPenguins');
+              res.json({
+                token: token, username: req.body.username
+              });
+            } else {
+              res.sendStatus(401);
+            }
+          })
       }
-    });
+    })
   }, 
 
   newUser: function(req, res, next) {
