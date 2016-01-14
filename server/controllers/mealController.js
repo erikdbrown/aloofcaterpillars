@@ -156,10 +156,8 @@ module.exports = {
                 userMeals.consumed.past.push(meal);
               }
             });
-            res.status(200).send(userMeals);
-          } else {
-            res.sendStatus(404);
           }
+          res.status(200).send(userMeals);
         });
       });
     })
