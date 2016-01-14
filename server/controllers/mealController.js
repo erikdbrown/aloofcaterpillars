@@ -29,42 +29,42 @@ module.exports = {
   },
 
   createMeal: function(req, res, next) {
-    var form = new multiparty.Form({
-      autoFiles: true,
-      uploadDir: '../images/'
-    });
+    // var form = new multiparty.Form({
+    //   autoFiles: true,
+    //   uploadDir: '../images/'
+    // });
 
-    form.on('error', function(err) {
-      console.log('Error parsing form: ' + err.stack);
-    });
+    // form.on('error', function(err) {
+    //   console.log('Error parsing form: ' + err.stack);
+    // });
 
-    form.parse(req, function(err, fields, files) {
+    // form.parse(req, function(err, fields, files) {
 
-      Object.keys(fields).forEach(function(name) {
-        console.log('Received field named ' + name);
-      });
+    //   Object.keys(fields).forEach(function(name) {
+    //     console.log('Received field named ' + name);
+    //   });
 
-      Object.keys(files).forEach(function(name) {
-        console.log('Received file named ' + name);
-      });
+    //   Object.keys(files).forEach(function(name) {
+    //     console.log('Received file named ' + name);
+    //   });
 
-      form.on('close', function() {
+    //   form.on('close', function() {
 
         createMeal({
-          imgUrl: files.path[0],
-          description: fields.description[0],
-          title: fields.title[0],
-          ingredients: fields.ingredients[0],
-          _creator: fields.creator[0],
-          date_available: fields.date_available[0],
-          portions: fields.portions[0],
-          tags: fields.tags[0]
+          imgUrl: req.body.imgUrl, // files.path[0],
+          description: req.body.decription, // fields.description[0],
+          title: req.body.title, // fields.title[0],
+          ingredients: req.body.ingredients, // fields.ingredients[0],
+          _creator: req.body.creator, // fields.creator[0],
+          date_available: req.body.date_available, // fields.date_available[0],
+          portions: req.body.portions, // fields.portions[0],
+          tags: req.body.tags // fields.tags[0]
         })
         .then(function(meal) {
           res.sendStatus(201);
         });
-      });
-    });
+    //   });
+    // });
   },
 
   editMeal: function(req, res, next) { // TODO: Use update and update
