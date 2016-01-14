@@ -56,12 +56,12 @@ module.exports = {
           description: fields.description[0],
           title: fields.title[0],
           ingredients: fields.ingredients[0],
-          creator: fields.creator[0],
+          _creator: fields.creator[0],
           date_available: fields.date_available[0],
           portions: fields.portions[0],
           tags: fields.tags[0]
         })
-        .then(function() {
+        .then(function(meal) {
           res.sendStatus(201);
         });
       });
@@ -79,32 +79,36 @@ module.exports = {
   deleteMeal: function(req, res, next) {
 
     var meal_id = req.params.mid;
-    var user_id = req.userId;
-    Meal.find({ _id: ObjectId(meal_id)})
-    .then(function(err, meal) {
-      if (err) { throw 'There was an error retrieving your deletion request'; }
-      if (meal.creator !== user_id) {
-        res.sendStatus(401).('You are not authorized to delete this meal.')
+    var user_id = req.params.uid; // TODO: return to taking from the token.
+    Meal.findOne({ _id: meal_id })
+    .then(function(meal) {
+      console.log('This is the meal requested to be deleted: ', meal);
+      if (!meal) {
+        res.sendStatus(404);
+      }
+      if (meal._creator !== user_id) {
+        res.sendStatus(401).send('You are not authorized to delete this meal.');
       } else {
         if (meal.consumers.length === 0) {
-          meal.remove()
+          meal.remove();
+          res.sendStatus(200)
         } else {
-          User.find(meal.consumers, function(err, users) { // TODO: can you pass in an array of objects in to .find?
-            if (err) { throw 'There was an error retreiving users that were consumers of the deleted meal: ' + err ; }
+          User.find({ _id: { $in: meal.consumers } }, function(users) { // http://stackoverflow.com/questions/8303900/mongodb-mongoose-findmany-find-all-documents-with-ids-listed-in-array
             users.forEach(function(user) {
               User.update(user, { $inc: { foodTokens : +1 } }, function(err) {
-                if (err) { throw 'There was an error updating tokens after deleting a meal: ' + err }
+                if (err) { throw 'There was an error updating tokens after deleting a meal: ' + err; }
               })
             })
             meal.remove();
-          })
+          });
         }
       }
-    })
-
+    });
   },
 
   userMeals: function(req, res, next) {
+
+    var user_id = req.userId;
     var date = new Date();
     var userMeals = {
       created: {
@@ -117,7 +121,7 @@ module.exports = {
       }
     };
 
-    Meal.find({ creator: ObjectID(_id) })
+    Meal.find({ creator: user_id })
     .then(function(meals) {
       meals.forEach(function(meal) {
         if (meal.date_available > date) {
@@ -128,7 +132,7 @@ module.exports = {
       });
     })
     .then(function() {
-      Meal.find({ consumers: Object(_id) })
+      Meal.find({ consumers: user_id })
       .then(function(meals) {
         meals.forEach(function(meal) {
           if (meal.date_available > date) {
@@ -146,10 +150,10 @@ module.exports = {
   addMealToUser: function(req, res, next) {
     // adds a selected meal the user's list of meals
     var meal_id = req.params.mid;
-    var user_id = req.params.uid;
+    var user_id = req.userId;
 
     Meal.findById(meal_id, function(err, meal) {
-      if (err) { throw 'There was an error in adding this meal'; }
+      if (err) { throw 'There was an error in adding this meal to your meals: ' + err; }
       if (meal) {
         meal.consumers.push(user_id);
         post.save(function() {
@@ -172,7 +176,7 @@ module.exports = {
       consumers: ObjectId(user_id)
     })
     .exec(function(err, meal) {
-      if (err) { throw 'There was an error when deleting this meal'; }
+      if (err) { throw 'There was an error when deleting this meal: ' + err; }
       if (meal) {
         meal.cosumers.pull(ObjectId(_id));
         post.save(function() {
@@ -182,6 +186,5 @@ module.exports = {
         res.sendStatus(404);
       }
     })
-
   }
 };
