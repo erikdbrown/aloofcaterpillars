@@ -6,7 +6,7 @@ var path = require('path');
 var multiparty = require('multiparty');
 var Hashids = require("hashids");
 var hash = new Hashids('hrPenguins');
-var counter = 10;
+var counter = 10000;
 
 
 //findone is the actual mongoose method, and it is being called on the Meal model provided as the second arg. 
@@ -15,7 +15,6 @@ var findMeal = Q.nbind(Meal.findOne, Meal);
 var createMeal = Q.nbind(Meal.create, Meal);
 //method for showing all Meal instances
 var findAllMeals = Q.nbind(Meal.find, Meal);
-var readFile = Q.nbind(fs.readFile, fs);
 
 module.exports = {
 
@@ -56,7 +55,7 @@ module.exports = {
       .then(function(user) {
         console.log(user);
         createMeal({
-          imgUrl: 'server/images/' + uniqPath + '.jpg'
+          imgUrl: 'server/images/' + uniqPath + '.jpg',
           description: fields.description[0], // req.body.description, //
           title: fields.title[0], // req.body.title, //
           ingredients: fields.ingredients[0], // req.body.ingredients, //
