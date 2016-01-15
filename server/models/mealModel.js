@@ -13,7 +13,8 @@ var MealSchema = mongoose.Schema({
   consumers: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Users' } ],  // in query, this will be populated
   date_available: { type: Date, default: Date.now }, // TODO: check that this is correct
   portions: Number,
-  tags: [String], // in query, this will be populated
+  portions_left: Number,
+  tags: [{type: mongoose.Schema.Types.ObjectId, ref: 'Ingredients'}], // in query, this will be populated
   rating: { type: Number, default: 0 } // need to write a 'query with options' http://mongoosejs.com/docs/populate.html
 },
 { 
