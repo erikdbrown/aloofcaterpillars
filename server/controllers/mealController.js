@@ -56,12 +56,12 @@ module.exports = {
         console.log(user);
         createMeal({
           imgUrl: 'server/images/' + uniqPath + '.jpg',
-          description: fields.description[0], // req.body.description, //
-          title: fields.title[0], // req.body.title, //
-          ingredients: fields.ingredients[0], // req.body.ingredients, //
+          description: fields.description[0],
+          title: fields.title[0],
+          ingredients: fields.ingredients[0],
           _creator: user._id,
-          date_available: fields.date_available[0], // req.body.date_available, //
-          portions: fields.portions[0], // req.body.portions, //
+          date_available: fields.date_available[0],
+          portions: fields.portions[0],
           // tags: fields.tags[0] // req.body.tags //
         })
         .then(function(meal) {
