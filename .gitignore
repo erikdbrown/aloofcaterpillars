@@ -1,5 +1,6 @@
 .DS_Store
 **/.DS_Store
+apiKeys.js
 
 # Files that might appear on external disk
 .Spotlight-V100
