@@ -6,7 +6,7 @@ var path = require('path');
 var multiparty = require('multiparty');
 var Hashids = require("hashids");
 var hash = new Hashids('hrPenguins');
-var counter = 10;
+var counter = 10000;
 
 
 //findone is the actual mongoose method, and it is being called on the Meal model provided as the second arg. 
