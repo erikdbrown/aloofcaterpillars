@@ -62,6 +62,7 @@ module.exports = {
           _creator: user._id,
           date_available: fields.date_available[0],
           portions: fields.portions[0],
+          portions_left: fields.portions[0]
           // tags: fields.tags[0] // req.body.tags //
         })
         .then(function(meal) {
