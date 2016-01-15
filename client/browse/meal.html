@@ -29,5 +29,13 @@
     <md-card-content>
       <h2>{{ meal.description }}</h2>
     </md-card-content>
+    <md-card-actions layout="row" layout-align="end">
+      <md-button ng-click="requestMeal()">
+       Request
+      </md-button>
+      <md-button ng-click="close()">
+       Cancel
+      </md-button>
+    </md-card-actions> 
   </md-card>
 </md-dialog>
