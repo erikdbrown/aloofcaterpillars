@@ -80,7 +80,7 @@ module.exports = {
     Meal.update({
       _id: meal_id
     }, updates, function() {
-      res.sendStatus(200)
+      res.sendStatus(200);
     });
   },
 
