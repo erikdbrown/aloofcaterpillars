@@ -15,7 +15,6 @@ var findMeal = Q.nbind(Meal.findOne, Meal);
 var createMeal = Q.nbind(Meal.create, Meal);
 //method for showing all Meal instances
 var findAllMeals = Q.nbind(Meal.find, Meal);
-var readFile = Q.nbind(fs.readFile, fs);
 
 module.exports = {
 
@@ -56,7 +55,7 @@ module.exports = {
       .then(function(user) {
         console.log(user);
         createMeal({
-          imgUrl: 'server/images/' + uniqPath + '.jpg'
+          imgUrl: 'server/images/' + uniqPath + '.jpg',
           description: fields.description[0], // req.body.description, //
           title: fields.title[0], // req.body.title, //
           ingredients: fields.ingredients[0], // req.body.ingredients, //
