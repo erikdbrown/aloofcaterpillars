@@ -1,17 +1,39 @@
-@import url(https://fonts.googleapis.com/css?family=Bangers);
+@import url(https://fonts.googleapis.com/css?family=Oswald);
 
 html, body {
-  height: 100%;
-  width: 100%;
-
+	height: 100%;
 }
 
-md-toolbar {
+main {
+  min-height: calc(100vh - 50px);
+}
+
+footer md-toolbar {
+  max-height: 50px;
+  /*background-color: #ccc;*/
+}
+
+md-toolbar, md-toolbar-tools {
   min-height: 50px;
 }
 
+md-card {
+  background-color: white;
+}
+
+.md-button.md-icon-button {
+  padding: 0;
+}
+
+.nav-profile-pic {
+  margin-top:4px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
 .logo {
-  font-family: 'Bangers', cursive;
+  font-family: 'Oswald', sans-serif;
   font-size: 40px;
   text-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
 }
@@ -22,21 +44,22 @@ md-toolbar {
 }
 
 .splash-logo {
-  font-family: 'Bangers', cursive;
+  font-family: 'Oswald', sans-serif;
   font-size: 60px;
   color: white;
   text-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
   margin-left: auto;
   margin-right: auto;
-  margin-top: 100px;
+  margin-top: -10px;
   margin-bottom: 10px;
+  /*margin: 10px -10px auto;*/
 }
 
 .auth-form {
-  width: 100%;
-  height: 100%;
+  /*width: 100%;*/
+  /*height: 100%;*/
   /*background-size: cover;*/
-  text-shadow: 0 1px 1px hsla(0,0%,100%,.3);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
 .auth-form, .auth-card::before {
@@ -50,16 +73,17 @@ md-toolbar {
     z-index: 1;
 }
 
-.footer {
-  height: 50px;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-}
 
-.footer *{
-  color: #9E9E9E;
-}
+/*.footer {*/
+  /*height: 50px;*/
+  /*width: 100%;*/
+  /*position: absolute;*/
+  /*bottom: 0;*/
+/*}*/
+
+/*.footer *{*/
+  /*color: #9E9E9E;*/
+/*}*/
 
 /*md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised), md-toolbar:not(.md-menu-toolbar) .md-button:not(.md-raised)*/
 /*attempting to make frosted glass effect

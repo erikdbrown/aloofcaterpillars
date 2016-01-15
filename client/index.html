@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>One For One</title>
@@ -42,46 +41,107 @@
   <script src="lib/angular-base64/angular-base64.js"></script>
     
 </head>
-<body ng-app="oneApp" layout='row' class='layout-row'>
-  <div layout='column' flex class='layout-column flex' ng-controller="AuthController" style="height: 100%; width: 100%">
-    <!-- navbar content -->
-    <md-toolbar class='navbar md-whiteframe-2dp' ng-show="location.$$path != '/signin' && location.$$path != '/register' " layout-align="center center">
-      <div class="md-toolbar-tools" flex="80" layout-align="center center">
-        <a class='logo' href="#/browse">lunchbox</a>
-        <span flex></span>
-<!--         <md-button ng-href="#/signin" class="" aria-label="Learn More">
-          Sign In 
-        </md-button> -->
-        <md-button ng-click="signout()" class="" aria-label="Learn More">
-          Logout
-        </md-button>
-        <md-button ng-href="#/create" class="" aria-label="Learn More">
-          Create Meal
-        </md-button>
-        <md-button ng-href="#/view" class="" aria-label="Learn More">
-          Pending
-        </md-button>
-      </div>
-    </md-toolbar>
+<body>
+  <div ng-app="oneApp" flex>
+    <header ng-controller="AuthController">
+      <md-toolbar class='navbar md-whiteframe-2dp' ng-show="location.$$path != '/signin' && location.$$path != '/register' " layout-align="center center">
+        <div class="md-toolbar-tools" flex="80" layout-align="center center">
+          <a class='logo' href="#/browse">LUNCHBOX</a>
+          <span flex></span>
+          <md-button ng-click="signout()" class="" aria-label="Learn More">Logout</md-button>
+          <md-button ng-href="#/create" class="" aria-label="Learn More">Create Meal</md-button>
+          <md-button ng-href="#/view" class="" aria-label="Learn More">Pending</md-button>
 
-    <!-- page content here -->
-    <md-content ng-view md-scroll-y flex class='flex' style="height: 100%; width: 100%">
-      <!-- <div ng-view></div> -->
-    </md-content>
-    
-  <!-- <div id="preloader">
-    <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i><div layout="row" flex class="fill-height layout-row flex">
-  </div> -->
-    <md-toolbar class='md-whiteframe-2dp footer'layout-align="center center">
-      <div class="md-toolbar-tools" flex="80" layout-align="start center">
+          <md-menu md-position-mode="target-right target" md-offset="0 40">
+            <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+                <img class="nav-profile-pic" src="http://lh4.googleusercontent.com/-CwacxnKPUsA/AAAAAAAAAAI/AAAAAAAAAAA/t80dR3yDxcM/s64-c-mo/photo.jpg">
+            </md-button>
+            <md-menu-content>
+              <md-menu-item><md-button ng-click="doSomething()">Do Something</md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="doSomething()">Do Something</md-button></md-menu-item>
+              <md-menu-item><md-button ng-click="doSomething()">Do Something</md-button></md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </div>
+      </md-toolbar>
+    </header>
+    <!--<main class='md-padding' layout="row" flex>-->
+      <!--<div flex>-->
+        <main ng-view flex layout="column"></main>
+      <!--</div>-->
+    <!--</main>-->
+    <footer>
+      <md-toolbar layout-align="center center">
+        <div class="md-toolbar-tools" flex="80" layout-align="start center">
         <md-button ng-href="" class="" aria-label="Learn More">
-          About
+        About
         </md-button>
         <md-button ng-href="" class="" aria-label="Learn More">
-          Support
+        Support
         </md-button>
-      </div>
-    </md-toolbar>
+        </div>
+      </md-toolbar>
+    </footer>
   </div>
 </body>
 </html>
+
+
+
+
+<!--<body ng-app="oneApp" layout='row' class='layout-row'>-->
+  <!--<div layout='column' flex class='layout-column flex' ng-controller="AuthController" style="height: 100%; width: 100%">-->
+    <!--&lt;!&ndash; navbar content &ndash;&gt;-->
+    <!--<md-toolbar class='navbar md-whiteframe-2dp' ng-show="location.$$path != '/signin' && location.$$path != '/register' " layout-align="center center">-->
+      <!--<div class="md-toolbar-tools" flex="80" layout-align="center center">-->
+        <!--<a class='logo' href="#/browse">LUNCHBOX</a>-->
+        <!--<span flex></span>-->
+<!--&lt;!&ndash;         <md-button ng-href="#/signin" class="" aria-label="Learn More">-->
+          <!--Sign In -->
+        <!--</md-button> &ndash;&gt;-->
+        <!--<md-button ng-click="signout()" class="" aria-label="Learn More">-->
+          <!--Logout-->
+        <!--</md-button>-->
+        <!--<md-button ng-href="#/create" class="" aria-label="Learn More">-->
+          <!--Create Meal-->
+        <!--</md-button>-->
+        <!--<md-button ng-href="#/view" class="" aria-label="Learn More">-->
+          <!--Pending-->
+        <!--</md-button>-->
+
+        <!--<md-menu md-position-mode="target-right target" md-offset="0 40">-->
+          <!--&lt;!&ndash; Trigger element is a md-button with an icon &ndash;&gt;-->
+          <!--<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">-->
+            <!--&lt;!&ndash;<div>&ndash;&gt;-->
+              <!--<img class="nav-profile-pic" src="http://lh4.googleusercontent.com/-CwacxnKPUsA/AAAAAAAAAAI/AAAAAAAAAAA/t80dR3yDxcM/s64-c-mo/photo.jpg">-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--</md-button>-->
+          <!--<md-menu-content>-->
+            <!--<md-menu-item><md-button ng-click="doSomething()">Do Something</md-button></md-menu-item>-->
+            <!--<md-menu-item><md-button ng-click="doSomething()">Do Something</md-button></md-menu-item>-->
+            <!--<md-menu-item><md-button ng-click="doSomething()">Do Something</md-button></md-menu-item>-->
+          <!--</md-menu-content>-->
+        <!--</md-menu>-->
+      <!--</div>-->
+    <!--</md-toolbar>-->
+
+    <!--&lt;!&ndash; page content here &ndash;&gt;-->
+    <!--<md-content ng-view md-scroll-y flex class='flex' style="height: 100%; width: 100%">-->
+      <!--&lt;!&ndash; <div ng-view></div> &ndash;&gt;-->
+    <!--</md-content>-->
+    <!-- -->
+  <!--&lt;!&ndash; <div id="preloader">-->
+    <!--<i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i><div layout="row" flex class="fill-height layout-row flex">-->
+  <!--</div> &ndash;&gt;-->
+    <!--<md-toolbar class='md-whiteframe-2dp footer'layout-align="center center">-->
+      <!--<div class="md-toolbar-tools" flex="80" layout-align="start center">-->
+        <!--<md-button ng-href="" class="" aria-label="Learn More">-->
+          <!--About-->
+        <!--</md-button>-->
+        <!--<md-button ng-href="" class="" aria-label="Learn More">-->
+          <!--Support-->
+        <!--</md-button>-->
+      <!--</div>-->
+    <!--</md-toolbar>-->
+  <!--</div>-->
+<!--</body>-->
