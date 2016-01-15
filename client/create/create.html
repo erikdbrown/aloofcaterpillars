@@ -1,44 +1,60 @@
 <div layout='row' layout-align="center center">
   <div flex="80" >
-    <h1 class= '.md-display-2'>Create</h1>
+    <h1 class= '.md-display-2'>Sharing a Meal</h1>
     <div class="createForm" ng-controller='createCtrl' ng-cloak>
       <md-content layout-padding>
       <md-card>
       <form name="createForm">
         <md-card-title>
-        <md-card-title-text>
-        <span class="md-headline">Enter your meal</span>
-        </md-card-title-text>
+          <md-card-title-text>
+            <span class="md-headline">Thank you for sharing!</span>
+          </md-card-title-text>
         </md-card-title>
-        
-        <md-input-container class="md-block">
-        <label>Describe your meal!</label>
-        <input required md-maxlength="30" required name="description" ng-model="meal.title">
-        
-        <div ng-messages="createForm.description.$error">
-          <div ng-message="required">This is required.</div>
-          <div ng-message="md-maxlength">Shorten it!</div>
-        </div>
-        
-        </md-input-container>
-        <md-input-container class="md-block">
-        <label>Quantity (# of servings)</label>
-        <input required type="number" step="any" name="quantity" min="1" max="6" ng-model="meal.quantity"/>
-        
-        <div ng-messages="createForm.rate.$error" multiple md-auto-hide="true">
-          <div ng-message="required">
-            If you don't eat your meat, you can't have any pudding, how can you have any pudding if you don't eat your meat!
-          </div>
-        </div>
-        </md-input-container>
-        <md-input-container class="md-block"><!-- ///photo upload BLOCK -->
-        <input type="file" ngf-select ng-model="meal.picture" name="file" accept="image/*" ngf-max-size="5MB"  base-sixty-four-input>
-        </md-input-container> <!-- ///photo upload BLOCK -->
+        <md-card-content>
+          <md-input-container class="md-block">
+            <label>What's it called?</label>
+            <input md-maxlength="30" name="title" ng-model="meal.title" required>
+
+            <div ng-messages="createForm.title.$error">
+              <div ng-message="required">Please enter a name.</div>
+              <div ng-message="md-maxlength">Please shorten the name.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Describe your meal</label>
+            <input md-maxlength="140" name="description" ng-model="meal.description" required>
+
+            <div ng-messages="createForm.description.$error">
+              <div ng-message="required">Please enter a description.</div>
+              <div ng-message="md-maxlength">Please shorten the description.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>How many portions are you sharing?</label>
+            <input type="number" step="any" name="portions" min="1" max="12" ng-model="meal.portions" required>
+
+            <div ng-messages="createForm.portions.$error">
+              <div ng-message="required">Please enter a number.</div>
+              <div ng-message="min">You want to share this, right?</div>
+              <div ng-message="max">That's a little too much to share!</div>
+            </div>
+            <div ng-messages="createForm.rate.$error" multiple md-auto-hide="true">
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block"><!-- ///photo upload BLOCK -->
+            <input type="file" ngf-select ng-model="meal.picture" name="file" accept="image/*" ngf-max-size="5MB" layout-align='end' base-sixty-four-input>
+          </md-input-container> <!-- ///photo upload BLOCK -->
+
+          <md-datepicker name='date' ng-model="meal.date_available" md-placeholder="Select a date" md-min-date="minDate" md-max-date="maxDate" required></md-datepicker>
+        </md-card-content>
         <div ng-cloak>
           <div class="menu-container" layout-align="start center" layout="column">
             <div class="menus" layout-wrap layout="row" layout-fill layout-align="space-between center" style="min-height:50px;">
-              <div layout="column" flex="33" flex-sm="100" layout-align="center center">
-                <p>Major Ingredient</p>
+              <div layout="column" flex="50" flex-sm="100" layout-align="center center">
+                <p>Major Ingredient(s)</p>
                 <md-menu md-offset="0 -7">
                 <md-button ng-click="$mdOpenMenu($event)">
                 <md-icon>whatshot</md-icon>
@@ -46,16 +62,16 @@
                 
                 <md-menu-content width="2">
                 <md-optgroup label="Meats">
-                <md-menu-item ng-repeat="item in ingredients | filter: {ingredient: 'meat'}">
+                <md-menu-item ng-repeat="item in ingredients.meat">
                 
-                <md-button ng-click="addProtein(item)"><span md-menu-align-target></span> {{item.name}} </md-button>
+                <md-button ng-click="addIngred(item)"><span md-menu-align-target></span> {{item}} </md-button>
                 
                 </md-optgroup>
-                <md-optgroup label="Vegetables">
+                <md-optgroup label="Other">
                 
-                <md-menu-item ng-repeat="item in ingredients | filter: {ingredient: 'veg'}">
+                <md-menu-item ng-repeat="item in ingredients.other">
                 
-                <md-button ng-model='meal.protein' ng-click="addProtein(item, meal)"><span md-menu-align-target></span> {{item.name}} </md-button>
+                <md-button ng-click="addIngred(item)"><span md-menu-align-target></span> {{item}} </md-button>
                 </md-optgroup>
                 </md-menu-item>
                 </md-menu-item>
@@ -63,10 +79,9 @@
                 </md-menu>
                 </md-menu-content>
                 </md-menu>
-                <div>{{data.protein}}</div>
               </div>
               <!-- TODO: NEED TO UPLOAD PICTURES INTO SERVER -->
-              <div layout="column" flex="33" flex-sm="100" layout-align="center center">
+              <div layout="column" flex="50" flex-sm="100" layout-align="center center">
                 <p>Dietary Restrictions</p>
                 <md-menu md-offset="0 -7">
                 <md-button ng-click="$mdOpenMenu($event)">
@@ -74,7 +89,7 @@
                 </md-button>
                 <md-menu-content width="2">
                 <md-menu-item ng-repeat="diet in restrictions">
-                <md-button ng-model='meal.diet' ng-click="addRestrict(diet, meal)"> <span md-menu-align-target></span> {{diet}} </md-button>
+                <md-button ng-model='meal.diet' ng-click="addRestrict(diet)"> <span md-menu-align-target></span> {{diet}} </md-button>
                 </md-menu-item>
                 </md-menu-content>
                 </md-menu>
@@ -83,14 +98,13 @@
             </div>
           </div>
         </div>
-        
+
         <md-card-actions layout="row" layout-column="end center">
-        <md-button ng-model='meal' ng-click='addMeal(meal)'>Add Meal</md-button>
+          <md-button ng-model='meal' ng-click='addMeal(meal)' ng-if="emptyCheck()">Add Meal</md-button>
         </md-card-actions>
       </form>
       </md-card>
       </md-content>
     </div>
   </div>
-</div>
 </div>
