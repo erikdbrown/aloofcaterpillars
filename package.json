@@ -25,6 +25,7 @@
     "express": "^4.13.3",
     "express-partials": "^0.3.0",
     "express-session": "^1.12.1",
+    "hashids": "^1.0.2",
     "jwt-simple": "^0.4.0",
     "kerberos": "0.0.17",
     "mocha": "^1.21.5",
