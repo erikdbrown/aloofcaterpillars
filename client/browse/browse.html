@@ -17,9 +17,11 @@
         <md-card-content>
           <h2>{{ meal.title }}</h2>
         </md-card-content>
-        <div class="md-actions" layout="row" layout-align="end center">
-          <md-button ng-click='showMeal($event, meal)'>View</md-button>
-        </div>
+        <md-card-actions layout="row" layout-align="end">
+          <md-button ng-click="showMeal($event, meal)">
+           View
+          </md-button>
+        </md-card-actions>
       </md-card>
     </div>
 
