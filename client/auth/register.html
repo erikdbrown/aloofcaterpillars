@@ -10,29 +10,62 @@
 	</div>
 </section> -->
 
-<div class="md-padding auth-form" layout="row" layout-wrap="" layout-align="center start">
+<div class="md-padding auth-form" layout="row" layout-wrap="" layout-align="center center">
   <div ng-model='register' ng-controller='AuthController' flex="40" flex-sm="60" flex-xs='100' layout="column">
-    <h1 class='splash-logo'>Lunchbox</h1>
+    <h1 class='splash-logo'>LUNCHBOX</h1>
     <md-card class="auth-card">
       <!-- <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out"> -->
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">Join us!</span>
-        </md-card-title-text>
-      </md-card-title>
+      <!--<md-card-title>-->
+        <!--<md-card-title-text>-->
+          <!--<span class="md-headline">Join us!</span>-->
+        <!--</md-card-title-text>-->
+      <!--</md-card-title>-->
       <md-card-content>
-        <form name="userForm" layout='column'>
-            <md-input-container class="md-block md-accent">
-              <label>Username</label>
-              <input ng-model="user.username" type='text'>
-            </md-input-container>
-            <md-input-container class="md-block md-accent">
-              <label>Password</label>
-              <input ng-model="user.password" type='password'>
-            </md-input-container>
+        <form name="userForm" layout='column' ng-submit="userForm.$valid && signup()">
+          <!--user's display name-->
+          <md-input-container class="md-block md-accent">
+            <label>Display Name</label>
+            <input md-maxlength="20" ng-model="user.displayname" required name="displayname" type='text'>
+            <div ng-messages="userForm.displayname.$error">
+              <div ng-message="required">This is required.</div>
+              <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+            </div>
+          </md-input-container>
+
+          <!--user's username => email address-->
+          <md-input-container class="md-block md-accent">
+            <label>Email</label>
+            <input ng-model="user.username" required name="username" type='email' ng-pattern="/^.+@.+\..+$/" >
+            <div ng-messages="userForm.username.$error">
+              <div ng-message="required">This is required.</div>
+              <div ng-message="pattern">This does not look like a valid email address.</div>
+            </div>
+          </md-input-container>
+
+          <!--user's password-->
+          <md-input-container class="md-block md-accent">
+            <label>Password</label>
+            <input ng-model="user.password" type='password' required name="password">
+            <div ng-messages="userForm.password.$error">
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+
+          <!--confirming user's password-->
+          <md-input-container class="md-block md-accent">
+            <label>Confirm Password</label>
+            <input ng-model="user.passwordConfirmation" type='password' required name="passwordConfirmation" ng-pattern="{{user.password}}">
+            <div ng-messages="userForm.passwordConfirmation.$error">
+              <div ng-message="required">This is required.</div>
+              <div ng-message="pattern">This must match your initial password.</div>
+            </div>
+            <!--{{user.password}} == {{user.passwordConfirmation}}-->
+          </md-input-container>
+
+
           <div layout='row' layout-align='end center'>
             <md-button ng-href='#/signin'>Already have an account?</md-button>
-            <md-button type="submit" ng-click="signup()" class="md-raised md-accent">Register</md-button>
+            <md-button type="submit" class="md-raised md-accent">Register</md-button>
           </div>
         </form>
       </md-card-content>

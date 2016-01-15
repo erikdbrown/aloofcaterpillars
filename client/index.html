@@ -47,7 +47,7 @@
     <!-- navbar content -->
     <md-toolbar class='navbar md-whiteframe-2dp' ng-show="location.$$path != '/signin' && location.$$path != '/register' " layout-align="center center">
       <div class="md-toolbar-tools" flex="80" layout-align="center center">
-        <a class='logo' href="#/browse">lunchbox</a>
+        <a class='logo' href="#/browse">LUNCHBOX</a>
         <span flex></span>
 <!--         <md-button ng-href="#/signin" class="" aria-label="Learn More">
           Sign In 
@@ -61,6 +61,21 @@
         <md-button ng-href="#/view" class="" aria-label="Learn More">
           Pending
         </md-button>
+
+        <md-menu md-position-mode="target-right target" md-offset="0 40">
+          <!-- Trigger element is a md-button with an icon -->
+          <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+            <!--<div>-->
+              <img class="nav-profile-pic" src="http://lh4.googleusercontent.com/-CwacxnKPUsA/AAAAAAAAAAI/AAAAAAAAAAA/t80dR3yDxcM/s64-c-mo/photo.jpg">
+            <!--</div>-->
+          </md-button>
+          <md-menu-content>
+            <md-menu-item><md-button ng-click="doSomething()">Do Something</md-button></md-menu-item>
+            <md-menu-item><md-button ng-click="doSomething()">Do Something</md-button></md-menu-item>
+            <md-menu-item><md-button ng-click="doSomething()">Do Something</md-button></md-menu-item>
+          </md-menu-content>
+        </md-menu>
+
       </div>
     </md-toolbar>
 
