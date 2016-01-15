@@ -19,12 +19,12 @@ module.exports = function(app, express) {
   app.get('/boorish/meals', helper.decode, mealController.allAvailableMeals); // get all meals
   app.post('/boorish/meals', helper.decode, mealController.createMeal); // create a new meal
   app.put('/boorish/meals/:id', helper.decode, mealController.editMeal); // edit a new meal
-  app.delete('/boorish/meals/:id', helper.decode, mealController.deleteMeal) // TODO: write controller to delete meal
+  app.delete('/boorish/meals/:id', helper.decode, mealController.deleteMeal) // delete a meal and redistribute tokens
 
   // adding, retrieving, and deleting a user's meals
-  app.get('/boorish/meals/users/', helper.decode, mealController.userMeals) // TODO: write a controller to GET all of a user's meals
-  app.post('/boorish/meals/users/:id', helper.decode, mealController.addMealToUser) // TODO: write a controller to add a meal to a user's list
-  app.put('/boorish/meals/users/:id', helper.decode, mealController.deleteMealFromUser) // TODO: write controller to remove a meal from user's list
+  app.get('/boorish/meals/users/', helper.decode, mealController.userMeals) // retrieves a user's meals (both created and consumed)
+  app.post('/boorish/meals/users/:id', helper.decode, mealController.addMealToUser) // adds a meal to a user's list. distributes tokens
+  app.put('/boorish/meals/users/:id', helper.decode, mealController.deleteMealFromUser) // removes a meal from a user's list. redistributes tokena
 
   // retrieving and adding feedback on individual meals
   app.get('/boorish/feedback/meals/:id', feedbackController.retrieveFeedback) // TODO: write controller to retrievie feedback on a meal
