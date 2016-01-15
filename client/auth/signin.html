@@ -1,26 +1,7 @@
-<!-- <section id="Experience_area" class="section_padding">
-<div class="col-md-6 col-md-offset-3" ng-model='register' ng-controller='AuthController'>
-    <h2>Sign in</h2>
- <form novalidate class="simple-form">
-    Username: <input type="text" ng-model="user.username" /><br />
-    Password: <input type="text" ng-model="user.password" /><br />
-    <input type="submit" ng-click="signin()" value="Sign In" />
-  </form>
-  <a href="#/register" class="btn btn-link">register an account ? </a>
-  {{response }}
-</div>
-</section> -->
-
-<div class="md-padding auth-form" layout="row" layout-wrap="" layout-align="center center">
+<div class="md-padding auth-form" layout="row" layout-align="center center" flex>
   <div ng-model='register' ng-controller='AuthController' flex="40" flex-sm="60" flex-xs='100' layout="column">
     <h1 class='splash-logo'>LUNCHBOX</h1>
     <md-card class="auth-card">
-      <!-- <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out"> -->
-     <!--  <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">Welcome back!</span>
-        </md-card-title-text>
-      </md-card-title> -->
       <md-card-content>
         <form name="userForm" layout='column' ng-submit="userForm.$valid && signin()">
           <!--user's username => email address-->
@@ -33,7 +14,7 @@
             </div>
           </md-input-container>
 
-           <!--user's password-->
+          <!--user's password-->
           <md-input-container class="md-block md-accent">
             <label>Password</label>
             <input ng-model="user.password" type='password' required name="password">
@@ -48,11 +29,6 @@
           </div>
         </form>
       </md-card-content>
-      <!-- <md-card-actions layout="row" layout-align="end center">
-        <md-button>Action 1</md-button>
-        <md-button>Action 2</md-button>
-      </md-card-actions> -->
     </md-card>
-  </div>
   </div>
 </div>

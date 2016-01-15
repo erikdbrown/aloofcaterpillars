@@ -1,25 +1,7 @@
-<!-- <section id="Experience_area" class="section_padding">
-	<div class="col-md-6 col-md-offset-3" ng-model='register' ng-controller='AuthController'>
-    <h2>Register an account</h2>
- <form novalidate class="simple-form">
-    Username: <input type="text" ng-model="user.username" /><br />
-    Password: <input type="text" ng-model="user.password" /><br />
-    <input type="submit" ng-click="signup()" value="Register" />
-  </form>
-  <a href="#/signin" class="btn btn-link">already have an account ? </a>
-	</div>
-</section> -->
-
-<div class="md-padding auth-form" layout="row" layout-wrap="" layout-align="center center">
+<div class="md-padding auth-form" layout="row" layout-align="center center" flex>
   <div ng-model='register' ng-controller='AuthController' flex="40" flex-sm="60" flex-xs='100' layout="column">
     <h1 class='splash-logo'>LUNCHBOX</h1>
     <md-card class="auth-card">
-      <!-- <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out"> -->
-      <!--<md-card-title>-->
-        <!--<md-card-title-text>-->
-          <!--<span class="md-headline">Join us!</span>-->
-        <!--</md-card-title-text>-->
-      <!--</md-card-title>-->
       <md-card-content>
         <form name="userForm" layout='column' ng-submit="userForm.$valid && signup()">
           <!--user's display name-->
