@@ -24,9 +24,3 @@ var port = process.env.PORT || 5000;
 app.listen(port);
 
 module.exports = app;
-
-// var server = app.listen(port, function(){
-//   var host = server.address().address;
-//   var port = server.address().port;
-//   console.log('One2One server listening on: ', host, port);
-// });
