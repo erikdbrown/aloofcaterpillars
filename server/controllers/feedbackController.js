@@ -12,12 +12,47 @@ module.exports = {
 
   retrieveFeedback: function(req, res, next) {
     // returns the ratings for the meals from a specific user
+    var meal_id = req.params.id;
+
+    Feedback.find({ meal: meal_id })
+    .then(function(ratings) {
+      
+      var freshness =  ratings.map(function(rating) {
+        return rating.freshness;
+      }).reduce(function(acc, score) {
+          acc += score;
+          return acc;
+        }) / ratings.length;
+
+      var flavor =  ratings.map(function(rating) {
+        return rating.flavor;
+      }).reduce(function(acc, score) {
+          acc += score;
+          return acc;
+        }) / ratings.length;
+
+      var filling =  ratings.map(function(rating) {
+        return rating.filling;
+      }).reduce(function(acc, score) {
+          acc += score;
+          return acc;
+        }) / ratings.length;
+
+      var overall = ( freshness + flavor + filling ) / 3;
+
+      res.json({
+        meal_id: meal_id,
+        freshness: freshness,
+        flavor: flavor,
+        filling: filling,
+        overall: overall
+      })
+    })
   },
 
   addFeedback: function(req, res, next) {
     // adds feedback about a specific meal from one user
     var meal_id = req.params.id;
-    console.log('you\'re here')
 
     findUser({ username: req.username })
     .then(function(consumer) {
