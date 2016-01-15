@@ -1,7 +1,11 @@
 angular.module('viewReq', [])
 
-.controller('viewCtrl', function($scope, Meals, $compile, $location, $window) {
+.controller('viewCtrl', function($scope, Meals, $compile, $window, $location) {
   //TODO: we need to figure out current user and pass that in the get request
+  if(!($window.localStorage.getItem('com.oneAppUser'))){
+    $location.href = "#/signin";
+  }
+  // debugger;
   $scope.user = $window.localStorage.getItem('com.oneAppUser').toLowerCase();
 
   //Initialize variables
@@ -16,6 +20,10 @@ angular.module('viewReq', [])
   Meals.pendingReq().then(function(response) {
     var getData = response
     for (var i = 0; i<getData.length;i++) {
+      // WTF WHY NULL
+      if(!getData[i].creator){
+        alert("We forgot who created this dish...Sorry!");
+      }
       if (getData[i].creator.toLowerCase() === $scope.user) {
         $scope.pending.push(getData[i])
       }

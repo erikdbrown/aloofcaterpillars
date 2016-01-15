@@ -1,19 +1,23 @@
-angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', 'fmp-card'])
-  
 
-.controller('browseCtrl', function($scope, $window, $mdDialog, Meals, Auth) {
+angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', 'fmp-card'])
+
+
+  .controller('browseCtrl',   function($scope, $window, Meals, Users, Auth, $mdDialog) {
 
   $scope.searchInput = '';
+
+    //Pulls logged in user from localStorage
+    $scope.activeUser = $window.localStorage.getItem('com.oneAppUser');
 
   $scope.search = function (meal) {
     return angular.lowercase(meal.title).indexOf($scope.searchInput || '') !== -1;
 
     // enable when server returns meals with this information
     // return (
-    //   angular.lowercase(meal.title).indexOf($scope.searchInput || '') !== -1 || 
-    //   angular.lowercase(meal.description).indexOf($scope.searchInput || '') !== -1|| 
-    //   angular.lowercase(meal.tags).indexOf($scope.searchInput || '') !== -1|| 
-    //   angular.lowercase(meal.ingredients).indexOf($scope.searchInput || '') !== -1|| 
+    //   angular.lowercase(meal.title).indexOf($scope.searchInput || '') !== -1 ||
+    //   angular.lowercase(meal.description).indexOf($scope.searchInput || '') !== -1||
+    //   angular.lowercase(meal.tags).indexOf($scope.searchInput || '') !== -1||
+    //   angular.lowercase(meal.ingredients).indexOf($scope.searchInput || '') !== -1||
     //   angular.lowercase(meal.creator).indexOf($scope.searchInput || '') !== -1);
   };
 
@@ -27,6 +31,22 @@ angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', '
       }
       if (datum.tags.length) {
         datum.tags = datum.tags.split(', ');
+
+    // This is hard coded because we wanted a filtering mechanism by the "dominant ingredient"
+    // $scope.proteins = [
+    //   { category: 'meat', name: 'Chicken' },
+    //   { category: 'meat', name: 'Beef' },
+    //   { category: 'meat', name: 'Pork' },
+    //   { category: 'meat', name: 'Bacon' },
+    //   { category: 'veg', name: 'Tofu' },
+    //   { category: 'veg', name: 'Beans' },
+    //   { category: 'veg', name: 'Protein Shake' },
+    //   { category: 'veg', name: 'Grass' }
+    // ];
+    //
+    // $scope.restrict = [
+    //   'All', 'Vegetarian', 'Gluten-Free', 'Paleo', 'Low-Carb'
+    // ]
       }
       return datum;
     })
@@ -48,6 +68,33 @@ angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', '
       $mdDialog.hide(request)
     };
   };
+    $scope.getAllMeals = function (){
+      Meals.getAllMeals().then(function(data){
+        $scope.data = data.data;
+        // Scope.data: [ { imgUrl: String, description: String, title: String, ingredients: Array, creator: String,, REVIEW (format: 080916?) date_available: Number, portions: Number, tags: Array, feedback: Array , overall: Number } ]
+        // for (var i = 0; i < $scope.data.length; i++) {
+        //   if ($scope.activeUser !== $scope.data[i].creator) {
+        //     $scope.browseMeals.push($scope.data[i])
+        //   }
+
+        // }
+      })
+    }
+    $scope.makeRequest = function(meal_id) {
+      // var req = {
+      //   username: $window.localStorage.getItem('com.oneAppUser'),
+      //   meal: meal.title
+      // }
+      Users.buyMeal(meal_id).then(function(data) {
+        alert('Made the request')
+      })
+    }
+
+    $scope.editMeal = function (meal_id, changes) {
+      Users.editMeal(meal_id).then(function (data){
+        alert('Made the request')
+      })
+    }
 
   $scope.showMeal = function(event, meal) {
     $mdDialog.show({
@@ -60,8 +107,5 @@ angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', '
         meal: meal
       }
     })
-    .then(function(request) {
-
-    });
   };
 });
