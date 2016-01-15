@@ -48,7 +48,8 @@ module.exports = {
       return;
     }
 
-    var uniqPath = hash(counter);
+    var uniqPath = hash.encode(counter);
+    counter++;
     fs.rename(files.picture[0].path, 'server/images/'+ uniqPath + '.jpg', function (err) {
 
       User.findOne({ username: req.username })
