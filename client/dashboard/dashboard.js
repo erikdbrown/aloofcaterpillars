@@ -1,10 +1,7 @@
 angular.module('dashboard', ['ngMaterial', 'ngMessages'])
 
 .controller('dashController', function($scope, Users, Feedback) {
-  Users.getUserInfo()
-  .then(function(user) {
-    $scope.tokenBalance = user.lunchboxes;
-  });
+  $scope.tokenBalance = $window.localStorage.getItem('com.oneAppTokens')
 
   Users.getMeals()
   .then(function(meals) {
