@@ -58,7 +58,7 @@ module.exports = {
     .then(function(consumer) {
       findMeal({ _id: meal_id, consumers: consumer._id})
       .then(function(meal) {
-        if (!meal) { res.sendStatus(401); }
+        if (!meal) { res.sendStatus(404); }
         findFeedback({ meal: meal_id, consumer: consumer._id })
         .then(function(feedback) {
           if (feedback) { res.sendStatus(401); }
