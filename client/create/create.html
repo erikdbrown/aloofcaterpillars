@@ -16,8 +16,8 @@
             <input md-maxlength="30" name="title" ng-model="meal.title" required>
 
             <div ng-messages="createForm.title.$error">
-              <div ng-message="required">Please enter a name.</div>
-              <div ng-message="md-maxlength">Please shorten the name.</div>
+              <div ng-message="required">This is required.</div>
+              <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
             </div>
           </md-input-container>
 
@@ -26,17 +26,16 @@
             <input md-maxlength="140" name="description" ng-model="meal.description" required>
 
             <div ng-messages="createForm.description.$error">
-              <div ng-message="required">Please enter a description.</div>
-              <div ng-message="md-maxlength">Please shorten the description.</div>
+              <div ng-message="required">This is required.</div>
+              <div ng-message="md-maxlength">The description has to be less than 140 characters long..</div>
             </div>
           </md-input-container>
 
           <md-input-container class="md-block">
             <label>How many portions are you sharing?</label>
-            <input type="number" step="any" name="portions" min="1" max="12" ng-model="meal.portions" required>
-
+            <input type="number" step="any" name="portions" min="1" max="12" ng-model="meal.portions" required ng-init="meal.portions=1">
             <div ng-messages="createForm.portions.$error">
-              <div ng-message="required">Please enter a number.</div>
+              <div ng-message="required">This is required.</div>
               <div ng-message="min">You want to share this, right?</div>
               <div ng-message="max">That's a little too much to share!</div>
             </div>
@@ -45,7 +44,7 @@
           </md-input-container>
 
           <md-input-container class="md-block"><!-- ///photo upload BLOCK -->
-            <input type="file" ngf-select ng-model="meal.picture" name="file" accept="image/*" ngf-max-size="5MB" layout-align='end' base-sixty-four-input>
+            <input aria-label="upload image file" type="file" ngf-select ng-model="meal.picture" name="file" accept="image/*" ngf-max-size="5MB" layout-align='end' base-sixty-four-input>
           </md-input-container> <!-- ///photo upload BLOCK -->
 
           <md-datepicker name='date' ng-model="meal.date_available" md-placeholder="Select a date" md-min-date="minDate" md-max-date="maxDate" required></md-datepicker>
@@ -56,28 +55,22 @@
               <div layout="column" flex="50" flex-sm="100" layout-align="center center">
                 <p>Major Ingredient(s)</p>
                 <md-menu md-offset="0 -7">
-                <md-button ng-click="$mdOpenMenu($event)">
-                <md-icon>whatshot</md-icon>
-                </md-button>
-                
-                <md-menu-content width="2">
-                <md-optgroup label="Meats">
-                <md-menu-item ng-repeat="item in ingredients.meat">
-                
-                <md-button ng-click="addIngred(item)"><span md-menu-align-target></span> {{item}} </md-button>
-                
-                </md-optgroup>
-                <md-optgroup label="Other">
-                
-                <md-menu-item ng-repeat="item in ingredients.other">
-                
-                <md-button ng-click="addIngred(item)"><span md-menu-align-target></span> {{item}} </md-button>
-                </md-optgroup>
-                </md-menu-item>
-                </md-menu-item>
-                
-                </md-menu>
-                </md-menu-content>
+                  <md-button ng-click="$mdOpenMenu($event)">
+                    <md-icon>whatshot</md-icon>
+                  </md-button>
+
+                  <md-menu-content width="2">
+                    <md-optgroup label="Meats">
+                      <md-menu-item ng-repeat="item in ingredients.meat">
+                        <md-button ng-click="addIngred(item)"><span md-menu-align-target></span> {{item}} </md-button>
+                      </md-menu-item>
+                    </md-optgroup>
+                    <md-optgroup label="Other">
+                      <md-menu-item ng-repeat="item in ingredients.other">
+                        <md-button ng-click="addIngred(item)"><span md-menu-align-target></span> {{item}} </md-button>
+                      </md-menu-item>
+                    </md-optgroup>
+                  </md-menu-content>
                 </md-menu>
               </div>
               <!-- TODO: NEED TO UPLOAD PICTURES INTO SERVER -->
