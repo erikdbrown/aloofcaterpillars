@@ -12,10 +12,9 @@ module.exports = {
     console.log(req.body);
 
     findUser({ username: req.body.username })
-    .then(function (user) {
+    .then(function(user) {
       if (user) {
-        //should refactor this later not to return an error but to check the session. 
-        next(new Error('User already in the database'));
+        res.sendStatus(403); // sends a 403 error if user already exists
       } else {
         return createUser({
           username: req.body.username,
