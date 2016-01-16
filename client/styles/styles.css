@@ -13,6 +13,14 @@ footer md-toolbar {
   /*background-color: #ccc;*/
 }
 
+md-icon {
+  line-height: 0.75;
+}
+
+md-menu-bar md-menu.md-open > .dropdown-icon-btn {
+    background: rgba(158,158,158,0.2)
+}
+
 md-toolbar, md-toolbar-tools {
   min-height: 50px;
 }

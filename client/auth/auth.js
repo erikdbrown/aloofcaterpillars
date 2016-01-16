@@ -41,6 +41,7 @@ angular.module('auth', [])
           $window.localStorage.setItem('com.oneApp', user.token)
           Users.getUserInfo().then(function (resp){
             $scope.userInfo = resp;
+            console.log(resp);
           });
 
           $location.path('/browse');
