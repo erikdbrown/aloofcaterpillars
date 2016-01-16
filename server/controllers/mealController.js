@@ -51,16 +51,19 @@ module.exports = {
 
     var uniqPath = hash.encode(counter);
     counter++;
-    fs.rename(files.picture[0].path, 'server/images/'+ uniqPath + '.jpg', function (err) {
+    var path = files.picture[0].path.split('.');
+    var ext = path[path.length - 1];
+    var newPath = 'server/images/'+ uniqPath + '.' + ext;
+    fs.rename(files.picture[0].path, newPath, function (err) {
 
       User.findOne({ username: req.username })
       .then(function(user) {
         console.log(user);
         createMeal({
-          imgUrl: 'server/images/' + uniqPath + '.jpg',
-          description: fields.description[0],
+          imgUrl: newPath,
+          description: fields.description[0].split(', '),
           title: fields.title[0],
-          ingredients: fields.ingredients[0],
+          ingredients: fields.ingredients[0].split(', '),
           _creator: user._id,
           date_available: fields.date_available[0],
           portions: fields.portions[0],
