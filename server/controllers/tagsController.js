@@ -5,7 +5,7 @@ var apiKey = require('../config/apiKeys.js');
 
 module.exports = {
   
-  getTags: function(req, res, next) {
+  getIngredients: function(req, res, next) {
 
     request('http://api.nal.usda.gov/ndb/list?format=json&lt=f&sort=n&max=1500&lt=g&api_key=' + apiKey, function (error, response, body) {
       if (!error && response.statusCode === 200) {

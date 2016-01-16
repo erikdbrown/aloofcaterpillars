@@ -26,7 +26,7 @@ module.exports = {
       if (err) { throw 'Err getting meals: ' + err }
 
       var available = meals.filter(function(meal) {
-        return meal.date_available > new Date();
+        return meal.date_available > new Date() && meal.portions_left > 0;
       })
       console.log(available);
       res.status(200).send(available);
@@ -56,12 +56,13 @@ module.exports = {
         console.log(user);
         createMeal({
           imgUrl: 'server/images/' + uniqPath + '.jpg',
-          description: fields.description[0], // req.body.description, //
-          title: fields.title[0], // req.body.title, //
-          ingredients: fields.ingredients[0], // req.body.ingredients, //
+          description: fields.description[0],
+          title: fields.title[0],
+          ingredients: fields.ingredients[0],
           _creator: user._id,
-          date_available: fields.date_available[0], // req.body.date_available, //
-          portions: fields.portions[0], // req.body.portions, //
+          date_available: fields.date_available[0],
+          portions: fields.portions[0],
+          portions_left: fields.portions[0]
           // tags: fields.tags[0] // req.body.tags //
         })
         .then(function(meal) {
@@ -174,22 +175,19 @@ module.exports = {
     var meal_id = req.params.id;
     var username = req.username;
 
-    User.findOne({ username: username })
-    .then(function(user) {
-      console.log(user);
-      Meal.findOne({ _id: meal_id })
-      .then(function(meal) {
-        if (!meal) {
-          res.sendStatus(404);
+    User.findOneAndUpdate({ username: username }, { $inc: { foodTokens : -1 } }, function(err, consumer) { // decreases the number of foodTokens for the consumer
+      if (err) { throw 'There was an error removing a foodToken after a consumer added a meal:' + err; }
+      Meal.findOneAndUpdate({ _id: meal_id }, { $inc: { portions_left : -1 }, $push: { consumers: consumer._id } }, function(err, meal) { // locates meal and pushes consumer into consumers array
+        if (err) { throw 'There was an error finding this meal when a consumer added it: ' + err; }
+        if (!meal) { 
+          res.sendStatus(404); 
         }
-        meal.consumers.push(user._id);
-        meal.save();
-        User.update(user, { $inc: { foodTokens : -1 } }, function(err) {
-          if (err) { throw 'There was an error removing a token after adding a meal:' + err; }
-          User.update({ _id: meal._creator }, { $inc: { foodTokens : +1 } }, function(err) {
-            if (err) { throw 'There was an error adding a token to the creator after adding a meal:' + err; }
-            res.sendStatus(200);
-          });
+        User.findOneAndUpdate({ _id: meal._creator }, { $inc: { foodTokens : +1 } }, function(err, creator) { // locates creator and increase foodTokens
+          if (err) { throw 'There was an error finding the creator of the meal and increaing foodTokens: ' + err; }
+          if (creator._id === consumer._id) {
+            res.sendStatus(401);
+          }
+          res.sendStatus(200)
         });
       });
     });
@@ -200,24 +198,21 @@ module.exports = {
     var meal_id = req.params.id;
     var username = req.username;
 
-    User.findOne({ username: username })
-    .then(function(user) {
-      Meal.findOne({
-        _id: meal_id,
-        consumers: user._id
-      })
-      .then(function(meal) {
-        if (meal) {
-          console.log('Meal: ', meal)
-          console.log('Consumers Array: ', meal.consumers)
-          meal.consumers.pull(user._id);
-          meal.save(function() {
-            res.sendStatus(200);
-          })
-        } else {
-          res.sendStatus(404);
+    User.findOneAndUpdate({ username: username }, { $inc: { foodTokens: 1 } }, function(err, consumer) { // increases the number of foodTokens for the consumer
+      if (err) { throw 'There was an err in finding the consumer after deleting their meal: ' + err; }
+      if (!consumer) {
+        res.sendStatus(404); // user was not found
+      }
+      Meal.findOneAndUpdate({ _id: meal_id, consumers: consumer._id}, { $inc: { portions_left : 1 }, $pull: { consumers: consumer._id } }, function(err, meal) { // increases the number of portions
+        if (err) { throw 'There was an error increasing portions_left after a consumer removed: ' + err; }
+        if (!meal) {
+          res.sendStatus(401); // user is not a consumer of this meal.
         }
-      })
-    })
+        User.findOneAndUpdate({ _id: meal._creator }, { $inc: { foodTokens: -1 } }, function(err, creator) {
+          if (err) { throw 'There was an error decreasing the foodTokens for the creator after a consumer removes: ' + err; }
+          res.sendStatus(200);
+        });
+      });
+    });
   }
 };
