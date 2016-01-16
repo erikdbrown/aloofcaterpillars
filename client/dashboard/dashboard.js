@@ -1,6 +1,6 @@
 angular.module('dashboard', ['ngMaterial', 'ngMessages'])
 
-.controller('dashController', function($scope, Users) {
+.controller('dashController', function($scope, Users, Feedback) {
   Users.getUserInfo()
   .then(function(user) {
     $scope.tokenBalance = user.lunchboxes;
@@ -33,6 +33,7 @@ angular.module('dashboard', ['ngMaterial', 'ngMessages'])
     if (meals.created && meals.created.past.length) {
       var randIdx = Math.floor(Math.random()*meals.created.past.length);
       $scope.oneFeedback = meals.created.past[randIdx];
+      $scope.oneFeedback.overall = Feedback.retrieveFeedBack($scope.oneFeedback._id).overall;
     } else {
       $scope.oneFeedback = {
         imgUrl: '/images/defaultMealImage.png',
