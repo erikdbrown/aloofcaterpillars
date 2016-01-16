@@ -1,21 +1,21 @@
 {
-  "name": "aloofcaterpillars",
+  "name": "Lunchbox",
   "version": "1.0.0",
-  "description": "Greenfield Project",
+  "description": "Legacy Project",
   "main": "index.js",
   "scripts": {
     "test": "mocha specs/apispec.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aloofcaterpillars/aloofcaterpillars.git"
+    "url": "git+https://github.com/boarishpenguin/aloofcaterpillars.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/joeyholland15/aloofcaterpillars/issues"
+    "url": "https://github.com/erikdbrown/boarishpenguin/issues"
   },
-  "homepage": "https://github.com/joeyholland15/aloofcaterpillars#readme",
+  "homepage": "https://github.com/boarishpenguin/aloofcaterpillars#readme",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.4.3",
