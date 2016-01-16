@@ -26,6 +26,7 @@ module.exports = {
     })
     .then(function(user) {
       var token = jwt.encode(user.username, 'hrPenguins');
+      console.log('Token for ' + user._id + ' : ' + token);
       res.json({
         token: token, username: user.username
       });

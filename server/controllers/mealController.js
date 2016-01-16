@@ -4,10 +4,7 @@ var User = require('../models/userModel.js');
 var keys = require('../config/apiKeys.js')
 var fs = require('fs');
 var path = require('path');
-var multiparty = require('multiparty');
-var Hashids = require("hashids");
-var hash = new Hashids('hrPenguins');
-var counter = 10000;
+var utils = require('../config/utils.js')
 // var s3 = new AWS.S3({ params: { Bucket: 'lunchboxhr', Key: keys.s3Key } });
 
 
@@ -36,46 +33,31 @@ module.exports = {
   },
 
   createMeal: function(req, res, next) {
-   var form = new multiparty.Form();
 
-   form.on('error', function(err) {
-     console.log('Error parsing form: ' + err.stack);
-   });
+    console.log('Fields: ', req.fields);
+    console.log('newPath: ', req.newPath);
+    console.log('Description: ', req.fields.description[0].split(', '))
+    console.log('Ingredients: ', req.fields.ingredients[0].split(', '))
 
-  form.parse(req, function(err, fields, files) {
-    if (err) {
-      res.writeHead(400, {'content-type': 'text/plain'});
-      res.end("invalid request: " + err.message);
-      return;
-    }
-
-    var uniqPath = hash.encode(counter);
-    counter++;
-    var path = files.picture[0].path.split('.');
-    var ext = path[path.length - 1];
-    var newPath = 'server/images/'+ uniqPath + '.' + ext;
-    fs.rename(files.picture[0].path, newPath, function (err) {
-
-      User.findOne({ username: req.username })
-      .then(function(user) {
-        console.log(user);
-        createMeal({
-          imgUrl: newPath,
-          description: fields.description[0].split(', '),
-          title: fields.title[0],
-          ingredients: fields.ingredients[0].split(', '),
-          _creator: user._id,
-          date_available: fields.date_available[0],
-          portions: fields.portions[0],
-          portions_left: fields.portions[0]
-          // tags: fields.tags[0] // req.body.tags //
-        })
-        .then(function(meal) {
-          res.sendStatus(201);
-        });
+    User.findOne({ username: req.username })
+    .then(function(user) {
+      createMeal({
+        imgUrl: req.newPath,
+        description: req.fields.description[0].split(', '),
+        title: req.fields.title[0],
+        ingredients: req.fields.ingredients[0].split(', '),
+        _creator: user._id,
+        date_available: req.fields.date_available[0],
+        portions: req.fields.portions[0],
+        portions_left: req.fields.portions[0],
+        tags: req.fields.tags[0] // req.body.tags //
       })
-    })
-  });
+      .then(function(meal) {
+        console.log('you\'ve created the meal');
+        console.log('The meal: ', meal)
+        res.sendStatus(201);
+      });
+    });
  },
 
   editMeal: function(req, res, next) {
