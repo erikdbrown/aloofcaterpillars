@@ -44,7 +44,14 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     })
   }
 
-
+  var retrieveTags = function (){
+    return $http({
+      method: 'GET',
+      url: '/boorish/tags'
+    }).then(function (resp){
+      return resp;
+    })
+  }
 //Changes food status to pending
   // var makeReq = function(req) {
   //   return $http({
@@ -123,6 +130,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     // that JWT is then stored in localStorage as 'com.shortly'
     // after you signin/signup open devtools, click resources,
     // then localStorage and you'll see your token from the server
+
     var authorized = function (status, situation){
       if (status === 200) {
         return null;
@@ -203,7 +211,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     //   $window.localStorage.removeItem('com.oneApp');
     //   $location.path('/signin');
     // };
-
+    //
     // var currentUser = function() {
     //   var userID = $window.localStorage.getItem('com.oneAppID');
     //   $http({
@@ -222,6 +230,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     };
   })
   .factory('Users', function ($http){
+    var userData = {};
 
     var getMeals = function (){
       return $http({
@@ -237,15 +246,26 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       })
     };
 
-    var getUserInfo = function (){
+    var setUserInfo = function (){
       return $http({
         method: "GET",
         url: '/boorish/users/'
       }).then(function (resp){
-        var userData = {lunchboxes: resp.data.foodTokens, rating: resp.data.rating, name: resp.data.displayName || resp.data.username};
+        userData = {lunchboxes: resp.data.foodTokens, rating: resp.data.rating, name: resp.data.displayName || resp.data.username};
         return userData;
       })
     };
+
+    var getUserInfo = function (){
+      if (userData){
+        return userData;
+      }
+      else {
+        return setUserInfo.then( function (userData){
+          return userData;
+        })
+      }
+    }
 
     var buyMeal = function (mid){
       $http({
@@ -261,10 +281,18 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
         data: changes
       })
     }
+
     var returnMeal = function (mid){
       $http({
         method: 'PUT',
         url: '/boorish/meals/users/' + mid
+      })
+    }
+
+    var cancelMeal = function (mid){
+      $http({
+        method: "DELETE",
+        url:  '/boorish/meals/:id' + mid
       })
     }
 
@@ -273,6 +301,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       buyMeal: buyMeal,
       editMeal: editMeal,
       getUserInfo: getUserInfo,
+      setUserInfo: setUserInfo,
       returnMeal: returnMeal
       // getUserMeals: getUserMeals,
       // confirmReq: confirmReq,
@@ -283,15 +312,39 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
   })
   .factory('Feedback', function ($http){
 
-    var submitFeedback = function (feedback){
+    var submitFeedback = function (mid ,feedback){
+
       $http({
         method: "POST",
-        url: '/boorish/feedback/meals/' + feedback.meal_id,
+        url: '/boorish/feedback/meals/' + mid,
         data: feedback
+      });
+
+    };
+
+    var retrieveFeedBack = function (mid){
+
+      $http({
+        method: "GET",
+        url: "/boorish/feedback/meals/" + mid
+      }).then( function (resp){
+        return resp.data;
       })
-    }
+    };
+
+    var editFeedback = function (changes){
+
+    $http({
+      method: "PUT",
+      url: "/boorish/feedback/meals/" + mid
+      data: changesS
+    })
+  }
+
     return {
-      submitFeedback: submitFeedback
+      submitFeedback: submitFeedback,
+      retrieveFeedBack: retrieveFeedBack,
+      editFeedback: editFeedback
     }
     // var retrieveFeedBack = function (){
     //   return $http({
