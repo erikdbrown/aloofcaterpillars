@@ -267,6 +267,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       })
     };
 
+
     var getUserInfo = function (){
       // if(userData){
       //   return userData;
@@ -332,7 +333,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     var cancelMeal = function (mid){
       $http({
         method: "DELETE",
-        url:  '/boorish/meals/:id' + mid
+        url:  '/boorish/meals/' + mid
       })
     };
 
@@ -341,7 +342,9 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       buyMeal: buyMeal,
       editMeal: editMeal,
       getUserInfo: getUserInfo,
-      returnMeal: returnMeal
+      // setUserInfo: setUserInfo,
+      returnMeal: returnMeal,
+      cancelMeal: cancelMeal
       // getUserMeals: getUserMeals,
       // confirmReq: confirmReq,
       // makeReq: makeReq,

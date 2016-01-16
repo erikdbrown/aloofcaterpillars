@@ -14,7 +14,6 @@ angular.module('auth', [])
 
   Auth.isAuth()
     .then(function (resp){
-      debugger;
       if(resp){
         Users.getUserInfo().then(function (resp){
           $scope.userInfo = resp;
