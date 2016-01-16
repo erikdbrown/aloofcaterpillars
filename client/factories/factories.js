@@ -135,19 +135,19 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       }
       else if (status === 401){
         if(situation === "signIn"){
-          return "Wrong Password";
+          return "Your username and/or password are invalid.";
         }
         else if (situation === "checkAuth") {
-          return "Not Logged In";
+          return "Please log in to view this page.";
         }
       }
       else if (status === 403){
         if(situation == "signUp"){
-          return "Username Already Exists";
+          return "The email address you have entered is already registered.";
         }
       }
       else {
-        return "Unknown Error";
+        return "We do not know what's wrong. Sorry! Please contact a developer about this issue/";
       }
     }
 
@@ -357,6 +357,15 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     }
   })
   .factory('Feedback', function ($http){
+
+    var retrieveAllFeedback = function (){
+      $http({
+        method: "GET",
+        url: '/boorish/feedback/meals'
+      }).then(function (resp){
+        return resp.data;
+      })
+    }
 
     var submitFeedback = function (mid ,feedback){
 
