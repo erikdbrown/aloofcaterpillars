@@ -356,4 +356,4 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     //   })
     // }
 
-  });
+  }});
