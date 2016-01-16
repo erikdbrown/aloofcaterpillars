@@ -4,7 +4,7 @@
   "description": "Legacy Project",
   "main": "index.js",
   "engines": {
-    "node": "4.2.2."
+    "node": "4.2.2"
   },
   "scripts": {
     "test": "mocha specs/apispec.js",
