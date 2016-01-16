@@ -12,11 +12,11 @@ angular.module('dashboard', ['ngMaterial', 'ngMessages'])
         imgUrl: '/images/defaultMealImage.png', // need address of default image
         title: 'We don\'t know what it is yet!',
         creator: 'a friend',
-        date_available: 'Sometime soon, we hope'
+        date_available: 'some day soon, we hope'
       };
     }
 
-    if (meals.created && meals.created.current.length && !(meals.created.current[0].portions - meals.created.current[0].portions_left)) {
+    if (meals.created && meals.created.current.length) {
       $scope.nextOffer = meals.created.current[0];
       $scope.nextOffer.portions = meals.created.current[0].portions - meals.created.current[0].portions_left;
     } else {
@@ -24,7 +24,7 @@ angular.module('dashboard', ['ngMaterial', 'ngMessages'])
         imgUrl: '/images/defaultMealImage.png', // need address of default image
         title: 'Share a meal with someone',
         date_available: 'Sometime soon, we hope',
-        portions: 'Bring lots of'
+        portions: 'lots of'
       };
     }
 
