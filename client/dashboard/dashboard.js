@@ -2,6 +2,7 @@ angular.module('dashboard', ['ngMaterial', 'ngMessages'])
 
 .controller('dashController', function($scope, $window, Users, Feedback) {
   $scope.tokenBalance = $window.localStorage.getItem('com.oneAppTokens');
+  $scope.specialName = $window.localStorage.getItem('com.oneAppName');
 
   Users.getMeals()
   .then(function(meals) {
@@ -10,9 +11,9 @@ angular.module('dashboard', ['ngMaterial', 'ngMessages'])
     } else {
       $scope.nextMeal = {
         imgUrl: '/images/defaultMealImage.png', // need address of default image
-        title: 'We don\'t know what it is yet!',
+        title: 'Nothing yet!',
         creator: 'a friend',
-        date_available: 'some day soon, we hope'
+        date_available: 'soon'
       };
     }
 
@@ -23,7 +24,7 @@ angular.module('dashboard', ['ngMaterial', 'ngMessages'])
       $scope.nextOffer = {
         imgUrl: '/images/defaultMealImage.png', // need address of default image
         title: 'Share a meal with someone',
-        date_available: 'Sometime soon, we hope',
+        date_available: 'soon',
         portions: 'lots of'
       };
     }

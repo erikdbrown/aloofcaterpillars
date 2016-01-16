@@ -1,4 +1,6 @@
-<div name='feedback' class='container'>
+<md-content class="md-padding" layout='row' layout-align="center start" flex>
+  <div flex="80" >
+    <div name='feedback' class='container'>
   <md-card ng-repeat='meal in pastMeals' ng-if='pastMeals.length' ng-cloak>
     <img ng-src="{{ meal.imgUrl }}" class="md-card-image">
     <md-card-title>
@@ -34,3 +36,6 @@
       </md-card-actions>
   </md-card>
 </div>
+
+    </div>
+</md-content>
