@@ -12,27 +12,33 @@ angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', '
 
     // enable when server returns meals with this information
     return (
-      angular.lowercase(meal.title).indexOf($scope.searchInput || '') !== -1 || 
-      angular.lowercase(meal.description).indexOf($scope.searchInput || '') !== -1|| 
-      angular.lowercase(meal.tags).indexOf($scope.searchInput || '') !== -1|| 
-      angular.lowercase(meal.ingredients).indexOf($scope.searchInput || '') !== -1|| 
+      angular.lowercase(meal.title).indexOf($scope.searchInput || '') !== -1 ||
+      angular.lowercase(meal.description).indexOf($scope.searchInput || '') !== -1||
+      angular.lowercase(meal.tags).indexOf($scope.searchInput || '') !== -1||
+      angular.lowercase(meal.ingredients).indexOf($scope.searchInput || '') !== -1||
       angular.lowercase(meal.creator).indexOf($scope.searchInput || '') !== -1);
   };
 
   $scope.data;
   $scope.browseMeals = [];
 
-  Meals.getAllMeals().then(function(data){
-    $scope.browseMeals = data.data.map(function(datum) {
-      datum.ingredients.length ? datum.ingredients = datum.ingredients.join(', ') : datum.ingredients = 'Not Available';
-      datum.tags.length ? datum.tags = datum.tags.join(', ') : datum.tags = 'None/Not Available';
+  Users.getUserInfo().then(function (user){
+    return user.displayName;
+  }).then(function (displayName){
+    Meals.getAllMeals().then(function(data){
+      $scope.browseMeals = data.data.map(function(datum) {
+        datum.ingredients.length ? datum.ingredients = datum.ingredients.join(', ') : datum.ingredients = 'Not Available';
+        datum.tags.length ? datum.tags = datum.tags.join(', ') : datum.tags = 'None/Not Available';
 
-      return datum;
-    })
-    .filter(function(datum) {
-      return datum.creator.displayName !== User.userData.displayName;
+        return datum;
+      })
+      .filter(function(datum) {
+
+        return datum._creator.displayName !== displayName;
+      });
     });
-  });
+  })
+
 
   var mealController = function($scope, $mdDialog, meal) {
     $scope.meal = meal;
