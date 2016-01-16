@@ -34,15 +34,10 @@ module.exports = {
 
   createMeal: function(req, res, next) {
 
-    console.log('Fields: ', req.fields);
-    console.log('newPath: ', req.newPath);
-    console.log('Description: ', req.fields.description[0].split(', '))
-    console.log('Ingredients: ', req.fields.ingredients[0].split(', '))
-
     User.findOne({ username: req.username })
     .then(function(user) {
       createMeal({
-        imgUrl: req.newPath,
+        imgUrl: req.imgPath,
         description: req.fields.description[0].split(', '),
         title: req.fields.title[0],
         ingredients: req.fields.ingredients[0].split(', '),
