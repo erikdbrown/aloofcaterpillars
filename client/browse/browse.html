@@ -13,7 +13,7 @@
 
     <div class='md-padding' layout="row" layout-wrap ng-if='browseMeals.length'>
       <md-card style="width: 325px;" ng-repeat="meal in browseMeals | filter:search" ng-if='!meal.hide'>
-        <img src="{{ meal.imgUrl }}" class="md-card-image" alt="user avatar">
+        <img ng-src="{{ meal.imgUrl }}" class="md-card-image" alt="user avatar">
         <md-card-content>
           <h2>{{ meal.title }}</h2>
           <h4>Available {{ meal.date_available | date : mediumDate }}</h4>
