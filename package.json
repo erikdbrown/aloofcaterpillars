@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Legacy Project",
   "main": "index.js",
+  "engines": {
+    "node": "4.2.2."
+  },
   "scripts": {
     "test": "mocha specs/apispec.js",
-    "start": "nodemon server/server.js",
+    "start": "node server/server.js",
     "postinstall": "bower install"
   },
   "repository": {
