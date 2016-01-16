@@ -1,0 +1,19 @@
+<md-dialog>
+  <md-card style="width: 400px;">
+    <img ng-src="{{ person.imgUrl }}" class="md-card-image">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">{{ person.name }}</span>
+        {{ person.role }}
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+      {{ person.description }}
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="end">
+      <md-button ng-href="{{ person.github }}" >
+       Find on Github
+      </md-button>
+    </md-card-actions> 
+  </md-card>
+</md-dialog>

@@ -38,7 +38,6 @@ angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', '
     });
   })
 
-
   var mealController = function($scope, $mdDialog, meal) {
     $scope.meal = meal;
 
