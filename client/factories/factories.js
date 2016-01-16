@@ -27,8 +27,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       data: meal
     })
     .then(function(resp) {
-      return resp.data
-      console.log('meal is stored')
+      return resp.data;
     })
   }
 
@@ -251,7 +250,12 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
         method: "GET",
         url: '/boorish/users/'
       }).then(function (resp){
-        userData = {lunchboxes: resp.data.foodTokens, rating: resp.data.rating, name: resp.data.displayName || resp.data.username};
+        var userData = {
+          lunchboxes: resp.data.foodTokens,
+          rating: resp.data.rating,
+          displayName: resp.data.displayName,
+          username: resp.data.username
+        };
         return userData;
       })
     };
@@ -334,12 +338,12 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
 
     var editFeedback = function (changes){
 
-    $http({
-      method: "PUT",
-      url: "/boorish/feedback/meals/" + mid
-      data: changesS
-    })
-  }
+      $http({
+        method: "PUT",
+        url: "/boorish/feedback/meals/" + mid
+        data: changesS
+      })
+    }
 
     return {
       submitFeedback: submitFeedback,
@@ -353,4 +357,4 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     //   })
     // }
 
-  })
+  });
