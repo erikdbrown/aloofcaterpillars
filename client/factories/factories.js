@@ -41,6 +41,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       console.log(resp)
       return resp.data;
     }).error(function(){
+
       alert('Error: Cannot Retrieve Meals From Server. Check your connection & try again');
     })
   }
