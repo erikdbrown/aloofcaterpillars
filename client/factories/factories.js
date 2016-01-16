@@ -237,11 +237,11 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
         url: '/boorish/meals/users/'
       }).then(function (resp){
         var userMeals = {};
-        // var userMeals = {hi: "bye"};
-        if(resp.consumed){
+
+        if(resp.data.consumed){
           userMeals.eating = {
-            current: resp.consumed.current,
-            past: resp.consumed.past
+            current: resp.data.consumed.current || [],
+            past: resp.data.consumed.past || []
           }
         }
         else{
@@ -250,10 +250,10 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
             past: []
           }
         }
-        if(resp.created){
+        if(resp.data.created){
           userMeals.created = {
-            current: resp.created.current,
-            past: resp.created.past
+            current: resp.data.created.current || [],
+            past: resp.data.created.past || []
           }
         }
         else{
