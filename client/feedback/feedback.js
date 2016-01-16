@@ -1,10 +1,13 @@
 angular.module('feedback', ['ngMaterial', 'ngMessages'])
 
-.controller('feedbackController', function(Users) {
+.controller('feedbackController', function($scope, Users) {
   Users.getMeals()
   .then(function(meals) {
-    var pastMeals = meals.created.past;
-    var meals;
+    var pastMeals;
+
+    if (meals.created && meals.created.past) {
+      pastMeals = meals.created.past;
+    }
 
     if (pastMeals.length) {
       $scope.pastMeals = pastMeals.map(function(pastMeal) {
