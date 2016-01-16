@@ -60,7 +60,7 @@ angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', '
       targetEvent: event,
       clickOutsideToClose: true,
       locals: {
-        person: person
+        meal: meal
       }
     })
     .then(function(request) {
