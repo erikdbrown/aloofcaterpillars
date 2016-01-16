@@ -6,12 +6,9 @@
         <md-card-title-text>
           <span class="md-headline">Lunchboxes In Your Crate</span>
         </md-card-title-text>
-        <md-card-title-media>
-          <div class="md-media-lg card-media"></div>
-        </md-card-title-media>
       </md-card-title>
-      <md-card-content>
-        <p>{{ foodTokens }}</p>
+      <md-card-content layout="row" layout-align="center center">
+        <p>{{ tokenBalance }}</p>
       </md-card-content>
     </md-card>
 
@@ -23,9 +20,9 @@
         </md-card-title-text>
       </md-card-title>
       <md-card-content>
-        <p>{{ nextMeal.title }}</p>
-        <p>{{ nextMeal.date_available }}</p>
-        <p>{{ nextMeal.portions }}</p>
+        <p>{{ nextOffer.title }}</p>
+        <p>{{ nextOffer.date_available }}</p>
+        <p>{{ nextOffer.portions }}</p>
       </md-card-content>
       <md-card-actions layout="column" layout-align="start">
         <md-button href="#/create">Create a meal!</md-button>
@@ -56,9 +53,9 @@
         </md-card-title-text>
       </md-card-title>
       <md-card-content>
-        <p>{{ nextOffer.title }}</p>
-        <p>{{ nextOffer.date_available }}</p>
-        <p>Made by {{ nextOffer.creator }}</p>
+        <p>{{ nextMeal.title }}</p>
+        <p>{{ nextMeal.date_available }}</p>
+        <p>Made by {{ nextMeal.creator }}</p>
       </md-card-content>
       <md-card-actions layout="column" layout-align="start">
         <md-button href="#/orders">More Meals...</md-button>
