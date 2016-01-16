@@ -38,11 +38,6 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       method: 'GET',
       url: '/boorish/meals'
     }).then(function(resp){
-      if(typeof resp.data === 'object'){
-        var arr = [];
-        arr.push(resp.data)
-        return arr;
-      }
       return resp.data;
     })
   }
