@@ -1,38 +1,49 @@
-<md-content name='dashboard' class="md-padding" layout='row' layout-align="center center" flex>
-  <div  flex="80" layout='row' layout-align="center none" layout-wrap>
-    <!--<md-card flex="30">-->
-      <!--<md-card-title>-->
-        <!--<md-card-title-text>-->
-          <!--<span class="md-headline">Lunchboxes</span>-->
-        <!--</md-card-title-text>-->
-      <!--</md-card-title>-->
-      <!--<md-card-content layout="row" layout-align="center none">-->
-        <!--<md-icon style="font-size: 48px">shopping_basket</md-icon>{{ tokenBalance }}-->
-      <!--</md-card-content>-->
-    <!--</md-card>-->
+<md-content name='dashboard' class="md-padding" layout='row' layout-align="center start" flex>
 
-    <md-card flex="30">
-      <img ng-src="{{ nextOffer.imgUrl }}" class="md-card-image">
+  <div  flex="80" layout='row' layout-align="center none" layout-wrap>
+    <md-card flex="95">
+      <md-card-content layout="row" layout-align="center none">
+          <h1>{{specialName}}</h1> <span flex></span>
+          <p></p>
+        <div flex="15" flex-sm="20" flex-xs="50" layout="row" layout-align="space-around none">
+          <md-icon style="margin-top: 20px; font-size: 48px" >shopping_basket</md-icon>
+          <h1>{{tokenBalance}}</h1>
+        </div>
+      </md-card-content>
+    </md-card>
+
+    <md-card flex="30" flex-sm="100" flex-xs="100">
+      <div class="number" flex="none">
+            <span>Bring {{nextOffer.portions}}</span>
+        </div>
+        <div class="img-container">
+          <img ng-src="{{ nextOffer.imgUrl }}" class="md-card-image">
+        </div>
       <md-card-title>
         <md-card-title-text>
-          <span class="md-headline">Next Meal You're Sharing</span>
+          <span class="md-headline">You're Sharing</span>
         </md-card-title-text>
       </md-card-title>
       <md-card-content>
-        <p>{{ nextOffer.title }}</p>
-        <p>On {{ nextOffer.date_available | date : mediumDate }}</p>
-        <p>Bring {{ nextOffer.portions- nextOffer.portions_left }} portions!</p>
+        <span class="md-headline" >{{ nextOffer.title }}</span> <span flex></span>
+        <span class="md-subhead" style="float: right; margin-top: 6px"> <md-icon>date_range</md-icon> {{ nextOffer.date_available | date : 'MMM d' }}</span>
+        <!--<p>Bring {{ nextOffer.portions - nextOffer.portions_left }} portions!</p>-->
+
       </md-card-content>
       <md-card-actions layout="column" layout-align="start">
         <md-button href="#/create">Create a meal!</md-button>
       </md-card-actions>
     </md-card>
 
-    <md-card flex="30">
-      <img ng-src="{{ oneFeedback.imgUrl }}" class="md-card-image">
+    <md-card flex="30" flex-sm="100" flex-xs="100">
+
+        <div class="img-container">
+          <img ng-src="{{ oneFeedback.imgUrl }}" class="md-card-image">
+        </div>
+
       <md-card-title>
         <md-card-title-text>
-          <span class="md-headline">What People Think About...</span>
+          <span class="md-headline">Feedback</span>
         </md-card-title-text>
       </md-card-title>
       <md-card-content>
@@ -44,16 +55,20 @@
       </md-card-actions>
     </md-card>
 
-    <md-card flex="30">
-      <img ng-src="{{ nextMeal.imgUrl }}" class="md-card-image">
+    <md-card flex="30" flex-sm="100" flex-xs="100">
+
+        <div class="img-container">
+           <img ng-src="{{ nextMeal.imgUrl }}" class="md-card-image">
+        </div>
+
       <md-card-title>
         <md-card-title-text>
-          <span class="md-headline">Your Next Meal</span>
+          <span class="md-headline">You're Eating</span>
         </md-card-title-text>
       </md-card-title>
       <md-card-content>
-        <p>{{ nextMeal.title }}</p>
-        <p>{{ nextMeal.date_available }}</p>
+        <span class="md-headline" >{{ nextMeal.title }}</span> <span flex></span>
+        <span class="md-subhead" style="float: right; margin-top: 6px"> <md-icon>date_range</md-icon> {{ nextMeal.date_available | date : 'MMM d' }}</span>
         <p>Made by {{ nextMeal.creator }}</p>
       </md-card-content>
       <md-card-actions layout="column" layout-align="start">

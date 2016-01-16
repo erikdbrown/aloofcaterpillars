@@ -21,6 +21,7 @@ footer md-toolbar {
 .material-icons {
   /*margin-top: -2px;*/
   line-height: 0.9;
+  margin: 0;
 }
 
 md-menu-bar md-menu.md-open > .dropdown-icon-btn {
