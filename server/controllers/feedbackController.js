@@ -20,13 +20,14 @@ module.exports = {
         Feedback.find({ consumer: consumer }, function(err, feedbacks) {
           var mealsWithFeedback = feedbacks.map(function(feedback) {
             return feedback.meal;
-          })
+          });
           var mealsWithoutFeedback = [];
           meals.forEach(function(meal) {
-            if (!mealsWithFeedback.contains(meal._id)) {
+            if (mealsWithFeedback.indexOf(meal._id) === -1) {
               mealsWithoutFeedback.push(meal);
             }
-          })
+          });
+          res.json(mealsWithoutFeedback);
         })
       })
     })
