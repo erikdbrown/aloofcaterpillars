@@ -14,7 +14,7 @@ var MealSchema = mongoose.Schema({
   date_available: { type: Date, default: Date.now }, // TODO: check that this is correct
   portions: Number,
   portions_left: Number,
-  tags: [{type: mongoose.Schema.Types.ObjectId, ref: 'Ingredients'}], // in query, this will be populated
+  tags: [String], // in query, this will be populated
   rating: { type: Number, default: 0 } // need to write a 'query with options' http://mongoosejs.com/docs/populate.html
 },
 { 
