@@ -119,7 +119,7 @@ angular.module('oneApp', [
   })
   .run(function($rootScope, $location, Auth) {
     $rootScope.$on('$routeChangeStart', function(evt, next, current) {
-      if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
+      if (next.$$route && next.$$route.authenticate) {
         $location.path('/signin');
       }
     });
