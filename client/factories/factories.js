@@ -38,10 +38,8 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       method: 'GET',
       url: '/boorish/meals'
     }).success(function(resp){
-      console.log(resp)
       return resp.data;
     }).error(function(){
-
       alert('Error: Cannot Retrieve Meals From Server. Check your connection & try again');
     })
   }
@@ -243,20 +241,28 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
         var userMeals = {};
         // var userMeals = {hi: "bye"};
         if(resp.consumed){
-          userMeals.currentEating = resp.consumed.current;
-          userMeals.pastEating = resp.consumed.past;
+          userMeals.eating = {
+            current: resp.consumed.current,
+            past: resp.consumed.past
+          }
         }
         else{
-          userMeals.currentEating = [];
-          userMeals.pastEating = []
+          userMeals.eating = {
+            current: [],
+            past: []
+          }
         }
         if(resp.created){
-          userMeals.currentCreated = resp.created.current;
-          userMeals.pastCreated = resp.created.past;
+          userMeals.created = {
+            current: resp.created.current,
+            past: resp.created.past
+          }
         }
         else{
-          userMeals.currentCreated = [];
-          userMeals.pastCreated = []
+          userMeals.created = {
+            current: [],
+            past: []
+          }
         }
         return userMeals;
       })
@@ -274,7 +280,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
             lunchboxes: resp.data.foodTokens,
             rating: resp.data.rating,
             displayName: resp.data.displayName,
-            username: resp.data.username
+            id: resp.data.id
           };
           return userData;
         })
