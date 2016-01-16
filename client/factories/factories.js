@@ -336,8 +336,8 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
 
     $http({
       method: "PUT",
-      url: "/boorish/feedback/meals/" + mid
-      data: changes 
+      url: "/boorish/feedback/meals/" + mid,
+      data: changes
     })
   }
 
