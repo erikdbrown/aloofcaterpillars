@@ -359,10 +359,11 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
   .factory('Feedback', function ($http){
 
     var retrieveAllFeedback = function (){
-      $http({
+      return $http({
         method: "GET",
         url: '/boorish/feedback/meals'
       }).then(function (resp){
+        console.log(resp.data);
         return resp.data;
       })
     }
@@ -399,6 +400,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     return {
       submitFeedback: submitFeedback,
       retrieveFeedBack: retrieveFeedBack,
+      retrieveAllFeedback: retrieveAllFeedback,
       editFeedback: editFeedback
     }
     // var retrieveFeedBack = function (){
