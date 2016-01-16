@@ -1,6 +1,6 @@
 
-angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', 'fmp-card'])
-.controller('browseCtrl',   function($scope, $window, Meals, Users, Auth, $mdDialog) {
+angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate'])
+.controller('browseCtrl', function($scope, $window, Meals, Users, Auth, $mdDialog) {
 
   $scope.searchInput = '';
 
@@ -16,7 +16,7 @@ angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', '
       angular.lowercase(meal.description).indexOf($scope.searchInput || '') !== -1||
       angular.lowercase(meal.tags).indexOf($scope.searchInput || '') !== -1||
       angular.lowercase(meal.ingredients).indexOf($scope.searchInput || '') !== -1||
-      angular.lowercase(meal.creator).indexOf($scope.searchInput || '') !== -1);
+      angular.lowercase(meal._creator.displayName).indexOf($scope.searchInput || '') !== -1);
   };
 
   $scope.data;
