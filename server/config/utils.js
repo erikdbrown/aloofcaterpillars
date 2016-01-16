@@ -18,23 +18,22 @@ module.exports = {
         res.status(err.status).end();
       }
     })
-  },
-
-  getTags: function(req, res, next) {
-
-    var options = {
-      url: 'http://api.nal.usda.gov/ndb/list?format=json&lt=g&sort=n&api_key=' + givKey,
-      headers: {
-        'X-Mashape-Key': 
-      }
-    };
-
-    request(options, function (error, response, body) {
-      if (!error && response.statusCode === 200) {
-        console.log(body)
-      } else {
-        console.log(error);
-      }
-    });
   }
-}
+  // getTags: function(req, res, next) {
+
+  //   var options = {
+  //     url: 'http://api.nal.usda.gov/ndb/list?format=json&lt=g&sort=n&api_key=' + givKey,
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   };
+
+  //   request(options, function (error, response, body) {
+  //     if (!error && response.statusCode === 200) {
+  //       console.log(body)
+  //     } else {
+  //       console.log(error);
+  //     }
+  //   });
+  }
+// }
