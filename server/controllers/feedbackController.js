@@ -10,6 +10,28 @@ var findMeal = Q.nbind(Meal.findOne, Meal);
 
 module.exports = {
 
+  allFeedbackForMeals: function(req, res, next) {
+    var username = req.username;
+
+    User.findOne({ username: req.username })
+    .then(function(consumer) {
+      Meal.find({ consumers: consumer._id }, function(err, meals) {
+        if (err) { throw 'There was an error in retrieving meals: ' + err; }
+        Feedback.find({ consumer: consumer }, function(err, feedbacks) {
+          var mealsWithFeedback = feedbacks.map(function(feedback) {
+            return feedback.meal;
+          })
+          var mealsWithoutFeedback = [];
+          meals.forEach(function(meal) {
+            if (!mealsWithFeedback.contains(meal._id)) {
+              mealsWithoutFeedback.push(meal);
+            }
+          })
+        })
+      })
+    })
+  },
+
   retrieveFeedback: function(req, res, next) {
     // returns the ratings for the meals from a specific user
     var meal_id = req.params.id;

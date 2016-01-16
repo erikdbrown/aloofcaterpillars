@@ -28,6 +28,7 @@ module.exports = function(app, express) {
   app.put('/boorish/meals/users/:id', helpers.decode, mealController.deleteMealFromUser); // removes a meal from a user's list. redistributes tokena
 
   // retrieving and adding feedback on individual meals
+  app.get('/boorish/feedback/meals/', helpers.decode, feedbackController.allFeedbackForMeals);
   app.get('/boorish/feedback/meals/:id', helpers.decode, feedbackController.retrieveFeedback); // retrievies average feedback on a meal
   app.post('/boorish/feedback/meals/:id', helpers.decode, feedbackController.addFeedback); // adds feedback to a specific meal by a consumer
 

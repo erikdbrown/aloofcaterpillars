@@ -1,12 +1,12 @@
 {
-  "name": "OneForOne",
+  "name": "Lunchbox",
   "description": "Trade meals with peers at Hack Reactor",
   "main": "index.js",
   "authors": [
-    "Anthony Chung",
-    "Jonathan Fiamor",
-    "Joey Holland",
-    "Yoni Mekuria"
+    "Gisela Kottmeier",
+    "Erik Brown",
+    "Steven Law",
+    "Siobhan O'Donovan"
   ],
   "license": "MIT",
   "moduleType": [],
