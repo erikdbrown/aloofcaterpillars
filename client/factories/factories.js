@@ -229,7 +229,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       deleteAcc: deleteAcc
     };
   })
-  .factory('Users', function ($http){
+  .factory('Users', function ($http, $window){
     var userData = null;
 
     var getMeals = function (){
@@ -276,6 +276,10 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
           method: "GET",
           url: '/boorish/users/'
         }).then(function (resp){
+          $window.localStorage.setItem('com.oneAppTokens', resp.data.foodTokens);
+          $window.localStorage.setItem('com.oneAppRating', resp.data.rating);
+          $window.localStorage.setItem('com.oneAppName', resp.data.displayName);
+          $window.localStorage.setItem('com.oneAppID', resp.data.id);
           userData = {
             lunchboxes: resp.data.foodTokens,
             rating: resp.data.rating,
