@@ -71,6 +71,7 @@ module.exports = {
         res.sendStatus(404);
       } else {
         res.json({
+          id: user._id,
           username: user.username,
           foodTokens: user.foodTokens,
           displayName: user.displayName,
