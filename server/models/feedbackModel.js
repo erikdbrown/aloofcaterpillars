@@ -12,10 +12,6 @@ var FeedbackSchema = mongoose.Schema({
   meal: { type: mongoose.Schema.Types.ObjectId, ref: 'Meals' } // TODO: needs to reference the meal's ObjectID
 });
 
-// FeedbackSchema.pre('save', function(next) {
-
-// })
-
 var Feedback = mongoose.model('Feedback', FeedbackSchema);
 
 module.exports = Feedback;
