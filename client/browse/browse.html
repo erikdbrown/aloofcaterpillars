@@ -1,4 +1,4 @@
-<md-content class="md-padding" layout='row' layout-align="center center" flex>
+<md-content class="md-padding" layout='row' layout-align="center start" flex>
   <div layout="column" class="md-inline-form inputdemoBasicUsage" flex="80" ng-cloak>
     <div>
       <form name="userForm">
@@ -11,15 +11,20 @@
       </form>
     </div>
 
-    <div class='' layout="row" layout-align="space-around start" layout-wrap  >
-      <md-card flex="30" flex-sm="45" flex-xs="100" ng-repeat="meal in browseMeals | filter:search" ng-if='!meal.hide'>
+    <div class='' layout="row" layout-align="center none" layout-wrap  >
+      <md-card flex="30" flex-sm="45" flex-xs="100" ng-repeat="meal in browseMeals | filter:search" ng-if='!meal.hide' >
+        <div class="number" flex="none">
+            <span>{{meal.portions_left}} left</span>
+        </div>
         <div class="img-container">
           <img ng-src="{{ meal.imgUrl }}" class="md-card-image" alt="user avatar">
         </div>
-        <md-card-content>
-          <h2>{{ meal.title }}</h2>
-          <h4>Available {{ meal.date_available | date : mediumDate }}</h4>
-        </md-card-content>
+        <md-card-title>
+          <md-card-title-text layout='row' flex>
+            <span class="md-headline" >{{ meal.title }}</span> <span flex></span>
+            <span class="md-subhead" > <md-icon>date_range</md-icon> {{ meal.date_available | date : 'MMM d' }}</span>
+          </md-card-title-text>
+        </md-card-title>
         <md-card-actions layout="row" layout-align="end">
           <md-button ng-click="requestMeal(meal)" ng-if="!meal.self">
            Request
