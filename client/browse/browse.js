@@ -22,21 +22,20 @@ angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate'])
   $scope.data;
   $scope.browseMeals = [];
 
-  Users.getUserInfo().then(function (user){
-    return user.id;
-  }).then(function (id){
+  // Users.getUserInfo().then(function (user){
+  //   return user.id;
+  // }).then(function (id){
     Meals.getAllMeals().then(function(data){
       $scope.browseMeals = data.map(function(datum) {
         datum.ingredients.length ? datum.ingredients = datum.ingredients.join(', ') : datum.ingredients = 'Not Available';
         datum.tags.length ? datum.tags = datum.tags.join(', ') : datum.tags = 'None/Not Available';
-
-        if (datum._creator._id === id) {
+        if (datum._creator._id ===  $window.localStorage.getItem('com.oneAppID')) {
           datum.self = true;
         }
         return datum;
       });
     });
-  })
+  // })
 
   var mealController = function($scope, $mdDialog, meal) {
     $scope.meal = meal;
@@ -74,6 +73,9 @@ angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate'])
     meal.hide = true;
     Users.buyMeal(meal._id)
     .then(function(data) {
+      Users.getUserInfo().then(function (resp){
+        $scope.userInfo = resp;
+      });
       console.log('meal requested')
     });
   };
