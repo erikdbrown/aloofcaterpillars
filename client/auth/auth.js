@@ -1,6 +1,6 @@
 angular.module('auth', [])
 
-.controller('AuthController', function ($scope, $window, $location, Auth, Users) {
+.controller('AuthController', function ($scope, $window, $location, Auth, Users, $mdDialog) {
   $scope.user = {};
   $scope.userInfo = {}; // signedIn
   $scope.click = false;
@@ -8,6 +8,34 @@ angular.module('auth', [])
 
   //if you're coming from logout, destroy token
 
+  $scope.showError = function (ev){
+    // debugger;
+    if($scope.error){
+      $mdDialog.show(
+        $mdDialog.alert()
+        .parent(angular.element(document.querySelector('#popupContainer')))
+        .clickOutsideToClose(true)
+        .title('Error:')
+        .textContent($scope.error)
+        .ariaLabel('Alert Dialog Demo')
+        .ok('Got it!')
+        // .targetEvent(ev)
+      );
+    }
+  }
+
+  $scope.showOptionError = function (){
+    var confirm = $mdDialog.confirm()
+          .title('Would you like to sign in?')
+          .textContent($scope.error)
+          .ariaLabel('Lucky day')
+          .ok('Sign In')
+          .cancel('No, Let me sign up');
+    $mdDialog.show(confirm).then(function() {
+      $location.path('/signin');
+    }, function() {
+    });
+  }
   $scope.clicked = function() {
     $scope.click = true;
   }
@@ -33,6 +61,7 @@ angular.module('auth', [])
         }
         else{
           $scope.error = user.error;
+          $scope.showOptionError();
         }
 
       })
@@ -55,6 +84,7 @@ angular.module('auth', [])
         }
         else{
           $scope.error = user.error;
+          $scope.showError();
         }
       })
       .catch(function (error) {
@@ -82,6 +112,7 @@ angular.module('auth', [])
       }
       else {
         $scope.error = error;
+        $scope.showError();
       }
     })
   };
