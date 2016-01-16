@@ -1,6 +1,6 @@
 <md-dialog>
   <md-card style="width: 450px;">
-    <img ng-src="http://placehold.it/450x300" class="md-card-image">
+    <img ng-src="{{ meal.imgUrl }}" class="md-card-image">
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">{{ meal.title }}</span>
@@ -16,7 +16,7 @@
       <h5>Shared by {{ meal._creator.displayName }}</h5>
     </md-card-content>
     <md-card-actions layout="row" layout-align="end">
-      <md-button ng-click="requestMeal()">
+      <md-button ng-click="requestMeal()" ng-if='!meal.self'>
        Request
       </md-button>
       <md-button ng-click="close()">

@@ -11,7 +11,7 @@
       </form>
     </div>
 
-    <div class='md-padding' layout="row" layout-wrap ng-if='browseMeals.length'>
+    <div class='md-padding' layout="row" layout-wrap>
       <md-card style="width: 325px;" ng-repeat="meal in browseMeals | filter:search" ng-if='!meal.hide'>
         <img ng-src="{{ meal.imgUrl }}" class="md-card-image" alt="user avatar">
         <md-card-content>
@@ -19,7 +19,7 @@
           <h4>Available {{ meal.date_available | date : mediumDate }}</h4>
         </md-card-content>
         <md-card-actions layout="row" layout-align="end">
-          <md-button ng-click="requestMeal(meal)">
+          <md-button ng-click="requestMeal(meal)" ng-if="!meal.self">
            Request
           </md-button>
           <md-button ng-click="showMeal($event, meal)">
@@ -31,4 +31,3 @@
 
   </div>
 </div>
-
