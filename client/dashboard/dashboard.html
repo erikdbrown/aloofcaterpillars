@@ -21,8 +21,8 @@
       </md-card-title>
       <md-card-content>
         <p>{{ nextOffer.title }}</p>
-        <p>{{ nextOffer.date_available }}</p>
-        <p>{{ nextOffer.portions }}</p>
+        <p>On {{ nextOffer.date_available | date : mediumDate }}</p>
+        <p>Bring {{ nextOffer.portions }} portions!</p>
       </md-card-content>
       <md-card-actions layout="column" layout-align="start">
         <md-button href="#/create">Create a meal!</md-button>
