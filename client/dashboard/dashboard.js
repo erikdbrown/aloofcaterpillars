@@ -1,7 +1,7 @@
 angular.module('dashboard', ['ngMaterial', 'ngMessages'])
 
-.controller('dashController', function($scope, Users, Feedback) {
-  $scope.tokenBalance = $window.localStorage.getItem('com.oneAppTokens')
+.controller('dashController', function($scope, $window, Users, Feedback) {
+  $scope.tokenBalance = $window.localStorage.getItem('com.oneAppTokens');
 
   Users.getMeals()
   .then(function(meals) {
@@ -16,8 +16,9 @@ angular.module('dashboard', ['ngMaterial', 'ngMessages'])
       };
     }
 
-    if (meals.created && meals.created.current.length) {
+    if (meals.created && meals.created.current.length && !(meals.created.current[0].portions - meals.created.current[0].portions_left)) {
       $scope.nextOffer = meals.created.current[0];
+      $scope.nextOffer.portions = meals.created.current[0].portions - meals.created.current[0].portions_left;
     } else {
       $scope.nextOffer = {
         imgUrl: '/images/defaultMealImage.png', // need address of default image
