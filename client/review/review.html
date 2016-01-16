@@ -1,6 +1,6 @@
 <div name='dashboard' class='container'>
-  <md-content layout-padding>
-    <md-card ng-repeat='meal in needFeedback'>
+  <div class='md-padding' layout="row" layout-wrap>
+    <md-card ng-repeat='meal in needFeedback' ng-if='meal.show'>
       <img ng-src="" class="md-card-image">
       <md-card-title>
         <md-card-title-text>
@@ -10,22 +10,27 @@
       <md-card-content>
         <form ng-submit='submitFeedback(meal)'>
           <md-radio-group ng-model='meal.rating.One' layout='row'>
-            <p>Freshness:</p>
+            <p style='width:100px;'>Freshness:</p>
             <md-radio-button ng-repeat="score in [1, 2, 3, 4, 5]" ng-value="score" required>
             </md-radio-button>
           </md-radio-group>
           <md-radio-group ng-model='meal.rating.Two' layout='row'>
-            <p>Flavor:</p>
+            <p style='width:100px;'>Flavor:</p>
             <md-radio-button ng-repeat="score in [1, 2, 3, 4, 5]" ng-value="score" required>
             </md-radio-button>
           </md-radio-group>
-          <md-radio-group ng-model='meal.rating.Three'>
-            <p>Filling:</p>
+          <md-radio-group ng-model='meal.rating.Three' layout='row'>
+            <p style='width:100px;'>Filling:</p>
             <md-radio-button ng-repeat="score in [1, 2, 3, 4, 5]" ng-value="score" required>
             </md-radio-button>
           </md-radio-group>
         </form>
       </md-card-content>
+      <md-card-actions layout="row" layout-align="end">
+        <md-button ng-click="submitFeedback(meal)">
+         Submit Feedback
+        </md-button>
+      </md-card-actions>
     </md-card>
-  </md-content>
+  </div>
 </div>
