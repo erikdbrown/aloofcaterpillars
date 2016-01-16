@@ -8,7 +8,7 @@ module.exports = {
     var username;
 
     if (!token) {
-      return res.send(403); // send forbidden if a token is not provided
+      return res.sendStatus(403); // send forbidden if a token is not provided
     }
     try {
       // decode token and attach user to the request

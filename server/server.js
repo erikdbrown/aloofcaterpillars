@@ -13,7 +13,7 @@ mongoose.connect('mongodb://localhost/boorish');
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/../client'));// this serves all the static assests in the /client folder
+app.use(express.static(__dirname + '/../client')); // this serves all the static assests in the /client folder
 // app.use(express.cookieParser('shhhh, very secret'));// used for Auth uncomment when ready
 // app.use(session({secret: 'somesecret'})); // used for Auth
 

@@ -14,7 +14,7 @@ module.exports = function(app, express) {
   app.post('/boorish/users', userController.create); // creates a new user
   app.delete('/boorish/users/', helper.decode, userController.removeUser); // TODO: Remove a user and delete their created meals
   app.post('/boorish/users/signin', userController.signin); // sign in a user
-  app.get('/boorish/users/signedin', userController.checkAuth); // TODO: check user authorization
+  app.get('/boorish/users/signedin', helper.decode, userController.checkAuth); // TODO: check user authorization
 
   // creating, retreiving, and removing meals
   app.get('/boorish/meals', helper.decode, mealController.allAvailableMeals); // get all meals
@@ -32,5 +32,5 @@ module.exports = function(app, express) {
   app.post('/boorish/feedback/meals/:id', helper.decode, feedbackController.addFeedback); // adds feedback to a specific meal by a consumer
 
   // app.get('/boorish/tags', helper.decode, tagsController.getTags); // TODO: write controller function
-  app.get('/server/images/:id', helper.decode, utils.getImage);
+  app.get('server/images/:id', helper.decode, utils.getImage);
 };
