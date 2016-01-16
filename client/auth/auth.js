@@ -65,6 +65,10 @@ angular.module('auth', [])
 
   $scope.signout = function() {
     $window.localStorage.removeItem('com.oneApp')
+    $window.localStorage.removeItem('com.oneAppTokens');
+    $window.localStorage.removeItem('com.oneAppRating');
+    $window.localStorage.removeItem('com.oneAppName');
+    $window.localStorage.removeItem('com.oneAppID');
     $location.path('/signin')
   };
 
