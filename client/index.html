@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
-  <title>One For One</title>
+  <title>Lunchbox</title>
+  <link rel="shortcut icon" href="images/favicon.png">
+
+  <!--necessary for mobile-->
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
   
   <link rel="stylesheet" href="./lib/angular-material/angular-material.css">
   <link rel="stylesheet" href="./lib/fmp-card-directive/css/fmpCardDirective.css">
@@ -48,19 +52,19 @@
         <div class="md-toolbar-tools" flex="80" layout-align="center center">
           <a class='logo' href="#/browse">LUNCHBOX</a>
           <span flex></span>
-          <md-button ng-href="#/create" class="" aria-label="Learn More">Create Meal</md-button>
-          <md-button ng-href="#/view" class="" aria-label="Learn More">Pending</md-button>
+          <md-menu-bar role="menubar" layout-align="center center" layout="row">
+            <md-button ng-href="#/create" class="" aria-label="Learn More"> <md-icon >add_circle</md-icon> Add Meal</md-button>
 
-          <md-menu md-position-mode="target-right target" md-offset="0 40">
-            <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu" flex>
-                <!--<img class="nav-profile-pic" src="http://lh4.googleusercontent.com/-CwacxnKPUsA/AAAAAAAAAAI/AAAAAAAAAAA/t80dR3yDxcM/s64-c-mo/photo.jpg">-->
-              <md-icon style="font-size:36px; margin-left: -13px; margin-top:-13px;">account_circle</md-icon>
-            </md-button>
-            <md-menu-content>
-              <md-menu-item><md-button ng-href="#/dashboard">Dashboard</md-button></md-menu-item>
-              <md-menu-item><md-button ng-click="signout()">Logout</md-button></md-menu-item>
-            </md-menu-content>
-          </md-menu>
+            <md-menu md-position-mode="target-right bottom">
+              <md-button ng-click="$mdOpenMenu($event)" class="dropdown-icon-btn" aria-label="Open sample menu">
+                <md-icon >account_circle</md-icon> User
+              </md-button>
+              <md-menu-content width="2">
+                <md-menu-item><md-button ng-href="#/dashboard"> <md-icon >settings_input_svideo</md-icon> Dashboard</md-button></md-menu-item>
+                <md-menu-item><md-button ng-click="signout()"> <md-icon >exit_to_app</md-icon> Logout</md-button></md-menu-item>
+              </md-menu-content>
+            </md-menu>
+          </md-menu-bar>
         </div>
       </md-toolbar>
     </header>
