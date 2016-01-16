@@ -70,14 +70,14 @@ angular.module('auth', [])
     })
   };
 
-  $scope.isAuth = function (){
-    Auth.isAuth().then(function (resp){
-      if(resp){
-        return true;
-      }
-      else{
-        return false;
-      }
-    })
-  }
+  // $scope.isAuth = function (){
+  //   Auth.isAuth().then(function (resp){
+  //     if(resp){
+  //       return true;
+  //     }
+  //     else{
+  //       return false;
+  //     }
+  //   })
+  // }
 });
