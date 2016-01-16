@@ -37,10 +37,8 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     return $http({
       method: 'GET',
       url: '/boorish/meals'
-    }).success(function(resp){
+    }).then(function(resp){
       return resp.data;
-    }).error(function(){
-      alert('Error: Cannot Retrieve Meals From Server. Check your connection & try again');
     })
   }
 
@@ -237,7 +235,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       return $http({
         method: "GET",
         url: '/boorish/meals/users/'
-      }).success(function (resp){
+      }).then(function (resp){
         var userMeals = {};
         // var userMeals = {hi: "bye"};
         if(resp.consumed){
