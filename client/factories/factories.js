@@ -343,7 +343,6 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
         url: "/boorish/feedback/meals/" + mid,
         data: changes
       });
-    }
 
     return {
       submitFeedback: submitFeedback,
