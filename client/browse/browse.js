@@ -22,61 +22,15 @@ angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', '
   $scope.data;
   $scope.browseMeals = [];
 
-  // disable this when server works
-  // $scope.browseMeals = [{
-  //   _id: 1,// _id: populated automatically by mongoDB
-  //   imgUrl: 'http://placehold.it/325x325', // TODO: store picure URL 
-  //   description: 'It\'s... just ice cream. I mean, it\'s pretty good ice cream, but don\'t expect the world',
-  //   title: 'A la mode a la mode',
-  //   ingredients: 'beef, chicken',
-  //   _creator: 'Mark', // TODO: need to pull the _id from Users schema
-  //   consumers: ['Jack', 'Marshall'],  // in query, this will be populated
-  //   date_available: new Date(), // TODO: check that this is correct
-  //   portions: 5,
-  //   tags: 'vegan, low-carb', // in query, this will be populated
-  //   rating: 4 // need to write a 'query with options' http://mongoosejs.com/docs/populate.html
-  // }, {
-  //   _id: 2,// _id: populated automatically by mongoDB
-  //   imgUrl: 'http://placehold.it/325x325', // TODO: store picure URL 
-  //   description: 'You don\'t want to know',
-  //   title: 'hot dog',
-  //   ingredients: ['beef', 'chicken'],
-  //   _creator: 'Jack', // TODO: need to pull the _id from Users schema
-  //   consumers: ['Michael'],  // in query, this will be populated
-  //   date_available: new Date(), // TODO: check that this is correct
-  //   portions: 2,
-  //   tags: ['vegan', 'low-carb'], // in query, this will be populated
-  //   rating: 5 // need to write a 'query with options' http://mongoosejs.com/docs/populate.html
-  // }];
-  // enable this when server works
   Meals.getAllMeals().then(function(data){
     $scope.browseMeals = data.data.map(function(datum) {
-      if (datum.ingredients.length) {
-        datum.ingredients = datum.ingredients.split(', ');
-      }
-      if (datum.tags.length) {
-        datum.tags = datum.tags.split(', ');
+      datum.ingredients.length ? datum.ingredients = datum.ingredients.join(', ') : datum.ingredients = 'Not Available';
+      datum.tags.length ? datum.tags = datum.tags.join(', ') : datum.tags = 'None/Not Available';
 
-    // This is hard coded because we wanted a filtering mechanism by the "dominant ingredient"
-    // $scope.proteins = [
-    //   { category: 'meat', name: 'Chicken' },
-    //   { category: 'meat', name: 'Beef' },
-    //   { category: 'meat', name: 'Pork' },
-    //   { category: 'meat', name: 'Bacon' },
-    //   { category: 'veg', name: 'Tofu' },
-    //   { category: 'veg', name: 'Beans' },
-    //   { category: 'veg', name: 'Protein Shake' },
-    //   { category: 'veg', name: 'Grass' }
-    // ];
-    //
-    // $scope.restrict = [
-    //   'All', 'Vegetarian', 'Gluten-Free', 'Paleo', 'Low-Carb'
-    // ]
-      }
       return datum;
     })
     .filter(function(datum) {
-      return datum.creator !== Auth.currentUser();
+      return datum.creator.displayName !== User.userData.displayName;
     });
   });
 
