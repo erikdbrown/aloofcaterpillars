@@ -13,7 +13,8 @@ angular.module('oneApp', [
   'review',
   'viewReq',
   'base64', //Needed for photo upload
-  'ngFileUpload' //Needed for photo upload
+  'ngFileUpload', //Needed for photo upload
+  'about'
 ])
 
 .config(function($routeProvider, $httpProvider, $mdThemingProvider) {
@@ -96,6 +97,10 @@ angular.module('oneApp', [
       .when('/review', {
         templateUrl: '/review/review.html',
         controller: 'reviewController'
+      })
+      .when('/about', {
+        templateUrl: '/about/about.html',
+        controller: 'aboutController'
       })
       .otherwise({
         redirectTo: '/dashboard'

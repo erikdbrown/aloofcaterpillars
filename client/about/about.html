@@ -1,0 +1,33 @@
+<md-content class="md-padding" layout='row' layout-align="center center" flex>
+  <div flex="80" >
+    <h1 class= '.md-display-2'></h1>
+    <div class="createForm" ng-cloak>
+      <md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">About Lunchbox</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+        Bacon ipsum dolor amet tail bacon sirloin corned beef jerky leberkas shankle t-bone spare ribs filet mignon pork loin. Swine landjaeger picanha pork belly kevin filet mignon ball tip, venison chuck jerky porchetta sirloin tongue sausage. Swine pastrami meatball, biltong bacon tri-tip ribeye. Fatback capicola kevin sausage turducken salami swine meatloaf drumstick ribeye. Short ribs kielbasa kevin shankle landjaeger flank sausage hamburger jowl cupim tail pork chop drumstick spare ribs turducken. Frankfurter rump pork loin, tri-tip fatback sausage ham bresaola pig salami. Bresaola porchetta pork chop boudin rump picanha.
+        <div ng-cloak>
+        </div>
+      </md-card>
+      <div class='md-padding' layout="row" layout-wrap>
+      <md-card style="width: 200px;" ng-repeat="person in persons">
+        <img ng-src="{{ person.imgUrl }}" class="md-card-image" alt="user avatar">
+        <md-card-content>
+          <h4>{{ person.name }}</h4>
+          {{ person.role }}
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end">
+          <md-button ng-click="showPerson($event, person)">
+           More Info
+          </md-button>
+        </md-card-actions>
+      </md-card>
+    </div>
+      
+    </div>
+  </div>
+</md-content>

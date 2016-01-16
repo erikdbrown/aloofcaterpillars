@@ -38,7 +38,6 @@ angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', '
     });
   })
 
-
   var mealController = function($scope, $mdDialog, meal) {
     $scope.meal = meal;
 
@@ -61,7 +60,7 @@ angular.module('browse',['ngMaterial', 'ngMessages', 'factories', 'ngAnimate', '
       targetEvent: event,
       clickOutsideToClose: true,
       locals: {
-        meal: meal
+        person: person
       }
     })
     .then(function(request) {
