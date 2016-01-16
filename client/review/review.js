@@ -1,36 +1,39 @@
 angular.module('review', ['ngMaterial', 'ngMessages'])
 
-.controller('reviewController', function(Auth, Users, Feedback) {
+.controller('reviewController', function($scope, $window, Auth, Users, Feedback) {
   Users.getMeals()
   .then(function(meals) {
     var needFeedback = [];
-    meals.eating.past.forEach(function(meal) {
-      var found = false;
-      for (var i = 0; i < meal.feedback.length; i++) {
-        if (meal.feedback[i].user_eater === Auth.currentUser) {
-          found = true;
-        }
-      }
-      if (!found) {
-        meal.rating = {
-          One: 3,
-          Two: 3, 
-          Three: 3
-        };
-        needFeedback.push(meal);
-      }
-    });
-    $scope.needFeedback = needFeedback;
+    var reviewerID = $window.localStorage.getItem('com.oneAppID');
+    if (meals.eating.past.length) {
+      Feedback.retrieveAllFeedback()
+      .then(function(meals) {
+        meals = meals.map(function(meal) {
+          meal.rating = {
+            One: 3,
+            Two: 3, 
+            Three: 3
+          };
+          meal.show = true;
+          return meal;
+        });
+        $scope.needFeedback = meals;
+      });
+    } else {
+      $scope.needFeedback = [];
+    }
   });
 
   $scope.submitFeedback = function(meal) {
+    console.log(meal);
     var feedback = {
-      meal_id: meal.meal_id,
-      ratingOne: meal.rating.One,
-      ratingTwo: meal.rating.Two,
-      ratingThree: meal.rating.Three
+      freshness: meal.rating.One,
+      flavor: meal.rating.Two,
+      filling: meal.rating.Three
     };
-    Feedback.submitFeedback(feedback);
+    
+    Feedback.submitFeedback(meal._id, feedback);
+    meal.show = false;
   };
 
 });
