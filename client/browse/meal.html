@@ -13,7 +13,7 @@
         Ingredients: {{ meal.ingredients }} <br />
         Dietary restrictions: {{ meal.tags }}
       </h5>
-      <h5>Shared by {{ meal._creator }}</h5>
+      <h5>Shared by {{ meal._creator.displayName }}</h5>
     </md-card-content>
     <md-card-actions layout="row" layout-align="end">
       <md-button ng-click="requestMeal()">
