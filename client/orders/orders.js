@@ -1,6 +1,6 @@
 angular.module('orders', ['ngMaterial', 'ngMessages'])
 
-.controller('ordersController', function(Users) {
+.controller('ordersController', function($scope, Users) {
   Users.getMeals()
   .then(function(meals) {
     $scope.sharedMeals = meals.created.current.map(function(sharedMeal) {
