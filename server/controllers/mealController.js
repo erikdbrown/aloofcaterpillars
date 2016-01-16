@@ -1,12 +1,14 @@
 var Q = require('q');
 var Meal = require('../models/mealModel.js');
 var User = require('../models/userModel.js');
+var keys = require('../config/apiKeys.js')
 var fs = require('fs');
 var path = require('path');
 var multiparty = require('multiparty');
 var Hashids = require("hashids");
 var hash = new Hashids('hrPenguins');
 var counter = 10000;
+// var s3 = new AWS.S3({ params: { Bucket: 'lunchboxhr', Key: keys.s3Key } });
 
 
 //findone is the actual mongoose method, and it is being called on the Meal model provided as the second arg. 
