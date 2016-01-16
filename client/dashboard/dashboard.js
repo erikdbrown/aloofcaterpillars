@@ -1,10 +1,7 @@
 angular.module('dashboard', ['ngMaterial', 'ngMessages'])
 
-.controller('dashController', function($scope, Users) {
-  Users.getUserInfo()
-  .then(function(user) {
-    $scope.tokenBalance = user.lunchboxes;
-  });
+.controller('dashController', function($scope, $window, Users, Feedback) {
+  $scope.tokenBalance = $window.localStorage.getItem('com.oneAppTokens');
 
   Users.getMeals()
   .then(function(meals) {
@@ -15,24 +12,26 @@ angular.module('dashboard', ['ngMaterial', 'ngMessages'])
         imgUrl: '/images/defaultMealImage.png', // need address of default image
         title: 'We don\'t know what it is yet!',
         creator: 'a friend',
-        date_available: 'Sometime soon, we hope'
+        date_available: 'some day soon, we hope'
       };
     }
 
     if (meals.created && meals.created.current.length) {
       $scope.nextOffer = meals.created.current[0];
+      $scope.nextOffer.portions = meals.created.current[0].portions - meals.created.current[0].portions_left;
     } else {
       $scope.nextOffer = {
         imgUrl: '/images/defaultMealImage.png', // need address of default image
         title: 'Share a meal with someone',
         date_available: 'Sometime soon, we hope',
-        portions: 'Bring lots of'
+        portions: 'lots of'
       };
     }
 
     if (meals.created && meals.created.past.length) {
       var randIdx = Math.floor(Math.random()*meals.created.past.length);
       $scope.oneFeedback = meals.created.past[randIdx];
+      $scope.oneFeedback.overall = Feedback.retrieveFeedBack($scope.oneFeedback._id).overall;
     } else {
       $scope.oneFeedback = {
         imgUrl: '/images/defaultMealImage.png',

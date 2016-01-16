@@ -1,26 +1,26 @@
 <div name='feedback' class='container'>
   <md-card ng-repeat='meal in pastMeals' ng-if='pastMeals.length' ng-cloak>
+    <img ng-src="{{ meal.imgUrl }}" class="md-card-image">
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">{{ meal.title }}</span>
       </md-card-title-text>
-      <md-card-title-media>
-        <div class="md-media-md card-media"></div>
-      </md-card-title-media>
     </md-card-title>
     <md-card-content ng-if='meal.ratings.length'>
-      <p>Freshness: {{ meal.ratings[0] }} </p>
-      <p>Flavor: {{ meal.ratings[1] }} </p>
-      <p>Filling: {{ meal.ratings[2] }} </p>
+      <h3>Shared on {{ meal.date_available | date : mediumDate }}</h3>
+      <p>Freshness: {{ meal.ratings.freshness }} </p>
+      <p>Flavor: {{ meal.ratings.flavor }} </p>
+      <p>Filling: {{ meal.ratings.filling }} </p>
     </md-card-content>
     <md-card-content ng-if='!meal.ratings.length'>
-      <p>Nobody's provided any feedback yet :(</p>
+      <h3>Shared on {{ meal.date_available | date : mediumDate }}</h3>
+      <p>Sorry, feedback isn't available yet</p>
     </md-card-content>
   </md-card>
   <md-card ng-if='!pastMeals.length'>
     <md-card-title>
       <md-card-title-text>
-        <span class="md-headline">You haven't shared any meals :(</span>
+        <span class="md-headline">We don't have any feedback for you at the moment</span>
       </md-card-title-text>
       <md-card-title-media>
         <div class="md-media-md card-media"></div>
