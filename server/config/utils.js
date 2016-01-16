@@ -53,6 +53,7 @@ module.exports = {
         'Content-Type' : 'image/jpeg'
       }
     }
+    console.log('Path: ', options.root)
     res.sendFile(fileName, options, function(err) {
       if (err) {
         console.log(err);

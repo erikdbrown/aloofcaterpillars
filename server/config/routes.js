@@ -32,5 +32,5 @@ module.exports = function(app, express) {
   app.post('/boorish/feedback/meals/:id', helpers.decode, feedbackController.addFeedback); // adds feedback to a specific meal by a consumer
 
   // app.get('/boorish/tags', helpers.decode, tagsController.getTags); // TODO: write controller function
-  app.get('server/images/:id', helpers.decode, utils.getImage);
+  app.get('/server/images/:id', utils.getImage);
 };
