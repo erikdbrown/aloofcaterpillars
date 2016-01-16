@@ -120,7 +120,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     // searchByIngredient: searchByIngredient,
   }
 })
-.factory('Auth', function($http, $location, $window) {
+.service('Auth', function($http, $location, $window) {
     // Don't touch this Auth service!!!
     // it is responsible for authenticating our user
     // by exchanging the user's username and password
@@ -188,9 +188,10 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
         method: 'GET',
         url: '/boorish/users/signedin'
       }).then(function (resp){
+        console.log(resp)
         return authorized(resp.status, "checkAuth") === null;
 
-      }).then(function (resp){
+      }).catch(function (resp){
         return false;
       })
       // return !!$window.localStorage.getItem('com.oneApp');

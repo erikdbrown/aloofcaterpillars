@@ -12,6 +12,16 @@ angular.module('auth', [])
     $scope.click = true;
   }
 
+  Auth.isAuth()
+    .then(function (resp){
+      debugger;
+      if(resp){
+        Users.getUserInfo().then(function (resp){
+          $scope.userInfo = resp;
+        })
+      }
+  })
+
   $scope.signup = function () {
     Auth.signup($scope.user)
       .then(function (user) {
@@ -33,10 +43,8 @@ angular.module('auth', [])
   };
 
   $scope.signin = function () {
-
     Auth.signin($scope.user)
       .then(function (user) {
-        // debugger;
         if(!user.error){
           $window.localStorage.setItem('com.oneApp', user.token)
           Users.getUserInfo().then(function (resp){
