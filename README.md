@@ -9,4 +9,4 @@ Lunchbox spices up the the Hack Reactor student's experience by allowing them to
 
 Lunchbox is built on the meanstack which includes Node and MongoDB on the server side and Angular (Angular Material) on the client side.
 
-We hope you enjoy our project!
+<b> We hope you enjoy our project! </b>
