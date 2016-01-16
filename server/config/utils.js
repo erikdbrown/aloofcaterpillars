@@ -24,15 +24,14 @@ module.exports = {
       }
 
       if (!files.picture) {
-        req.imgPath = 'server/images/defaultMealImage.png';
+        req.imgPath = '/images/defaultMealImage.png';
         req.fields = fields;
-        console.log('There are no pictures!')
         next();
       } else {
         var uniqPath = hash.encode(counter);
         counter++;
         var oldPath = files.picture[0].path.split('.');
-        var ext = path[path.length - 1];
+        var ext = oldPath[oldPath.length - 1];
         req.imgPath = 'server/images/'+ uniqPath + '.' + ext;
         req.fields = fields;
         fs.rename(files.picture[0].path, req.imgPath, function (err) {
