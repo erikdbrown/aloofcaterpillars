@@ -27,7 +27,8 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       data: meal
     })
     .then(function(resp) {
-      return resp.data;
+      return resp.data
+      console.log('meal is stored')
     })
   }
 
@@ -37,6 +38,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
       method: 'GET',
       url: '/boorish/meals'
     }).success(function(resp){
+      console.log(resp)
       return resp.data;
     }).error(function(){
       alert('Error: Cannot Retrieve Meals From Server. Check your connection & try again');
@@ -159,7 +161,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
           data: signingUser
         })
         .then(function(resp) {
-          var signedInUser = {token: resp.data.token};
+          var signedInUser = {error: authorized(resp.status, "signIn"), token: resp.data.token};
           return signedInUser;
         }, function (resp){
           var error = {error: authorized(resp.status, "signIn")};
@@ -174,9 +176,11 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
           data: user
         })
         .then(function(resp) {
-          var user = {error: null, token: resp.data.token}
-          user.error = authorized(resp.status, "signUp");
+          var user = {error: authorized(resp.status, "signUp"), token: resp.data.token}
           return user;
+        }, function (resp){
+          var error = {error: authorized(resp.status, "signUp")};
+          return error;
         });
 
     };
@@ -187,12 +191,11 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
         method: 'GET',
         url: '/boorish/users/signedin'
       }).then(function (resp){
-        if(authorized(resp.status, "checkAuth") === null){
-          return true;
-        }
+        return authorized(resp.status, "checkAuth") === null;
+
+      }).then(function (resp){
         return false;
       })
-
       // return !!$window.localStorage.getItem('com.oneApp');
     };
 
@@ -229,47 +232,59 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     };
   })
   .factory('Users', function ($http){
-    var userData = {};
+    var userData = null;
 
     var getMeals = function (){
       return $http({
         method: "GET",
         url: '/boorish/meals/users/'
-      }).then(function (resp){
-        var userMeals = {}
-        userMeals.currentEating = resp.data.eating.current;
-        userMeals.currentCreated = resp.data.created.current;
-        userMeals.pastEating = resp.data.eating.past;
-        userMeals.pastCreated = resp.data.created.past;
+      }).success(function (resp){
+
+        var userMeals = {hi: "bye"};
+        // console.log(resp)
+        // userMeals.currentEating = resp.data.eating.current;
+        // userMeals.currentCreated = resp.data.created.current;
+        // userMeals.pastEating = resp.data.eating.past;
+        // userMeals.pastCreated = resp.data.created.past;
         return userMeals;
       })
     };
 
-    var setUserInfo = function (){
-      return $http({
-        method: "GET",
-        url: '/boorish/users/'
-      }).then(function (resp){
-        var userData = {
-          lunchboxes: resp.data.foodTokens,
-          rating: resp.data.rating,
-          displayName: resp.data.displayName,
-          username: resp.data.username
-        };
-        return userData;
-      })
-    };
-
     var getUserInfo = function (){
-      if (userData){
-        return userData;
-      }
-      else {
-        return setUserInfo.then( function (userData){
+      // if(userData){
+      //   return userData;
+      // } else{
+        return $http({
+          method: "GET",
+          url: '/boorish/users/'
+        }).then(function (resp){
+          userData = {
+            lunchboxes: resp.data.foodTokens,
+            rating: resp.data.rating,
+            displayName: resp.data.displayName,
+            username: resp.data.username
+          };
           return userData;
         })
-      }
-    }
+      // }
+
+    };
+
+    // var getUserInfo = function (){
+    //   debugger;
+    //   if (userData){
+    //     console.log("1")
+    //     return userData;
+    //   }
+    //   else {
+    //     console.log("setUser:",setUserInfo())
+    //   //  return setUserInfo().then( function (newData){
+    //   //    userData = newData;
+    //   //   //  console.log(userData.constructor);
+    //   //     return userData;
+    //   //   })
+    //   }
+    // };
 
     var buyMeal = function (mid){
       $http({
@@ -284,28 +299,27 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
         url: '/boorish/meals/' + mid,
         data: changes
       })
-    }
+    };
 
     var returnMeal = function (mid){
       $http({
         method: 'PUT',
         url: '/boorish/meals/users/' + mid
       })
-    }
+    };
 
     var cancelMeal = function (mid){
       $http({
         method: "DELETE",
         url:  '/boorish/meals/:id' + mid
       })
-    }
+    };
 
     return {
       getMeals: getMeals,
       buyMeal: buyMeal,
       editMeal: editMeal,
       getUserInfo: getUserInfo,
-      setUserInfo: setUserInfo,
       returnMeal: returnMeal
       // getUserMeals: getUserMeals,
       // confirmReq: confirmReq,
@@ -338,11 +352,12 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
 
     var editFeedback = function (changes){
 
-      $http({
-        method: "PUT",
-        url: "/boorish/feedback/meals/" + mid,
-        data: changes
-      });
+    $http({
+      method: "PUT",
+      url: "/boorish/feedback/meals/" + mid,
+      data: changes
+    })
+  }
 
     return {
       submitFeedback: submitFeedback,
@@ -356,4 +371,4 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
     //   })
     // }
 
-  }});
+  });
