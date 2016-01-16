@@ -15,16 +15,17 @@
     </md-list>
     <md-list ng-if='sharedMeals.length'>
       <md-list-item class="md-3-line" ng-repeat="meal in sharedMeals">
-        <img ng-src='{{ meal.imgUrl }}'>
+        <img style='height: 50px; margin-right: 10px;' ng-src='{{ meal.imgUrl }}'>
         <div class="md-list-item-text" ng-if='meal.requesters'>
           <h3>{{ meal.title }}</h3>
-          <h4>{{ meal.date_available }}</h4>
-          <p>{{ meal.num_portions }}</p>
-          <p>{{ meal.requesters }}</p>
+          <h4>{{ meal.date_available | date : mediumDate }}</h4>
+          <p>{{ meal.num_portions }} portion(s) </p>
+          <p>Requested by {{ meal.requesters }}</p>
+          <md-button class="md-secondary" ng-click="confirmCancelPromise($event, meal)" ng-if='isAvailable(meal)'>Cancel</md-button>
         </div>
         <div class="md-list-item-text" ng-if='!meal.requesters'>
           <h3>{{ meal.title }}</h3>
-          <h4>{{ meal.date_available }}</h4>
+          <h4>{{ meal.date_available | date : mediumDate }}</h4>
           <p>No one has made any requests yet.</p>
         </div>
         <md-divider md-inset ng-if="!$last"></md-divider>
@@ -42,7 +43,7 @@
       <md-list-item class="md-3-line">
         <img ng-src=''>
         <div class="md-list-item-text">
-          <h3>You haven't made any requests</h3>
+          <h3>You don't have any requests at the moment.</h3>
         </div>
       </md-list-item>
     </md-list>
@@ -51,8 +52,9 @@
         <img ng-src='{{meal.imgUrl}}'>
         <div class="md-list-item-text">
           <h3>{{ meal.title }}</h3>
-          <h4>Made by {{ meal.creator }}</h4>
-          <p>{{ meal.date_available }}</p>
+          <h4>Shared by {{ meal.creator }}</h4>
+          <p>{{ meal.date_available | date : mediumDate }}</p>
+          <md-button class="md-secondary" ng-click="confirmCancelRequest($event, meal)" ng-if='isAvailable(meal)'>Cancel</md-button>
         </div>
         <md-divider md-inset ng-if="!$last"></md-divider>
       </md-list-item>
