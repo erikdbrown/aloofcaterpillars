@@ -19,7 +19,7 @@ app.use(express.static(__dirname + '/../client')); // this serves all the static
 
 require('./config/routes.js')(app, express);
 
-var port = process.env.PORT || 5000;
+var port = 5000;
 
 app.listen(port);
 
