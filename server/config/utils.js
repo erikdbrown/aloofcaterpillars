@@ -4,7 +4,7 @@ var multiparty = require('multiparty');
 var govKey = require('./apiKeys.js');
 var Hashids = require("hashids");
 var hash = new Hashids('hrPenguins');
-var counter = 10000;
+var counter = 100000000;
 
 module.exports = {
 

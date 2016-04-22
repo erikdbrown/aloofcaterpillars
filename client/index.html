@@ -54,14 +54,16 @@
           <a class='logo' href="#/browse">LUNCHBOX</a>
           <span flex></span>
           <md-menu-bar role="menubar" layout-align="center center" layout="row">
-            <md-button ng-href="#/create" class="" aria-label="Learn More"> <md-icon >add_circle</md-icon> Add Meal</md-button>
+            <md-button ng-href="#/create" class="" aria-label="Learn More"> <md-icon >add_circle</md-icon> <span hide-xs>Add Meal</span></md-button>
 
             <md-menu md-position-mode="target-right bottom">
               <md-button ng-click="$mdOpenMenu($event)" class="dropdown-icon-btn" aria-label="Open sample menu">
-                <md-icon >account_circle</md-icon> User
+                <md-icon >account_circle</md-icon>
+                <span hide-xs>User</span>
               </md-button>
               <md-menu-content width="2">
                 <md-menu-item><md-button ng-href="#/dashboard"> <md-icon >settings_input_svideo</md-icon> Dashboard</md-button></md-menu-item>
+                <md-menu-item><md-button ng-href="#/orders"> <md-icon >room_service</md-icon> Orders</md-button></md-menu-item>
                 <md-menu-item><md-button ng-click="signout()"> <md-icon >exit_to_app</md-icon> Logout</md-button></md-menu-item>
               </md-menu-content>
             </md-menu>

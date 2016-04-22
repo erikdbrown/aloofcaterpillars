@@ -9,12 +9,14 @@
           </md-card-title-text>
         </md-card-title>
         <md-card-content>
-        Bacon ipsum dolor amet tail bacon sirloin corned beef jerky leberkas shankle t-bone spare ribs filet mignon pork loin. Swine landjaeger picanha pork belly kevin filet mignon ball tip, venison chuck jerky porchetta sirloin tongue sausage. Swine pastrami meatball, biltong bacon tri-tip ribeye. Fatback capicola kevin sausage turducken salami swine meatloaf drumstick ribeye. Short ribs kielbasa kevin shankle landjaeger flank sausage hamburger jowl cupim tail pork chop drumstick spare ribs turducken. Frankfurter rump pork loin, tri-tip fatback sausage ham bresaola pig salami. Bresaola porchetta pork chop boudin rump picanha.
-        <div ng-cloak>
-        </div>
+          Bacon ipsum dolor amet tail bacon sirloin corned beef jerky leberkas shankle t-bone spare ribs filet mignon pork loin. Swine landjaeger picanha pork belly kevin filet mignon ball tip, venison chuck jerky porchetta sirloin tongue sausage. Swine pastrami meatball, biltong bacon tri-tip ribeye. Fatback capicola kevin sausage turducken salami swine meatloaf drumstick ribeye. Short ribs kielbasa kevin shankle landjaeger flank sausage hamburger jowl cupim tail pork chop drumstick spare ribs turducken. Frankfurter rump pork loin, tri-tip fatback sausage ham bresaola pig salami. Bresaola porchetta pork chop boudin rump picanha.
+          <div ng-cloak>
+          </div>
+        </md-card-content>
+
       </md-card>
-      <div class='md-padding' layout="row" layout-wrap>
-      <md-card style="width: 200px;" ng-repeat="person in persons">
+      <div class='md-padding' layout="row" layout-wrap layout-align="space-between none">
+      <md-card flex="20" flex-sm="45" flex-xs="100" ng-repeat="person in persons">
         <img ng-src="{{ person.imgUrl }}" class="md-card-image" alt="user avatar">
         <md-card-content>
           <h4>{{ person.name }}</h4>
