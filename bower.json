@@ -1,5 +1,5 @@
 {
-  "name": "Lunchbox",
+  "name": "lunchbox",
   "description": "Trade meals with peers at Hack Reactor",
   "main": "index.js",
   "authors": [
