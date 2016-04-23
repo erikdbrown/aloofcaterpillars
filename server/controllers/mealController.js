@@ -1,7 +1,7 @@
 var Q = require('q');
 var Meal = require('../models/mealModel.js');
 var User = require('../models/userModel.js');
-var keys = require('../config/apiKeys.js')
+// var keys = require('../config/apiKeys.js')
 var fs = require('fs');
 var path = require('path');
 var utils = require('../config/utils.js')
