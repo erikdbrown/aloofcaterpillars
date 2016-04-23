@@ -1,7 +1,7 @@
 // uncomment if you need to set up a model
 // var Tag = require('../models/tagModel.js');
 var request = require('request');
-var keys = require('../config/apiKeys.js');
+// var keys = require('../config/apiKeys.js');
 
 module.exports = {
   
