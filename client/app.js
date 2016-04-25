@@ -46,11 +46,13 @@ angular.module('oneApp', [
     $routeProvider
       .when('/', {
         templateUrl: '/browse/browse.html',
-        controller: 'browseCtrl'
+        controller: 'browseCtrl',
+        authenticate: true
       })
       .when('/home', {
         templateUrl: './browse/browse.html',
-        controller: 'AuthController'
+        controller: 'AuthController',
+        authenticate: true
       })
       .when('/signin', {
         templateUrl: '/auth/signin.html',
@@ -58,7 +60,8 @@ angular.module('oneApp', [
       })
       .when('/browse', {
         templateUrl: '/browse/browse.html',
-        controller: 'browseCtrl'
+        controller: 'browseCtrl',
+        authenticate: true
       })
       .when('/create', {
         templateUrl: '/create/create.html',
@@ -84,26 +87,31 @@ angular.module('oneApp', [
       })
       .when('/dashboard', {
         templateUrl: '/dashboard/dashboard.html',
-        controller: 'dashController'
+        controller: 'dashController',
+        authenticate: true
       })
       .when('/feedback', {
         templateUrl: '/feedback/feedback.html',
-        controller: 'feedbackController'
+        controller: 'feedbackController',
+        authenticate: true
       })
       .when('/orders', {
         templateUrl: '/orders/orders.html',
-        controller: 'ordersController'
+        controller: 'ordersController',
+        authenticate: true
       })
       .when('/review', {
         templateUrl: '/review/review.html',
-        controller: 'reviewController'
+        controller: 'reviewController',
+        authenticate: true
       })
       .when('/about', {
         templateUrl: '/about/about.html',
         controller: 'aboutController'
       })
       .otherwise({
-        redirectTo: '/dashboard'
+        redirectTo: '/dashboard',
+        authenticate: true
       })
 
     //Standard Auth from Angular Shortly
