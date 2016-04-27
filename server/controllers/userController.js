@@ -1,3 +1,4 @@
+
 var Q = require('q');
 var User = require('../models/userModel.js');
 var session = require('express-session');
@@ -9,7 +10,6 @@ var createUser = Q.nbind(User.create, User);
 module.exports = {
   
   create: function(req, res, next) {
-    console.log(req.body);
 
     findUser({ username: req.body.username })
     .then(function(user) {
@@ -62,8 +62,9 @@ module.exports = {
 
   getUser: function(req, res, next) {
     // returns a user from the database
+    console.log("You're in getUser")
     var username = req.username;
-    console.log(username);
+  
     findUser({ username: username })
     .then(function(user) {
       if (!user) {
@@ -85,6 +86,6 @@ module.exports = {
   },
 
   checkAuth: function(req, res, next) {
-    res.sendStatus(200);
+    res.send(req.username);
   }
 };

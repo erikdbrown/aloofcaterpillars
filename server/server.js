@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 
 var app = express();
+
 var mongoURI = process.env.MONGO_URI || 'mongodb://localhost/boorish';
 
 mongoose.connect(mongoURI);
