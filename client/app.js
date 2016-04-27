@@ -74,7 +74,8 @@ angular.module('oneApp', [
       })
       .when('/confirmreq', {
         templateUrl: '/browse/viewReq.html',
-        controller: 'viewCtrl'
+        controller: 'viewCtrl',
+        authenticate: true
       })
       .when('/view', {
         templateUrl: '/browse/viewReq.html',
@@ -110,8 +111,7 @@ angular.module('oneApp', [
         controller: 'aboutController'
       })
       .otherwise({
-        redirectTo: '/dashboard',
-        authenticate: true
+        redirectTo: '/dashboard'
       })
 
     //Standard Auth from Angular Shortly
@@ -132,8 +132,11 @@ angular.module('oneApp', [
   })
   .run(function($rootScope, $location, Auth) {
     $rootScope.$on('$routeChangeStart', function(evt, next, current) {
-      if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
-        $location.path('/signin');
-      }
+      Auth.isAuth().then(function(authorized) {
+        if (next.$$route && next.$$route.authenticate && !authorized) {
+          $location.path('/signin');
+        }
+      });
+
     });
   });

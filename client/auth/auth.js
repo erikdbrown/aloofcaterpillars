@@ -73,14 +73,12 @@ angular.module('auth', [])
   $scope.signin = function () {
     Auth.signin($scope.user)
       .then(function (user) {
-        if(!user.error){
+        if(!user.error) {
           $window.localStorage.setItem('com.oneApp', user.token)
           Users.getUserInfo().then(function (resp){
             $scope.userInfo = resp;
+            $location.path('/browse');
           });
-
-          $location.path('/browse');
-              //TODO: Save this in correct area for html access
         }
         else{
           $scope.error = user.error;

@@ -158,6 +158,7 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
           data: signingUser
         })
         .then(function(resp) {
+
           var signedInUser = {error: authorized(resp.status, "signIn"), token: resp.data.token};
           return signedInUser;
         }, function (resp){
@@ -184,13 +185,12 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
 
     var isAuth = function() {
 
+      console.log('calling Auth.isAuth()')
       return $http({
         method: 'GET',
         url: '/boorish/users/signedin'
       }).then(function (resp){
-        console.log(resp)
-        return authorized(resp.status, "checkAuth") === null;
-
+        return !!resp.data
       }).catch(function (resp){
         return false;
       })
@@ -269,13 +269,12 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
 
 
     var getUserInfo = function (){
-      // if(userData){
-      //   return userData;
-      // } else{
+      
         return $http({
           method: "GET",
           url: '/boorish/users/'
         }).then(function (resp){
+          console.log('user info: ', resp)
           $window.localStorage.setItem('com.oneAppTokens', resp.data.foodTokens);
           $window.localStorage.setItem('com.oneAppRating', resp.data.rating);
           $window.localStorage.setItem('com.oneAppName', resp.data.displayName);
@@ -287,26 +286,9 @@ angular.module('factories', ['ngMaterial', 'ngMessages'])
             id: resp.data.id
           };
           return userData;
-        })
-      // }
+        });
 
     };
-
-    // var getUserInfo = function (){
-    //   debugger;
-    //   if (userData){
-    //     console.log("1")
-    //     return userData;
-    //   }
-    //   else {
-    //     console.log("setUser:",setUserInfo())
-    //   //  return setUserInfo().then( function (newData){
-    //   //    userData = newData;
-    //   //   //  console.log(userData.constructor);
-    //   //     return userData;
-    //   //   })
-    //   }
-    // };
 
     var buyMeal = function (mid){
       return $http({
